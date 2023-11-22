@@ -1,0 +1,11 @@
+name        = Plastik
+base_bg     = 239, 239, 239
+base_fg     =   0,   0,   0
+window_bg   = 255, 255, 255
+window_fg   =   0,   0,   0
+button_bg   = 225, 227, 232
+button_fg   =   0,   0,   0
+selected_bg = 103, 141, 178
+selected_fg = 255, 255, 255
+disabled_bg = 239, 239, 239
+disabled_fg = 128, 128, 128

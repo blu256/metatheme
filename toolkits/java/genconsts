@@ -1,0 +1,33 @@
+#!/usr/bin/env perl
+
+$parse = 0;
+$I = "    ";
+
+print "/* Generated automatically from 'metatheme.h'. */
+
+package metatheme;
+
+public interface MT {
+";
+
+while (<>) {
+	if (/\/* ((widget|color|state|position|orientation) types|metric( size)? values|widget flags):/) {
+		$parse = 1;
+		$i = 0;
+		print "\n${I}/* $1: */\n\n";
+	}
+
+	if ($parse == 1) {
+		if (/(MT_[A-Z_]+)([ ]*=[ ]*(-?[x0-9]+))?/) {
+			if ($3 ne "") { $i = $3; }
+			print "${I}public static final int $1 = $i;\n";
+			$i++;
+		}
+
+		if (/}/) {
+			$parse = 0;
+		}
+	}
+}
+
+print "\n};";

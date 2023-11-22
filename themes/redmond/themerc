@@ -1,0 +1,4 @@
+name        = Redmond 2000
+engine      = redmond/libmt_redmond.so
+description = Redmond 2000 style
+author      = Martin Dvorak <jezek2@advel.cz>

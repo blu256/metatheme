@@ -1,0 +1,5 @@
+name        = MSSTYLE Loader
+engine      = msstyle/libmt_msstyle.so
+description = MSSTYLE Loader
+author      = Petr Jelinek <pjmodos@centrum.cz>, Martin Dvorak <jezek2@advel.cz>
+config      = msstyle/msstyle-config

@@ -1,0 +1,11 @@
+name        = Redmond 2000
+base_bg     = 212, 208, 200
+base_fg     =   0,   0,   0
+window_bg   = 255, 255, 255
+window_fg   =   0,   0,   0
+button_bg   = 212, 208, 200
+button_fg   =   0,   0,   0
+selected_bg =  10,  36, 106
+selected_fg = 255, 255, 255
+disabled_bg = 212, 208, 200
+disabled_fg = 128, 128, 128

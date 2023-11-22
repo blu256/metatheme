@@ -1,0 +1,42 @@
+#!/bin/sh
+
+[ "$JAVA_HOME" == "" ] && JAVA_HOME=@JAVA_HOME@
+
+while [ "$1" != "" ]; do
+	case $1 in
+		-cp|-classpath)
+			classpath="$2"
+			shift
+			;;
+
+		-jar)
+			jar="$2"
+			shift
+			;;
+
+		[^-]*)
+			mainclass="$1"
+			shift
+			params="$*"
+			break
+			;;
+
+		*)
+			other="$other $1"
+	esac
+
+	shift
+done
+
+if [ "$jar" != "" ]; then
+	classpath="$jar"
+	params="metatheme.Loader $jar $params"
+elif [ "$mainclass" != "" ]; then
+	params="metatheme.Loader $mainclass $params"
+fi
+
+if [ "$classpath" != "" ]; then
+	other="$other -cp $classpath"
+fi
+
+$JAVA_HOME/bin/java $other $params

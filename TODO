@@ -1,0 +1,42 @@
+TODO list:
+----------
+
+- QT: fix tooltip color in file dialog
+- QT: fix transparent menus
+- QT: style MDI windows
+- fix appearance of read-only entries without border (used in Eclipse for example)
+- Plastik: fix appearance of first visible tab in notebook
+- Redmond: style tabs at left/right in notebook
+- QT: toolbar: style button for showing the rest of toolbar buttons
+- Plastik: add other orientation of tabs in notebook
+- GTK2: rewrite GtkNotebook so all needed things can be done
+- QT: style headers in popup menu
+- QT: show tool buttons with popup menu as normal in vertical toolbar
+- QT: fix behaviour of toolbuttons with popupmenu
+- remake clipping
+- QT/Plastik: fix combobox with icon (in Konqueror at location bar for example)
+- QT: buttons with narrow border draw like toolbuttons ?
+- QT: Konsole/Konqueror: draw first tab as a middle when there is the create button at left
+- GTK2: create a patch for defining width of handle box
+- GTK: fix buttons in Sodipodi that don't react to button press
+- GTK: if there is no room for popup menu at right/down from cursor, place it left/up
+- SCALE: provide information about position of tickers
+- split drawing of button's focus
+- add metric for spinbutton size
+- add metric for toolbar separator width
+- GTK2: match CLIST and CTREE at any level (not only parent)
+- GTK2: fix bad position of scrollbars in GtkScrolledWindow unless they are right/down
+- GTK2: fix menubar items with icons
+- GTK2: resolve "StaticBox" (sizes + overflowing when label is too wide)
+- GTK2: file selector: add a space below the buttons for creating a directory, etc.
+- GTK2: GtkText: change borders... makes sense?
+- GTK2: style tooltips
+- remake drawing of filled polygon (?)
+- statusbar: split to drawing of the whole statusbar and sections
+- enhancement: ability to choose position of scrollbars (inside/outside)
+- QT: fix appearance in reverse layout
+- QT: style tooltips
+- GTK2: remake setting of MT_NOTEBOOK_TEXT_OFFSET
+- add flag for read-only CHOICE
+- QT: add a simple form of MT_TOOLBAR_ITEM_DROPDOWN for buttons which don't trigger direct action and has popup menu (how?)
+- GTK2: draw the buttons in calendar as toolbuttons

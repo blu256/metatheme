@@ -1,0 +1,16 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>2.&nbsp;Colors</title><link rel="stylesheet" href="html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.67.0"><link rel="start" href="index.html" title="MetaTheme - The Reference Book"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Public API"><link rel="prev" href="re05.html" title="mt_color_set_from_config"><link rel="next" href="ch03s03.html" title="3.&nbsp;Graphics contexts"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.&nbsp;Colors</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="re05.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Public API</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e1381"></a>2.&nbsp;Colors</h2></div></div></div><pre class="programlisting">typedef struct {
+   int r;
+   int g;
+   int b;
+   int a;
+} MT_COLOR;
+
+#define mt_color_set(c, red, green, blue)
+#define mt_color_set(c, red, green, blue, alpha)
+
+void mt_color_get_hsv(MT_COLOR *col, int *h, int *s, int *v);
+void mt_color_set_hsv(MT_COLOR *result, int h, int s, int v);
+void mt_color_light(MT_COLOR *result, MT_COLOR *col, int factor);
+void mt_color_dark(MT_COLOR *result, MT_COLOR *col, int factor);</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="re05.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">mt_color_set_from_config&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;3.&nbsp;Graphics contexts</td></tr></table></div></body></html>

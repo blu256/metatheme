@@ -1,0 +1,11 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>1.&nbsp;Library initialization and common functions</title><link rel="stylesheet" href="html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.67.0"><link rel="start" href="index.html" title="MetaTheme - The Reference Book"><link rel="up" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Internal API"><link rel="prev" href="ch04.html" title="Chapter&nbsp;4.&nbsp;Internal API"><link rel="next" href="re26.html" title="metatheme_toolkit_init"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">1.&nbsp;Library initialization and common functions</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Internal API</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="re26.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e1807"></a>1.&nbsp;Library initialization and common functions</h2></div></div></div><pre class="programlisting">typedef struct MT_LIBRARY;
+
+void        <a href="re26.html" title="metatheme_toolkit_init">metatheme_toolkit_init</a>(MT_TOOLKIT *toolkit);
+
+MT_LIBRARY *metatheme_library_init(MT_TOOLKIT *toolkit);
+void        metatheme_library_exit(MT_LIBRARY *lib);
+MT_CONFIG  *metatheme_get_config(MT_LIBRARY *lib);
+
+void        <a href="re27.html" title="metatheme_refresh">metatheme_refresh</a>();</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="re26.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;4.&nbsp;Internal API&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;metatheme_toolkit_init</td></tr></table></div></body></html>

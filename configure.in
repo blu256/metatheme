@@ -1,0 +1,387 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(metatheme/metatheme.c)
+
+AM_INIT_AUTOMAKE(metatheme, 0.0.6)
+AM_CONFIG_HEADER(config.h)
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_CPP
+AC_ENABLE_SHARED(yes)
+AC_ENABLE_STATIC(no)
+AC_PROG_INSTALL
+AC_PROG_RANLIB
+AC_PROG_LIBTOOL
+
+dnl Checks for header files.
+AC_PATH_X
+AC_HEADER_STDC
+AC_CHECK_HEADERS(malloc.h unistd.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(strdup)
+
+dnl QT library:
+AC_ARG_WITH(qt-dir,           [  --with-qt-dir=DIR       where the root of Qt is installed],
+	[
+		ac_qt_includes="$withval"/include
+		ac_qt_libraries="$withval"/lib
+		ac_qt_bindir="$withval"/bin
+	])
+
+AC_ARG_WITH(qt-includes,      [  --with-qt-includes=DIR  where the Qt includes are],
+	[
+		ac_qt_includes="$withval"
+	])
+
+AC_ARG_WITH(qt-libraries,     [  --with-qt-libraries=DIR where the Qt library is installed],
+	[
+		ac_qt_libraries="$withval"
+	])
+
+dnl KDE library:
+AC_ARG_WITH(kde,              [  --without-kde           build without KDE support],
+	[
+		test "$withval" = "no" && enable_kde=no || enable_kde=yes
+	],
+	[
+		enable_kde=yes
+	])
+
+AC_ARG_WITH(kde-dir,          [  --with-kde-dir=DIR      where the root of KDE is installed],
+	[
+		ac_kde_includes="$withval"/include
+		ac_kde_libraries="$withval"/lib
+	])
+
+AC_ARG_WITH(kde-includes,     [  --with-kde-includes=DIR where the KDE includes are],
+	[
+		ac_kde_includes="$withval"
+	])
+
+AC_ARG_WITH(kde-libraries,    [  --with-kde-libraries=DIR where the KDE library is installed],
+	[
+		ac_kde_libraries="$withval"
+	])
+
+dnl Java:
+AC_ARG_WITH(java,             [  --with-java=DIR         where the Java SDK is installed],
+	[
+		ac_java_home="$withval"
+	])
+
+dnl Cairo:
+MT_ARG_ENABLE(cairo,          [  --disable-cairo         disable support for Cairo])
+
+dnl Toolkits:
+MT_ARG_ENABLE(gtk2,           [  --disable-gtk2          disable support for GTK2 toolkit])
+MT_ARG_ENABLE(qt,             [  --disable-qt            disable support for QT toolkit])
+MT_ARG_ENABLE(java,           [  --disable-java          disable support for Java/SWING toolkit])
+
+dnl Theme engines:
+MT_ARG_ENABLE(redmond,        [  --disable-redmond       disable Redmond 2000 theme engine])
+MT_ARG_ENABLE(plastik,        [  --disable-plastik       disable Plastik theme engine])
+MT_ARG_ENABLE(highcolor,      [  --disable-highcolor     disable Highcolor theme engine])
+MT_ARG_ENABLE(industrial,     [  --disable-industrial    disable Industrial theme engine])
+MT_ARG_ENABLE(flat,           [  --disable-flat          disable Flat theme engine])
+MT_ARG_ENABLE(msstyle,        [  --disable-msstyle       disable MSSTYLE theme engine])
+
+dnl Check for Cairo:
+if test "$enable_cairo" = yes; then
+	PKG_CHECK_MODULES(CAIRO, cairo >= 0.5.1,, enable_cairo=no)
+
+	if test "$enable_cairo" = yes; then
+		CAIRO_CFLAGS="$CAIRO_CFLAGS -DHAVE_CAIRO=1"
+	fi
+
+	AC_SUBST(CAIRO_CFLAGS)
+	AC_SUBST(CAIRO_LIBS)
+fi
+
+dnl Check required libraries for toolkits:
+if test "$enable_gtk2" = yes; then
+	PKG_CHECK_MODULES(GTK2, gtk+-2.0 >= 2.2.0,, enable_gtk2=no)
+
+	if test "$enable_gtk2" = yes; then
+		GTK2_PREFIX=`$PKG_CONFIG gtk+-2.0 --variable=prefix`
+	fi
+
+	AC_SUBST(GTK2_CFLAGS)
+	AC_SUBST(GTK2_LIBS)
+	AC_SUBST(GTK2_PREFIX)
+fi
+
+if test "$enable_qt" = yes; then
+	AC_MSG_CHECKING([for QT])
+
+	# common dirs:
+	BIN_DIRS="/usr/X11R6/bin /usr/bin /usr/local/bin /opt/local/bin"
+	INCLUDE_DIRS="/usr/local/include /usr/include"
+	LIB_DIRS="/usr/local/lib /usr/lib /usr/X11R6/lib"
+
+	# specific QT/KDE dirs:
+	QT_DIRS=`ls -1dr /opt/qt3* /opt/qt-3* /usr/qt/3* 2>/dev/null`
+	QT_DIRS="$QTDIR $QT_DIRS /opt/qt /usr/local/qt /usr/lib/qt3 /usr/lib/qt /usr/share/qt3"
+
+	KDE_DIRS=`ls -1dr /opt/kde3* /opt/kde-3* /usr/kde/3* 2>/dev/null`
+	KDE_DIRS="$KDEDIR $KDE_DIRS /opt/kde /usr/local/kde"
+
+	for i in $QT_DIRS; do
+		QT_BIN_DIRS="$QT_BIN_DIRS $i/bin"
+		QT_INCLUDE_DIRS="$QT_INCLUDE_DIRS $i/include"
+		QT_LIB_DIRS="$QT_LIB_DIRS $i/lib"
+	done
+
+	for i in $KDE_DIRS; do
+		KDE_INCLUDE_DIRS="$KDE_INCLUDE_DIRS $i/include"
+		KDE_LIB_DIRS="$KDE_LIB_DIRS $i/lib"
+	done
+
+	QT_BIN_DIRS="$QT_BIN_DIRS $BIN_DIRS"
+
+	QT_INCLUDE_DIRS="$QT_INCLUDE_DIRS /usr/local/include/qt* /usr/include/qt* /usr/X11R6/include/X11/qt* $INCLUDE_DIRS"
+	KDE_INCLUDE_DIRS="$KDE_INCLUDE_DIRS /usr/local/include/kde* /usr/include/kde* $INCLUDE_DIRS"
+
+	QT_LIB_DIRS="$QT_LIB_DIRS $LIB_DIRS"
+	KDE_LIB_DIRS="$KDE_LIB_DIRS $LIB_DIRS"
+
+	MT_SEARCH_INCLUDES_AND_LIBS(qt, 
+		"qglobal.h",     [$QT_INCLUDE_DIRS],
+		"libqt-mt.so.3", [$QT_LIB_DIRS])
+	
+	if test "$qt_found" = "no"; then
+		AC_MSG_RESULT([no])
+		enable_qt=no
+	else
+		AC_MSG_RESULT([yes])
+
+		QT_DIR_FROM_INCLUDES=`echo $qt_includes | sed 's/\/[[^/]]*$//'`
+		QT_DIR_FROM_LIBRARIES=`echo $qt_libraries | sed 's/\/[[^/]]*$//'`
+
+		AC_MSG_CHECKING([for MOC])
+		AC_FIND_FILE("moc", [$ac_qt_bindir $QT_DIR_FROM_INCLUDES $QT_DIR_FROM_LIBRARIES $QT_BIN_DIRS], QT_MOC)
+
+		if test "$QT_MOC" = "no"; then
+			AC_MSG_RESULT([no])
+			enable_qt=no
+		else
+			QT_MOC="$QT_MOC/moc"
+			AC_MSG_RESULT([$QT_MOC])
+
+			QT_CFLAGS="-I$qt_includes -DQT_THREAD_SUPPORT -DQT_PLUGIN"
+
+			if test "$enable_kde" = "yes"; then
+				AC_MSG_CHECKING([for KDE])
+				MT_SEARCH_INCLUDES_AND_LIBS(kde, 
+					"kglobal.h",     [$KDE_INCLUDE_DIRS],
+					"libkdecore.so", [$KDE_LIB_DIRS])
+			else
+				kde_found=no
+			fi
+
+			if test "$kde_found" = "no"; then
+				if test "$enable_kde" = "yes"; then
+					AC_MSG_RESULT([no])
+					enable_kde=no
+				fi
+
+				QT_LIBS="$qt_libraries/libqt-mt.la"
+				if test -f "$QT_LIBS"; then
+					AC_MSG_CHECKING([QT style plugins directory])
+					AC_FIND_FILE("plugins", [$QT_DIR_FROM_INCLUDES $QT_DIR_FROM_LIBRARIES], QT_PLUGINS)
+					if test "$QT_PLUGINS" = "no"; then
+						AC_MSG_RESULT([no])
+						enable_qt=no
+					else
+						QT_STYLES_DIR="$QT_PLUGINS/plugins/styles"
+						AC_MSG_RESULT([$QT_STYLES_DIR])
+					fi
+
+					if test -f "$QT_STYLES_DIR/libqwindowsstyle.so"; then
+						QT_LIBS="$QT_LIBS -Wl,--rpath -Wl,$QT_STYLES_DIR -L$QT_STYLES_DIR -lqwindowsstyle"
+					fi
+
+					AC_MSG_CHECKING([QT_CFLAGS])
+					AC_MSG_RESULT([$QT_CFLAGS])
+
+					AC_MSG_CHECKING([QT_LIBS])
+					AC_MSG_RESULT([$QT_LIBS])
+				else
+					enable_qt=no
+				fi
+			else
+				AC_MSG_RESULT([yes])
+
+				QT_CFLAGS="$QT_CFLAGS -I$kde_includes"
+				QT_LIBS="$kde_libraries/libkdecore.la $kde_libraries/libkdeui.la $kde_libraries/libkdefx.la"
+
+				AC_MSG_CHECKING([QT_CFLAGS])
+				AC_MSG_RESULT([$QT_CFLAGS])
+
+				AC_MSG_CHECKING([QT_LIBS])
+				AC_MSG_RESULT([$QT_LIBS])
+
+				QT_STYLES_DIR=$kde_libraries/kde3/plugins/styles
+
+				AC_MSG_CHECKING([if QT >= 3.1 and KDE >= 3.0])
+				
+				AC_LANG_CPLUSPLUS
+				OLD_CXXFLAGS=$CXXFLAGS
+				OLD_LIBS=$LIBS
+				OLD_ACLINK=$ac_link
+				
+				CXXFLAGS=$QT_CFLAGS
+				LIBS=$QT_LIBS
+				ac_link="$SHELL $srcdir/libtool $ac_link"
+				
+				AC_TRY_RUN(
+					[
+					#include <qglobal.h>
+					#include <kdeversion.h>
+
+					int main()
+					{
+						#if QT_VERSION < 0x030100 || KDE_VERSION_MAJOR < 3
+							return 1;
+						#else
+							return 0;
+						#endif
+					}
+					],
+					[
+						AC_MSG_RESULT([yes])
+					],
+					[
+						AC_MSG_RESULT([no])
+						enable_qt=no
+					],
+					[
+						AC_MSG_RESULT([check yourself ;)])
+					])
+
+				rmdir .libs
+
+				CXXFLAGS=$OLD_CXXFLAGS
+				LIBS=$OLD_LIBS
+				ac_link=$OLD_ACLINK
+			fi
+		fi
+	fi
+
+	AC_SUBST(QT_MOC)
+	AC_SUBST(QT_CFLAGS)
+	AC_SUBST(QT_LIBS)
+	AC_SUBST(QT_STYLES_DIR)
+fi
+
+if test "$enable_java" = yes; then
+	AC_MSG_CHECKING([for Java SDK])
+	
+	if ! test "$ac_java_home" = ""; then
+		JAVA_HOME="$ac_java_home"
+	fi
+	
+	if test -x $JAVA_HOME/bin/javac && test -x $JAVA_HOME/bin/javah; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		enable_java=no
+	fi
+
+	AC_SUBST(JAVA_HOME)
+fi
+	
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.0.0,,)
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
+
+# disable MSSTYLE when GTK2 is not present:
+msstyle_note=""
+if test "$enable_gtk2" = no -a "$enable_msstyle" = yes; then
+	enable_msstyle=no
+	msstyle_note=", GTK2 is required"
+fi
+
+MT_SUBST_CONFIG(gtk2)
+MT_SUBST_CONFIG(qt)
+MT_SUBST_CONFIG(java)
+
+MT_SUBST_CONFIG(redmond)
+MT_SUBST_CONFIG(plastik)
+MT_SUBST_CONFIG(highcolor)
+MT_SUBST_CONFIG(industrial)
+MT_SUBST_CONFIG(flat)
+MT_SUBST_CONFIG(msstyle)
+
+MT_SUBST_SUBDIRS(TOOLKITS_SUBDIRS, [gtk2 qt java])
+MT_SUBST_SUBDIRS(THEMES_SUBDIRS, [redmond plastik highcolor industrial flat msstyle])
+
+MAIN_SUBDIRS=""
+test x"$enable_gtk2" = x"yes" && MAIN_SUBDIRS="config"
+AC_SUBST(MAIN_SUBDIRS)
+
+METATHEMEDIR=`(
+    test "x$prefix" = xNONE && prefix=$ac_default_prefix
+    test "x$exec_prefix" = xNONE && exec_prefix=${prefix}
+	eval echo $libdir/metatheme
+)`
+AC_DEFINE_UNQUOTED(METATHEMEDIR,"$METATHEMEDIR")
+AC_SUBST(METATHEMEDIR)
+
+if test "$enable_kde" = "no"; then
+	kde_support=" (without KDE support)"
+else
+	kde_support=""
+	AC_DEFINE(HAVE_KDE)
+fi
+
+HAVE_KDE="$enable_kde"
+AC_SUBST(HAVE_KDE)
+
+echo
+echo "Configuration summary"
+echo "====================="
+echo
+echo "Toolkit support:"
+echo
+echo "  * GTK2:         ${enable_gtk2}"
+echo "  * QT:           ${enable_qt}${kde_support}"
+echo "  * Java:         ${enable_java}"
+echo
+echo "Theme engines:"
+echo
+echo "  * Redmond 2000: ${enable_redmond}"
+echo "  * Plastik:      ${enable_plastik}"
+echo "  * Highcolor:    ${enable_highcolor}"
+echo "  * Industrial:   ${enable_industrial}"
+echo "  * Flat:         ${enable_flat}"
+echo "  * MSSTYLE:      ${enable_msstyle}${msstyle_note}"
+echo
+echo "Cairo support:    ${enable_cairo}"
+echo
+
+AC_OUTPUT([ \
+	Makefile \
+	metatheme-install \
+	metatheme/Makefile \
+	themes/Makefile \
+	themes/redmond/Makefile \
+	themes/plastik/Makefile \
+	themes/highcolor/Makefile \
+	themes/industrial/Makefile \
+	themes/flat/Makefile \
+	themes/msstyle/Makefile \
+	toolkits/Makefile \
+	toolkits/gtk2/Makefile \
+	toolkits/qt/Makefile \
+	toolkits/java/Makefile \
+	toolkits/java/metatheme/Makefile \
+	toolkits/java/mt-java \
+	config/Makefile \
+	colors/Makefile
+])

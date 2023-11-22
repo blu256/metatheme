@@ -1,0 +1,2703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<book>
+  <title>MetaTheme - The Reference Book</title>
+
+  <bookinfo>
+    <title>MetaTheme - The Reference Book</title>
+
+    <author>
+      <surname>Martin Dvorak</surname>
+
+      <affiliation>
+        <address><email>jezek2@advel.cz</email></address>
+      </affiliation>
+    </author>
+  </bookinfo>
+
+  <chapter>
+    <title>About MetaTheme</title>
+
+    <para>MetaTheme is a project dedicated to unification of appearance
+    between different graphics toolkits, such as GTK and QT.</para>
+
+    <para>The program is designed as a thin layer between toolkits and theme
+    engines, creating unified API by which each theme engine can draw. The
+    result is that every application uses the same code for drawing, making
+    the appearance same across different applications. MetaTheme also adjusts
+    behaviour a bit, so the overall effect of unification is
+    impressive.</para>
+
+    <para>Some applications have their own toolkits which are used only by
+    themselves. Cardinal examples of such applications are Mozilla, Firefox
+    and OpenOffice. They provide support for pixmap themes, and popular themes
+    exists for them. Though as they are pixmap based, you can't easily change
+    how they look. Particularly, it's quite impossible to change color theme.
+    Not everyone likes the default. Also, the behaviour of these toolkits is
+    unaffected, so the application may behave differently than other
+    applications.</para>
+
+    <para>There is planned support for Firefox (and maybe Mozilla too) in
+    future. For OpenOffice, you can at least try the KDE integration build of
+    it.</para>
+
+    <sect1>
+      <title>Goals</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Unified look'n'feel across toolkits</para>
+        </listitem>
+
+        <listitem>
+          <para>Pixel-perfect graphics</para>
+        </listitem>
+
+        <listitem>
+          <para>The same or similiar behaviour of widgets</para>
+        </listitem>
+
+        <listitem>
+          <para>Speed and efficiency</para>
+        </listitem>
+
+        <listitem>
+          <para>Easy of use</para>
+        </listitem>
+
+        <listitem>
+          <para>Small resource footprint</para>
+        </listitem>
+
+        <listitem>
+          <para>No external dependencies if possible</para>
+        </listitem>
+      </itemizedlist>
+    </sect1>
+
+    <sect1>
+      <title>Architecture</title>
+
+      <para>MetaTheme is divided into three parts:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Core library</para>
+        </listitem>
+
+        <listitem>
+          <para>Toolkit backends</para>
+        </listitem>
+
+        <listitem>
+          <para>Theme engines</para>
+        </listitem>
+      </itemizedlist>
+
+      <sect2>
+        <title>Core library</title>
+
+        <para>This library contains MetaTheme API and common functions.</para>
+      </sect2>
+
+      <sect2>
+        <title>Toolkit backends</title>
+
+        <para>Toolkit backends are the most complex pieces of MetaTheme. They
+        are supposed to narrow the toolkit API to MetaTheme API. Some toolkits
+        provide good support for changing things, others don't. To workaround
+        these limitations the toolkit backends often uses various hacks, like
+        run-time replacing of code. Though they are written in a safe fashion
+        (if not, they should be done in another way or removed).</para>
+
+        <para>Toolkit backends are implemented mostly as a native theme engine
+        for particular toolkit. Some can be implented as a patch, but our goal
+        is to avoid this way if possible.</para>
+
+        <para>General rules for writing toolkit backends are covered in the
+        chapter about <link linkend="toolkit-backends">Toolkit
+        backends</link>.</para>
+      </sect2>
+
+      <sect2>
+        <title>Theme engines</title>
+
+        <para>Theme engines uses MetaTheme API to describe metrics and other
+        things and to draw widgets.</para>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter id="chapter-constants">
+    <title>Constants</title>
+
+    <para>This chapter describes various constants in MetaTheme.</para>
+
+    <para>The <emphasis>compliance</emphasis> column is used for showing which
+    toolkit backends supports that constant. It is used mainly as a TODO list.
+    Some constants aren't used in all toolkits because the others doesn't have
+    such widgets.</para>
+
+    <sect1>
+      <title>Metric types</title>
+
+      <para>Metrics are used to determine sizes of various parts of widgets.
+      Some are more described in the <link
+      linkend="description-of-complex-widgets">Description of complex
+      widgets</link>.</para>
+
+      <table>
+        <title>One dimensional metric types</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+
+              <entry>Compliance</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>MT_BORDER</entry>
+
+              <entry>general width of border</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_SIZE</entry>
+
+              <entry>width of vertical scrollbar and height of horizontal
+              scrollbar</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHECKBOX_SIZE</entry>
+
+              <entry>size of checkbox including border</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCALE_SLIDER_SIZE</entry>
+
+              <entry>length of scale slider</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_STATICBOX_TEXT_OFFSET</entry>
+
+              <entry>offset of text from left/right (depends on text
+              alignment)</entry>
+
+              <entry>-</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR_ITEM_SPACING</entry>
+
+              <entry>width of space between items in menubar</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_SEPARATOR_HEIGHT</entry>
+
+              <entry>height of separator in menu</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_OVERLAP</entry>
+
+              <entry>number of pixels the tab bar area overlaps the
+              notebook</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_TAB_OVERLAP</entry>
+
+              <entry>number of pixels the tabs should overlap</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_TEXT_OFFSET</entry>
+
+              <entry>offset of text when tab is active</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_ARROW_WIDTH</entry>
+
+              <entry>width of arrow button</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_IS_FILLED</entry>
+
+              <entry>is notebook filled?</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry
+              id="MT_CHOICE_BUTTON_WIDTH">MT_CHOICE_BUTTON_WIDTH</entry>
+
+              <entry>width of button in choice widget</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM_DROPDOWN_WIDTH</entry>
+
+              <entry>additional width of toolbar item when the button has
+              associated popup menu</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SPLITTER_WIDTH</entry>
+
+              <entry>width of splitter</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Two dimensional metric types</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+
+              <entry>Compliance</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>MT_BUTTON_BORDER</entry>
+
+              <entry>additional space between label and border in
+              button</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_TEXT_OFFSET</entry>
+
+              <entry>offset of text when button is pressed</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_TOGGLE_BORDER</entry>
+
+              <entry>additional space between label and border in toggle
+              button</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_TOGGLE_TEXT_OFFSET</entry>
+
+              <entry>offset of text when toggle button is pressed</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM_TEXT_OFFSET</entry>
+
+              <entry>offset of text and image when toolbar item is
+              pressed</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM_BORDER</entry>
+
+              <entry>additional space for border</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR_BORDER</entry>
+
+              <entry>additional space for border (in QT, only the bigger value
+              is used for both axis)</entry>
+
+              <entry>GTK2, *QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR_ITEM_BORDER</entry>
+
+              <entry>additional space for border</entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR_ITEM_TEXT_OFFSET</entry>
+
+              <entry>offset of text when menubar item is active</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_BORDER</entry>
+
+              <entry>additional space for border</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM_BORDER</entry>
+
+              <entry>additional space for border</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_PROGRESSBAR_BORDER</entry>
+
+              <entry>spacing between progressbar and slider</entry>
+
+              <entry>GTK2, QT, SWING</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </sect1>
+
+    <sect1>
+      <title>Colors</title>
+
+      <table>
+        <title>Color types</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+
+              <entry>Compliance</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>MT_BACKGROUND</entry>
+
+              <entry morerows="1">windows &amp; dialogs (i.e. black text on
+              grey background)</entry>
+
+              <entry morerows="1">GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_FOREGROUND</entry>
+            </row>
+
+            <row>
+              <entry>MT_WINDOW_BACKGROUND</entry>
+
+              <entry morerows="1">entries, etc. (i.e. black text on white
+              background)</entry>
+
+              <entry morerows="1">GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_WINDOW_FOREGROUND</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_BACKGROUND</entry>
+
+              <entry morerows="1">buttons</entry>
+
+              <entry morerows="1">GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_FOREGROUND</entry>
+            </row>
+
+            <row>
+              <entry>MT_SELECTED_BACKGROUND</entry>
+
+              <entry morerows="1">selected text (i.e. white text on blue
+              background)</entry>
+
+              <entry morerows="1">GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SELECTED_FOREGROUND</entry>
+            </row>
+
+            <row>
+              <entry>MT_DISABLED_BACKGROUND</entry>
+
+              <entry morerows="1">disabled items (i.e. black text on grey
+              background)</entry>
+
+              <entry morerows="1">GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_DISABLED_FOREGROUND</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_LIGHT</entry>
+
+              <entry>lighter than button background</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_MIDLIGHT</entry>
+
+              <entry>between button background and button light</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_DARK</entry>
+
+              <entry>darker than button background</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_MID</entry>
+
+              <entry>between button background and dark</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_SHADOW</entry>
+
+              <entry>very dark color (black)</entry>
+
+              <entry>QT</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </sect1>
+
+    <sect1 id="widget-types">
+      <title>Widget types</title>
+
+      <para>The following table contains the full list of widgets. Most of
+      widgets are simple. Description of the complex ones is below the
+      table.</para>
+
+      <table>
+        <title>Widget types</title>
+
+        <tgroup cols="4">
+          <thead>
+            <row>
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+
+              <entry>Additional widget data</entry>
+
+              <entry>Compliance</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>MT_BASE</entry>
+
+              <entry>background of dialogs and windows</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_WINDOW_BASE</entry>
+
+              <entry>background of entries (Entry)</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_BORDER_IN</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BORDER_OUT</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_HLINE</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_VLINE</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_FOCUS_TAB</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_FOCUS_CHECKBOX</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_RESIZE_GRIP</entry>
+
+              <entry>resize grip in statusbar</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_ARROW_UP</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_ARROW_DOWN</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_ARROW_LEFT</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_ARROW_RIGHT</entry>
+
+              <entry></entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON</entry>
+
+              <entry>normal button</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_DEFAULT</entry>
+
+              <entry>default button</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_TOGGLE</entry>
+
+              <entry>toggle button</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_BUTTON_HEADER</entry>
+
+              <entry>button in a header of listview</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU</entry>
+
+              <entry>menu background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM</entry>
+
+              <entry>menu item background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM_CHECK</entry>
+
+              <entry>check icon in menu item</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM_RADIO</entry>
+
+              <entry>radio icon in menu item</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM_ARROW</entry>
+
+              <entry>arrow icon in menu item</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_ITEM_SEPARATOR</entry>
+
+              <entry>separator in menu</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENU_TEAROFF</entry>
+
+              <entry>tearoff in menu</entry>
+
+              <entry><link linkend="widget-flags-menu-tearoff">flags</link>
+              (MT_MENU_DETACHED)</entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR</entry>
+
+              <entry>menubar background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_MENUBAR_ITEM</entry>
+
+              <entry>menubar item background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR</entry>
+
+              <entry>toolbar background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM</entry>
+
+              <entry>toolbar item</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM_TOGGLE</entry>
+
+              <entry>toolbar toggle item</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_ITEM_DROPDOWN</entry>
+
+              <entry>toolbar dropdown item</entry>
+
+              <entry><link
+              linkend="widget-flags-toolbar-item-dropdown">flags</link>
+              (MT_TOOLBAR_ITEM_DROPDOWN_*)</entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_SEPARATOR</entry>
+
+              <entry>toolbar separator</entry>
+
+              <entry>orientation (of the whole toolbar)</entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLBAR_HANDLE</entry>
+
+              <entry>toolbar handle</entry>
+
+              <entry>orientation (of the whole toolbar)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR</entry>
+
+              <entry>scrollbar background</entry>
+
+              <entry>orientation, <link
+              linkend="widget-flags-scrollbar">flags</link> (MT_SCROLLBAR_*),
+              handle_position, groove_size (used for handle_size)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_HANDLE</entry>
+
+              <entry>scrollbar handle</entry>
+
+              <entry>orientation, <link
+              linkend="widget-flags-scrollbar">flags</link> (MT_SCROLLBAR_*),
+              handle_position, groove_size</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_ARROW_UP</entry>
+
+              <entry>scrollbar button with up arrow</entry>
+
+              <entry><link linkend="widget-flags-scrollbar">flags</link>
+              (MT_SCROLLBAR_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_ARROW_DOWN</entry>
+
+              <entry>scrollbar button with down arrow</entry>
+
+              <entry><link linkend="widget-flags-scrollbar">flags</link>
+              (MT_SCROLLBAR_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_ARROW_LEFT</entry>
+
+              <entry>scrollbar button with left arrow</entry>
+
+              <entry><link linkend="widget-flags-scrollbar">flags</link>
+              (MT_SCROLLBAR_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_ARROW_RIGHT</entry>
+
+              <entry>scrollbar button with right arrow</entry>
+
+              <entry><link linkend="widget-flags-scrollbar">flags</link>
+              (MT_SCROLLBAR_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_PROGRESSBAR</entry>
+
+              <entry>progressbar background and border</entry>
+
+              <entry>orientation, <link
+              linkend="widget-flags-progressbar">flags</link>
+              (MT_PROGRESSBAR_*)</entry>
+
+              <entry>GTK2, QT, SWING</entry>
+            </row>
+
+            <row>
+              <entry>MT_PROGRESSBAR_SLIDER</entry>
+
+              <entry>progressbar slider</entry>
+
+              <entry>orientation, <link
+              linkend="widget-flags-progressbar">flags</link>
+              (MT_PROGRESSBAR_*)</entry>
+
+              <entry>GTK2, QT, SWING</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK</entry>
+
+              <entry>notebook background and border</entry>
+
+              <entry>gap_x, gap_width, gap_position (currently, all are zeros
+              in QT)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_TAB</entry>
+
+              <entry>notebook tab</entry>
+
+              <entry>gap_position, <link
+              linkend="widget-flags-notebook-tab">flags</link>
+              (MT_NOTEBOOK_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_ARROW_LEFT</entry>
+
+              <entry>button with left arrow</entry>
+
+              <entry></entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_ARROW_RIGHT</entry>
+
+              <entry>button with right arrow</entry>
+
+              <entry></entry>
+
+              <entry>QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_RADIO_BUTTON</entry>
+
+              <entry>whole radio widget with label</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHECK_BUTTON</entry>
+
+              <entry>whole check widget with label</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHECK_BOX</entry>
+
+              <entry>check icon in check widget</entry>
+
+              <entry><link linkend="widget-flags-draw-mask">flags</link>
+              (MT_DRAW_MASK)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_RADIO_BOX</entry>
+
+              <entry>radio icon in radio widget</entry>
+
+              <entry><link linkend="widget-flags-draw-mask">flags</link>
+              (MT_DRAW_MASK)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHECK_CELL</entry>
+
+              <entry>check icon in cell</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_RADIO_CELL</entry>
+
+              <entry>radio icon in cell</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHOICE</entry>
+
+              <entry>background and border of input area</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_CHOICE_BUTTON</entry>
+
+              <entry>background and border of the popup button part</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCALE</entry>
+
+              <entry></entry>
+
+              <entry>orientation</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCALE_HANDLE</entry>
+
+              <entry></entry>
+
+              <entry>orientation</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_STATUSBAR_SECTION</entry>
+
+              <entry>statusbar section</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_STATICBOX</entry>
+
+              <entry></entry>
+
+              <entry>gap_x, gap_width (currently, both are zeros in
+              QT)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SPINBUTTON</entry>
+
+              <entry>background and border of input area in spinbutton</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SPINBUTTON_UP</entry>
+
+              <entry>button with up arrow in spin widget</entry>
+
+              <entry><link
+              linkend="widget-flags-spinbutton-up-down">flags</link>
+              (MT_SPINBUTTON_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SPINBUTTON_DOWN</entry>
+
+              <entry>button with down arrow in spin widget</entry>
+
+              <entry><link
+              linkend="widget-flags-spinbutton-up-down">flags</link>
+              (MT_SPINBUTTON_*)</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_ENTRY</entry>
+
+              <entry>inner background of entry</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_ENTRY_BORDER</entry>
+
+              <entry>border around entry</entry>
+
+              <entry></entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLED_WINDOW</entry>
+
+              <entry>border around scrolled window</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_TOOLTIP</entry>
+
+              <entry>tooltip background and border</entry>
+
+              <entry></entry>
+
+              <entry>GTK2</entry>
+            </row>
+
+            <row>
+              <entry>MT_SPLITTER</entry>
+
+              <entry>splitter</entry>
+
+              <entry>orientation</entry>
+
+              <entry>GTK2, QT</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <sect2 id="description-of-complex-widgets">
+        <title>Description of complex widgets</title>
+
+        <sect3>
+          <title>MT_SCROLLBAR</title>
+
+          <figure>
+            <title>Scrollbar overview</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" fileref="images/scrollbar.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <para>Scrollbars are divided into three parts:</para>
+
+          <orderedlist>
+            <listitem>
+              <para>Background of the entire scrollbar widget
+              (<literal>MT_SCROLLBAR</literal>)</para>
+            </listitem>
+
+            <listitem>
+              <para>Buttons with arrows at opposite sides
+              (<literal>MT_SCROLLBAR_ARROW_*</literal>)</para>
+            </listitem>
+
+            <listitem>
+              <para>Scrollbar handle
+              (<literal>MT_SCROLLBAR_HANDLE</literal>)</para>
+            </listitem>
+          </orderedlist>
+        </sect3>
+
+        <sect3>
+          <title>MT_NOTEBOOK</title>
+
+          <figure>
+            <title>Notebook overview</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" fileref="images/notebook.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <para>The notebook is divided into two main parts:</para>
+
+          <orderedlist>
+            <listitem>
+              <para><emphasis role="bold">Tab bar area</emphasis></para>
+
+              <para>This area contains tabs which are left aligned. Tabs can
+              overlap a little.</para>
+
+              <para>If there are more tabs than can be visible, then there are
+              slider buttons at right. Some toolkits (like Java/SWING) can
+              have more tab rows instead of this, but active tab is always in
+              the bottom row.</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis role="bold">Border with
+              content</emphasis></para>
+
+              <para>This is a simple border with gap for tabs.</para>
+            </listitem>
+          </orderedlist>
+        </sect3>
+
+        <sect3>
+          <title>MT_CHOICE</title>
+
+          <para>This widget is splitted into two parts. The first at left and
+          the second at right. The right part has fixed width defined by the
+          <link linkend="MT_CHOICE_BUTTON_WIDTH">MT_CHOICE_BUTTON_WIDTH</link>
+          metric.</para>
+        </sect3>
+
+        <sect3>
+          <title>MT_SPINBUTTON</title>
+
+          <para>This widget is also splitted into two parts like MT_CHOICE.
+          The difference is that right part is again splitted into the next
+          two parts, one for the up arrow and the second for the down arrow.
+          They both have half height of the entire widget.</para>
+        </sect3>
+      </sect2>
+    </sect1>
+
+    <sect1 id="supported-widget-types-in-draw-string">
+      <title>Supported widget types in metatheme_draw_string</title>
+
+      <para>This table shows supported widget types in the
+      <function>metatheme_draw_string</function> function. It also shows which
+      widget states are supported within particular widget type.<table>
+          <title>Supported widget types in draw_string</title>
+
+          <tgroup cols="3">
+            <thead>
+              <row>
+                <entry>Widget type</entry>
+
+                <entry>Widget states</entry>
+
+                <entry>Compliance</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry><emphasis>other</emphasis></entry>
+
+                <entry>MT_DISABLED</entry>
+
+                <entry>GTK2, QT</entry>
+              </row>
+
+              <row>
+                <entry>MT_BUTTON</entry>
+
+                <entry>MT_DISABLED, MT_ACTIVE, MT_HOVER</entry>
+
+                <entry>GTK2, QT, SWING</entry>
+              </row>
+
+              <row>
+                <entry>MT_BUTTON_DEFAULT</entry>
+
+                <entry>MT_DISABLED, MT_ACTIVE, MT_HOVER</entry>
+
+                <entry>GTK2</entry>
+              </row>
+
+              <row>
+                <entry>MT_BUTTON_TOGGLE</entry>
+
+                <entry>MT_DISABLED, MT_ACTIVE, MT_HOVER</entry>
+
+                <entry>GTK2, QT, SWING</entry>
+              </row>
+
+              <row>
+                <entry>MT_MENUBAR_ITEM</entry>
+
+                <entry>MT_DISABLED, MT_SELECTED, MT_HOVER</entry>
+
+                <entry>GTK2, QT, SWING</entry>
+              </row>
+
+              <row>
+                <entry>MT_MENU_ITEM (it's also applied to MT_MENU_ITEM_CHECK
+                and RADIO)</entry>
+
+                <entry>MT_DISABLED, MT_SELECTED</entry>
+
+                <entry>GTK2, QT, SWING</entry>
+              </row>
+
+              <row>
+                <entry>MT_PROGRESSBAR (for the text outside of slider) and
+                MT_PROGRESSBAR_SLIDER (for the text inside of slider)</entry>
+
+                <entry>MT_DISABLED</entry>
+
+                <entry>GTK2, QT, SWING</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table></para>
+    </sect1>
+
+    <sect1 id="widget-states">
+      <title>Widget states</title>
+
+      <para>Widget states are stored as a bit-mask.</para>
+
+      <table>
+        <title>Widget states</title>
+
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>MT_NORMAL</entry>
+
+              <entry>normal state (this is special since the value is
+              zero)</entry>
+            </row>
+
+            <row>
+              <entry>MT_HOVER</entry>
+
+              <entry>mouse is on top of widget</entry>
+            </row>
+
+            <row>
+              <entry>MT_ACTIVE</entry>
+
+              <entry>widget is toggled, downed, etc.</entry>
+            </row>
+
+            <row>
+              <entry>MT_DISABLED</entry>
+
+              <entry>widget is disabled</entry>
+            </row>
+
+            <row>
+              <entry>MT_SELECTED</entry>
+
+              <entry>widget is selected</entry>
+            </row>
+
+            <row>
+              <entry>MT_MOUSE_ACTIVE</entry>
+
+              <entry>widget is temporary toggled, downed, etc. by
+              mouse.</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </sect1>
+
+    <sect1>
+      <title>Widget flags</title>
+
+      <table>
+        <title>Widget flags</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Used by</entry>
+
+              <entry>Constant</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row id="widget-flags-scrollbar">
+              <entry>MT_SCROLLBAR and MT_SCROLLBAR_HANDLE</entry>
+
+              <entry>MT_SCROLLBAR_UNSCROLLABLE</entry>
+
+              <entry>Set when the scrollbar is unscrollable. This means that
+              scrollbar handle cannot change it's position (it's minimal value
+              is the same as the maximal one).</entry>
+            </row>
+
+            <row>
+              <entry morerows="1">MT_SCROLLBAR</entry>
+
+              <entry>MT_SCROLLBAR_SUBPAGE_ACTIVE</entry>
+
+              <entry>Set when upper track highlight is visible.</entry>
+            </row>
+
+            <row>
+              <entry>MT_SCROLLBAR_ADDPAGE_ACTIVE</entry>
+
+              <entry>Set when bottom track highlight is visible.</entry>
+            </row>
+
+            <row id="widget-flags-notebook-tab">
+              <entry morerows="2">MT_NOTEBOOK_TAB</entry>
+
+              <entry>MT_NOTEBOOK_FIRST_VISIBLE_TAB</entry>
+
+              <entry>Set when the tab is on the left ending of tab bar.
+              Usually this is the first visible tab, in QT first tab. This is
+              used to draw the top-left part of border of MT_NOTEBOOK.</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_FIRST_TAB</entry>
+
+              <entry>Set when the tab is first.</entry>
+            </row>
+
+            <row>
+              <entry>MT_NOTEBOOK_LAST_TAB</entry>
+
+              <entry>Set when the tab is last.</entry>
+            </row>
+
+            <row id="widget-flags-spinbutton-up-down">
+              <entry>MT_SPINBUTTON_UP and MT_SPINBUTTON_DOWN</entry>
+
+              <entry>MT_SPINBUTTON_HOVER</entry>
+
+              <entry>Set when the mouse is anywhere on top of the whole
+              MT_SPINBUTTON widget.</entry>
+            </row>
+
+            <row id="widget-flags-toolbar-item-dropdown">
+              <entry>MT_TOOLBAR_ITEM_DROPDOWN</entry>
+
+              <entry>MT_TOOLBAR_ITEM_DROPDOWN_ACTIVE</entry>
+
+              <entry>Set when the dropdown part of toolbar item is
+              active.</entry>
+            </row>
+
+            <row id="widget-flags-menu-tearoff">
+              <entry>MT_MENU_TEAROFF</entry>
+
+              <entry>MT_MENU_DETACHED</entry>
+
+              <entry>Set when the menu is detached.</entry>
+            </row>
+
+            <row id="widget-flags-draw-mask">
+              <entry>MT_CHECK_BOX and MT_RADIO_BOX</entry>
+
+              <entry>MT_DRAW_MASK</entry>
+
+              <entry>Set when we want draw the mask instead of the widget.
+              Beware that the state of widget is undefined when drawing the
+              mask. The visible part of widget should be colored by black and
+              invisible by white color. This flag is currently used only in
+              QT.</entry>
+            </row>
+
+            <row id="widget-flags-progressbar">
+              <entry>MT_PROGRESSBAR</entry>
+
+              <entry>MT_PROGRESSBAR_REVERSED</entry>
+
+              <entry>Set when the progressbar is reversed (right-to-left or
+              top-to-bottom).</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Public API</title>
+
+    <para>This section describes the public API of MetaTheme. This API is used
+    by creators of theme engines.</para>
+
+    <para id="mt-functions-explanation">All functions in this chapter aren't
+    really functions. They are macros which calls appropriate functions from
+    MT_TOOLKIT structure which must be accessible via the
+    <literal>MT_TOOLKIT_HANDLE</literal> macro which defaults to
+    <literal>engine-&gt;toolkit</literal>.</para>
+
+    <sect1>
+      <title>Configuration files</title>
+
+      <para><programlisting>typedef struct MT_CONFIG;
+
+MT_CONFIG  *<link linkend="mt_get_config">mt_get_config</link>();
+MT_CONFIG  *<link linkend="mt_load_config">mt_load_config</link>(const char *fname);
+void        <link linkend="mt_free_config">mt_free_config</link>(MT_CONFIG *cfg);
+const char *<link linkend="mt_get_config_option">mt_get_config_option</link>(MT_CONFIG *cfg, const char *name, const char *section);
+void        <link linkend="mt_color_set_from_config">mt_color_set_from_config</link>(MT_CONFIG *cfg, MT_COLOR *col, char *name, char *section);</programlisting></para>
+
+      <refentry id="mt_get_config">
+        <refnamediv>
+          <refname>mt_get_config</refname>
+
+          <refpurpose>gets the handle of main configuration file</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_CONFIG *mt_get_config();</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the handle of main configuration file. You should use
+          the pointer only within the same function.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_load_config">
+        <refnamediv>
+          <refname>mt_load_config</refname>
+
+          <refpurpose>loads configuration file</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_CONFIG *mt_load_config(const char *fname);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Loads given configuration file. Returns NULL in case of
+          failure.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_free_config">
+        <refnamediv>
+          <refname>mt_free_config</refname>
+
+          <refpurpose>frees configuration file</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_free_config(MT_CONFIG *cfg);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Frees a configuration file.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_get_config_option">
+        <refnamediv>
+          <refname>mt_get_config_option</refname>
+
+          <refpurpose>gets configuration option</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>const char *mt_get_config_option(MT_CONFIG *cfg, const char *name, const char *section);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the value of configuration option or NULL when the
+          option doesn't exist.</para>
+
+          <para>If section is NULL then the default section is used.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_color_set_from_config">
+        <refnamediv>
+          <refname>mt_color_set_from_config</refname>
+
+          <refpurpose>gets color from configuration</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_color_set_from_config(MT_CONFIG *cfg, MT_COLOR *col, char *name, char *section);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the color value (in parameter col) of configuration
+          option.</para>
+
+          <para>If section is NULL then the default section is used.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Colors</title>
+
+      <para><programlisting>typedef struct {
+   int r;
+   int g;
+   int b;
+   int a;
+} MT_COLOR;
+
+#define mt_color_set(c, red, green, blue)
+#define mt_color_set(c, red, green, blue, alpha)
+
+void mt_color_get_hsv(MT_COLOR *col, int *h, int *s, int *v);
+void mt_color_set_hsv(MT_COLOR *result, int h, int s, int v);
+void mt_color_light(MT_COLOR *result, MT_COLOR *col, int factor);
+void mt_color_dark(MT_COLOR *result, MT_COLOR *col, int factor);</programlisting></para>
+    </sect1>
+
+    <sect1>
+      <title>Graphics contexts</title>
+
+      <para>Graphics contexts are used to describe current color and clip
+      area.<programlisting>typedef void MT_GC;
+
+MT_GC        *<link linkend="mt_gc_new_with_foreground">mt_gc_new_with_foreground</link>(MT_COLOR *col);
+void          <link linkend="mt_gc_destroy">mt_gc_destroy</link>(MT_GC *gc);
+void          mt_gc_set_clip_rectangle(MT_RECTANGLE *rect, ...);
+MT_RECTANGLE *mt_gc_get_clip_rectangle(MT_GC *gc);
+void          <link linkend="mt_gc_set_foreground">mt_gc_set_foreground</link>(MT_GC *gc, MT_COLOR *col);</programlisting></para>
+
+      <refentry id="mt_gc_new_with_foreground">
+        <refnamediv>
+          <refname>mt_gc_new_with_foreground</refname>
+
+          <refpurpose>creates a new graphics context</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_GC *mt_gc_new_with_foreground(MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new graphics context with given foreground
+          color.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_gc_destroy">
+        <refnamediv>
+          <refname>mt_gc_destroy</refname>
+
+          <refpurpose>destroys graphics context</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_gc_destroy(MT_GC *gc);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Destroys given graphics context.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_gc_set_foreground">
+        <refnamediv>
+          <refname>mt_gc_set_foreground</refname>
+
+          <refpurpose>sets foreground color</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_gc_set_foreground(MT_GC *gc, MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Sets new foreground color to given graphics context.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Pixmaps</title>
+
+      <para>Pixmaps are images stored at X server. They are used mainly for
+      fast drawing.<programlisting>typedef void MT_PIXMAP;
+
+MT_PIXMAP *<link linkend="mt_pixmap_new_from_xpm">mt_pixmap_new_from_xpm</link>(char **xpm_data);
+MT_PIXMAP *<link linkend="mt_pixmap_new_from_image">mt_pixmap_new_from_image</link>(MT_IMAGE *img);
+void       <link linkend="mt_pixmap_destroy">mt_pixmap_destroy</link>(MT_PIXMAP *pixmap);</programlisting></para>
+
+      <refentry id="mt_pixmap_new_from_xpm">
+        <refnamediv>
+          <refname>mt_pixmap_new_from_xpm</refname>
+
+          <refpurpose>creates a new pixmap from XPM</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_PIXMAP *mt_pixmap_new_from_xpm(char **xpm_data);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new pixmap with image loaded from XPM.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_pixmap_new_from_image">
+        <refnamediv>
+          <refname>mt_pixmap_new_from_image</refname>
+
+          <refpurpose>converts image to pixmap</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_PIXMAP *mt_pixmap_new_from_image(MT_IMAGE *img);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new pixmap with data from given image.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_pixmap_destroy">
+        <refnamediv>
+          <refname>mt_pixmap_destroy</refname>
+
+          <refpurpose>destroys pixmap</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_pixmap_destroy(MT_PIXMAP *pixmap);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Destroys given pixmap.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Images</title>
+
+      <para>Images are stored at application. They are stored as 32bpp images
+      with alpha channel. Their usage is mainly for graphics expensive
+      operations on client side.<programlisting>typedef void MT_IMAGE;
+
+MT_IMAGE *<link linkend="mt_image_new">mt_image_new</link>(int width, int height);
+MT_IMAGE *<link linkend="mt_image_new_from_xpm">mt_image_new_from_xpm</link>(char **xpm_data);
+MT_IMAGE *<link linkend="mt_image_copy">mt_image_copy</link>(MT_IMAGE *img);
+void      <link linkend="mt_image_destroy">mt_image_destroy</link>(MT_IMAGE *image);
+void      <link linkend="mt_image_replace_color">mt_image_replace_color</link>(MT_IMAGE *img, int r, int g, int b, MT_COLOR *col);
+void      <link linkend="mt_image_set_pixel">mt_image_set_pixel</link>(MT_IMAGE *img, int x, int y, MT_COLOR *col);
+void      <link linkend="mt_image_get_pixel">mt_image_get_pixel</link>(MT_IMAGE *img, int x, int y, MT_COLOR *col);
+void      <link linkend="mt_image_fill">mt_image_fill</link>(MT_IMAGE *img, MT_COLOR *col);
+void      <link linkend="mt_image_get_size">mt_image_get_size</link>(MT_IMAGE *img, int *width, int *height);</programlisting></para>
+
+      <refentry id="mt_image_new">
+        <refnamediv>
+          <refname>mt_image_new</refname>
+
+          <refpurpose>creates a new image</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_IMAGE *mt_image_new(int width, int height);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new image with given size.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_new_from_xpm">
+        <refnamediv>
+          <refname>mt_image_new_from_xpm</refname>
+
+          <refpurpose>creates image from XPM</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_IMAGE *mt_image_new_from_xpm(char **xpm_data);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new image with data loaded from XPM.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_copy">
+        <refnamediv>
+          <refname>mt_image_copy</refname>
+
+          <refpurpose>copies image</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_IMAGE *mt_image_copy(MT_IMAGE *img);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the copy of image.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_destroy">
+        <refnamediv>
+          <refname>mt_image_destroy</refname>
+
+          <refpurpose>destroys image</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_destroy(MT_IMAGE *image);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Destroys given image.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_replace_color">
+        <refnamediv>
+          <refname>mt_image_replace_color</refname>
+
+          <refpurpose>replaces color</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_replace_color(MT_IMAGE *img, int r, int g, int b, MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Replaces color given with <literal>r</literal>,
+          <literal>g</literal>, and <literal>b</literal> parameters to
+          <literal>col</literal>.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_set_pixel">
+        <refnamediv>
+          <refname>mt_image_set_pixel</refname>
+
+          <refpurpose>sets pixel color</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_set_pixel(MT_IMAGE *img, int x, int y, MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Sets color and alpha for given pixel.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_get_pixel">
+        <refnamediv>
+          <refname>mt_image_get_pixel</refname>
+
+          <refpurpose>gets pixel color</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_set_pixel(MT_IMAGE *img, int x, int y, MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Gets color and alpha from given pixel.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_fill">
+        <refnamediv>
+          <refname>mt_image_fill</refname>
+
+          <refpurpose>fills image</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_fill(MT_IMAGE *img, MT_COLOR *col);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Fills the whole image with given color.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_image_get_size">
+        <refnamediv>
+          <refname>mt_image_get_size</refname>
+
+          <refpurpose>returns size of image</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_image_get_size(MT_IMAGE *img, int *width, int *height);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the size of given image.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Font, metrics and palette settings</title>
+
+      <para><programlisting>#define mt_set_metric(engine, metric, value)
+#define mt_set_metric_size(engine, metric, x, y)</programlisting></para>
+    </sect1>
+
+    <sect1>
+      <title>Drawing functions</title>
+
+      <para><programlisting>void     mt_draw_point(MT_WINDOW *win, MT_GC *gc, int x, int y);
+void     mt_draw_line(MT_WINDOW *win, MT_GC *gc, int x1, int y1, int x2, int y2);
+void     mt_draw_rectangle(MT_WINDOW *win, MT_GC *gc, int filled, int x1, int y1, int x2, int y2);
+void     mt_draw_polygon(MT_WINDOW *win, MT_GC *gc, int filled, MT_POINT *points, int npoints);
+void     mt_draw_string(MT_WINDOW *win, MT_STRING *str, int x_offset, int y_offset, MT_COLOR *color);
+void     mt_draw_pixmap(MT_WINDOW *win, MT_GC *gc, MT_PIXMAP *pixmap, int xsrc, int ysrc, int xdest, int ydest, int width, int height
+void     mt_draw_pixmap_tiled(MT_WINDOW *win, MT_GC *gc, MT_PIXMAP *pixmap, int srcwidth, int srcheight, int xdest, int ydest, int width, int height);
+void     mt_draw_image(MT_WINDOW *win, MT_GC *gc, MT_IMAGE *img, int xsrc, int ysrc, int wsrc, int hsrc, int xdest, int ydest, int width, int height);
+void     mt_draw_gradient(MT_WINDOW *win, MT_GC *gc, int x, int y, int width, int height, MT_COLOR *color1, MT_COLOR *color2, int orientation);
+
+cairo_t *mt_cairo_begin(MT_WINDOW *win, MT_RECTANGLE *area, int x, int y, int width, int height);
+void     mt_cairo_end(cairo_t *cr);</programlisting></para>
+    </sect1>
+
+    <sect1>
+      <title>Widget hierarchy</title>
+
+      <para>These functions are for limited interacting with widgets.</para>
+
+      <programlisting>#define mt_is_widget(widget) ((widget) &amp;&amp; *(widget))
+
+typedef void *MT_WIDGET;
+typedef void (*mt_destroy_func)(void *data);
+
+MT_WIDGET *<link linkend="mt_widget_ref">mt_widget_ref</link>(MT_WIDGET *widget);
+void       <link linkend="mt_widget_unref">mt_widget_unref</link>(MT_WIDGET *widget);
+MT_WIDGET *<link linkend="mt_widget_get_parent">mt_widget_get_parent</link>(MT_WIDGET *widget, MT_WIDGET *result);
+void       <link linkend="mt_widget_set_data">mt_widget_set_data</link>(MT_WIDGET *widget, void *data, mt_destroy_func data_dispose);
+void      *<link linkend="mt_widget_get_data">mt_widget_get_data</link>(MT_WIDGET *widget);</programlisting>
+
+      <refentry id="mt_widget_ref">
+        <refnamediv>
+          <refname>mt_widget_ref</refname>
+
+          <refpurpose>references a widget</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_WIDGET *mt_widget_ref(MT_WIDGET *widget);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns a new reference of the widget. You should use this
+          function when passing the pointer to widget outside the current
+          function called from MetaTheme
+          (<literal>metatheme_draw_widget</literal> for example).</para>
+
+          <para>It returns a new allocated "structure" which you must destroy
+          by calling <link linkend="mt_widget_unref">mt_widget_unref</link>.
+          Be careful, you can call this function only once for each
+          widget.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_widget_unref">
+        <refnamediv>
+          <refname>mt_widget_unref</refname>
+
+          <refpurpose>unreferences a widget</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_widget_unref(MT_WIDGET *widget);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Unreferences a widget returned by the previous call to <link
+          linkend="mt_widget_ref">mt_widget_ref</link>.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_widget_get_parent">
+        <refnamediv>
+          <refname>mt_widget_get_parent</refname>
+
+          <refpurpose>returns parent of a widget</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>MT_WIDGET *mt_widget_get_parent(MT_WIDGET *widget, MT_WIDGET *result);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns the parent widget or NULL when the widget don't have a
+          parent. If you don't pass the result, the result will be newly
+          allocated, you should then release the memory using the
+          <literal>free</literal> function.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_widget_set_data">
+        <refnamediv>
+          <refname>mt_widget_set_data</refname>
+
+          <refpurpose>sets user data to widget</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void mt_widget_set_data(MT_WIDGET *widget, void *data, mt_destroy_func data_dispose);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Sets user data to widget. You can set only one user data for
+          each widget. You can optionally pass the function which will
+          properly release user data from memory. It's called when the widget
+          is destroyed. It's possible it will never be called when the
+          application exits.</para>
+
+          <para>To remove user data, simply pass NULL as data.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="mt_widget_get_data">
+        <refnamediv>
+          <refname>mt_widget_get_data</refname>
+
+          <refpurpose>gets user data from widget</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void *mt_widget_get_data(MT_WIDGET *widget);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Returns user data from widget or NULL when there are no
+          data.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Internal API</title>
+
+    <para>This section describes the internal API of MetaTheme which is used
+    by:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Toolkit backends</para>
+      </listitem>
+
+      <listitem>
+        <para>The configuration tool</para>
+      </listitem>
+    </itemizedlist>
+
+    <sect1>
+      <title>Library initialization and common functions</title>
+
+      <programlisting>typedef struct MT_LIBRARY;
+
+void        <link linkend="metatheme_toolkit_set_funcs">metatheme_toolkit_init</link>(MT_TOOLKIT *toolkit);
+
+MT_LIBRARY *metatheme_library_init(MT_TOOLKIT *toolkit);
+void        metatheme_library_exit(MT_LIBRARY *lib);
+MT_CONFIG  *metatheme_get_config(MT_LIBRARY *lib);
+
+void        <link linkend="metatheme_refresh">metatheme_refresh</link>();</programlisting>
+
+      <refentry id="metatheme_toolkit_set_funcs">
+        <refnamediv>
+          <refname>metatheme_toolkit_init</refname>
+
+          <refpurpose>initializes toolkit structure</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void metatheme_toolkit_init(MT_TOOLKIT *toolkit);</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>This function is used in toolkit backends and does two things:
+          (a) sets pointers of core functions to the MT_TOOLKIT structure, (b)
+          stores the pointer of MT_TOOLKIT structure to static variable, so
+          core functions can call drawing functions.</para>
+        </refsect1>
+      </refentry>
+
+      <refentry id="metatheme_refresh">
+        <refnamediv>
+          <refname>metatheme_refresh</refname>
+
+          <refpurpose>reloads MetaTheme settings in all running
+          applications</refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>void metatheme_refresh();</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Description</title>
+
+          <para>Reloads MetaTheme settings in all running applications. This
+          function is used in the configuration tool.</para>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Theme engines</title>
+
+      <programlisting>typedef struct <link linkend="mt-engine">MT_ENGINE</link>;
+
+MT_ENGINE *metatheme_load_engine(MT_LIBRARY *lib, const char *name);
+void       metatheme_unload_engine(MT_ENGINE *engine);
+void       metatheme_load_default_settings(MT_ENGINE *engine);</programlisting>
+
+      <refentry id="mt-engine">
+        <refnamediv>
+          <refname>MT_ENGINE</refname>
+
+          <refpurpose></refpurpose>
+        </refnamediv>
+
+        <refsynopsisdiv>
+          <programlisting>typedef struct {
+   MT_TOOLKIT *toolkit;
+   MT_LIBRARY *library;
+   int refcount;
+
+   char *name;
+   void *data;
+   MT_CONFIG *config;
+
+   MT_COLOR_PALETTE palette;
+   int metric[MT_METRIC_MAX];
+   MT_POINT metric_size[MT_METRIC_SIZE_MAX];
+   char *font;
+   int font_size;
+
+   void *dlhandle;
+   int realized;
+
+   void (*init)(MT_ENGINE *engine, MT_TOOLKIT *mt);
+   void (*exit)(MT_ENGINE *engine);
+   void (*realize)(MT_ENGINE *engine);
+   void (*draw_widget)(MT_ENGINE *engine, MT_WINDOW *win, MT_RECTANGLE *area, int type, int state, int x, int y, int width, int height, MT_WIDG
+   void (*draw_string)(MT_ENGINE *engine, MT_WINDOW *win, int type, int state, MT_STRING *str);
+} MT_ENGINE;</programlisting>
+        </refsynopsisdiv>
+
+        <refsect1>
+          <title>Structure Members</title>
+
+          <variablelist>
+            <varlistentry>
+              <term>toolkit</term>
+
+              <listitem>
+                <para>points to MT_TOOLKIT structure which is used to calling
+                the <literal>mt_*</literal> functions</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>library</term>
+
+              <listitem>
+                <para>points to MetaTheme library instance which this engine
+                uses</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>refcount</term>
+
+              <listitem>
+                <para>reference counter</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>name</term>
+
+              <listitem>
+                <para>the name of theme engine</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>data</term>
+
+              <listitem>
+                <para>points to internal data of theme engine</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>config</term>
+
+              <listitem>
+                <para>themerc configuration file</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>palette</term>
+
+              <listitem>
+                <para>palette</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>metric</term>
+
+              <listitem>
+                <para>metrics</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>metric_size</term>
+
+              <listitem>
+                <para>size metrics</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>font</term>
+
+              <listitem>
+                <para>font family</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>font_size</term>
+
+              <listitem>
+                <para>font size</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>dlhandle</term>
+
+              <listitem>
+                <para>handle obtained from <literal>dlopen()</literal></para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>realized</term>
+
+              <listitem>
+                <para>this is optional and used only in some toolkit backends
+                in their own way</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>init</term>
+
+              <term>exit</term>
+
+              <term>realize</term>
+
+              <term>draw_widget</term>
+
+              <term>draw_string</term>
+
+              <listitem>
+                <para>theme engine's functions (see their <link
+                linkend="engines-exported-functions">description</link>)</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </refsect1>
+      </refentry>
+    </sect1>
+
+    <sect1>
+      <title>Configuration files</title>
+
+      <para>These are the same functions as in the public API. The only two
+      differencies are that they have <literal>metatheme_</literal> prefix
+      instead of <literal>mt_</literal> and that they are true functions (not
+      macros).</para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Theme engines</title>
+
+    <para>This chapters describes elements of a theme engine.</para>
+
+    <para>A theme engine is a simple shared library. It is located in the
+    <filename>$PREFIX/lib/metatheme/themes/&lt;theme_name&gt;/</filename>
+    directory. Themes are loaded by examining the <filename>themerc</filename>
+    file in this directory. This file is a simple configuration file with this
+    format:<programlisting>name        = Redmond 2000
+engine      = redmond/libmt_redmond.so
+description = Redmond 2000 style
+author      = Martin Dvorak &lt;jezek2@advel.cz&gt;</programlisting></para>
+
+    <para>The meaning of the variables is:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>name</term>
+
+        <listitem>
+          <para>The full name of theme. This name is showed in the
+          configuration tool.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>engine</term>
+
+        <listitem>
+          <para>Theme engine to be used. It is relative to the
+          <filename>$PREFIX/lib/metatheme/themes/</filename> directory. There
+          can be more than one theme using the same theme engine.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>description</term>
+
+        <listitem>
+          <para>The short description of the theme.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>author</term>
+
+        <listitem>
+          <para>The author of theme.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>config</term>
+
+        <listitem>
+          <para>The configuration application (optional). It's relative to
+          <filename>$PREFIX/lib/metatheme/themes/</filename> directory.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <sect1 id="engines-exported-functions">
+      <title>Exported functions</title>
+
+      <para>A theme engine must export these functions:<programlisting>void metatheme_init(MT_ENGINE *engine);
+void metatheme_exit(MT_ENGINE *engine);
+void metatheme_realize(MT_ENGINE *engine);
+void metatheme_draw_widget(MT_ENGINE *engine, MT_WINDOW *win, MT_RECTANGLE *area, int type, int state, int x, int y, int width, int height, MT_WIDGET_DATA *data);
+void metatheme_draw_string(MT_ENGINE *engine, MT_WINDOW *win, int type, int state, MT_STRING *str);</programlisting></para>
+
+      <sect2>
+        <title>metatheme_init</title>
+
+        <para>This function should initialize a theme. It might allocate a
+        structure with it's private data and store the pointer to the
+        <literal>data</literal> member of the MT_ENGINE structure.</para>
+
+        <para>This function should also set all metrics and gather colors from
+        current palette. This function must not create any graphics contexts
+        or pixmaps.</para>
+      </sect2>
+
+      <sect2>
+        <title>metatheme_exit</title>
+
+        <para>This function must free all resources obtained by the theme
+        engine.</para>
+      </sect2>
+
+      <sect2>
+        <title>metatheme_realize</title>
+
+        <para>You should create any common graphics contexts and pixmaps in
+        this function.</para>
+      </sect2>
+
+      <sect2>
+        <title>metatheme_draw_widget</title>
+
+        <para>This function is the core bussiness of a theme engine.</para>
+
+        <variablelist>
+          <varlistentry>
+            <term>win</term>
+
+            <listitem>
+              <para>This is a window we draw on.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>area</term>
+
+            <listitem>
+              <para>This is a (clip) rectangle which should be drawed. It
+              might be NULL.</para>
+
+              <para>This rectangle is automatically used for clipping area, so
+              you needn't to bother with it. It is provided for possibility of
+              optimalization of drawing.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>type</term>
+
+            <listitem>
+              <para>Type of the widget or it's part (see <link
+              linkend="widget-types">Widget types</link>).</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>state</term>
+
+            <listitem>
+              <para>Current state of the widget or it's part (see <link
+              linkend="widget-states">Widget states</link>).</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>x, y, width, height</term>
+
+            <listitem>
+              <para>This is a rectangle we draw within.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>data</term>
+
+            <listitem>
+              <para>Additional informations about widget or it's part. For
+              reference see the <filename>metatheme.h</filename> file and the
+              chapter about <link
+              linkend="chapter-constants">Constants</link>.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </sect2>
+
+      <sect2>
+        <title>metatheme_draw_string</title>
+
+        <para>This function is used for customizing the appearance of texts in
+        various widgets. However, it's use is very limited. The text is given
+        as an opaque structure by which you can do ONLY the following
+        things:</para>
+
+        <orderedlist>
+          <listitem>
+            <para>do not display it at all</para>
+          </listitem>
+
+          <listitem>
+            <para>display it as normal</para>
+          </listitem>
+
+          <listitem>
+            <para>change the color of text and/or position</para>
+          </listitem>
+
+          <listitem>
+            <para>repeat previous steps</para>
+          </listitem>
+        </orderedlist>
+
+        <para>The list of allowed widget types and states is listed <link
+        linkend="supported-widget-types-in-draw-string">here</link>.</para>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter id="toolkit-backends">
+    <title>Toolkit backends</title>
+
+    <para>If you (ever) want to cooperate on adding support for a new toolkit
+    or improving the current, then the best you can do is contacting me
+    directly.</para>
+
+    <para>There are some general rules at least:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>All metrics must be implemented in all toolkits.</para>
+      </listitem>
+
+      <listitem>
+        <para>All widgets or its' parts must be drawed the same in all
+        toolkits.</para>
+      </listitem>
+
+      <listitem>
+        <para>If some functionality is not <emphasis
+        role="bold">REALLY</emphasis> possible, then other toolkits should be
+        made consistent with this one. Although in reality there is always
+        some way to do things as needed. It's only matter of
+        difficulity.</para>
+      </listitem>
+
+      <listitem>
+        <para>Toolkit backends should be made to work without need of patching
+        code of toolkit and recompilation. However, if there is no other way,
+        it could be used.</para>
+      </listitem>
+    </itemizedlist>
+  </chapter>
+
+  <chapter>
+    <title>Future plans</title>
+
+    <para>This chapter contains some thoughs about future plans of MetaTheme.
+    These things might change as the time will go on.</para>
+
+    <sect1>
+      <title>Animations</title>
+
+      <para>MetaTheme should support animated themes, though the precise
+      specification is not done yet.</para>
+    </sect1>
+
+    <sect1>
+      <title>Translucent (popup) handlers</title>
+
+      <para>MetaTheme should have support for creating own translucent
+      handlers in theme engines. It should be also possible to combine this
+      with the animations. These handlers can be used for translucent menus
+      with shadows or tooltips with shadows.</para>
+    </sect1>
+
+    <sect1>
+      <title>Smooth scrolling</title>
+
+      <para>This would be good add on (but not necessary): add ability for
+      smooth scrolling in list views.</para>
+    </sect1>
+  </chapter>
+</book>

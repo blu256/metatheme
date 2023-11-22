@@ -1,0 +1,1752 @@
+-----------------------------------------------------------------
+Revision: 594d397d4ddce8177963953837c07608b063e2a7
+Ancestor: 11f1e8b37167d87ae013763ab99f5e1d60997133
+Author: jezek2@advel.cz
+Date: 2005-10-01T19:57:35
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/msstyle/msstyle.c toolkits/gtk2/mt_gtk2.c
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Styled menubar item, toolbar handle and dropdown item in MSSTYLE
+
+-----------------------------------------------------------------
+Revision: 11f1e8b37167d87ae013763ab99f5e1d60997133
+Ancestor: 7e1fb1a35a420aec12ec781ccc91d50671574810
+Author: jezek2@advel.cz
+Date: 2005-10-01T17:42:26
+Branch: cz.advel.metatheme
+
+Modified files:
+        README
+
+ChangeLog: 
+
+Updated README
+
+-----------------------------------------------------------------
+Revision: 7e1fb1a35a420aec12ec781ccc91d50671574810
+Ancestor: b52afc4dd6350b08d1c35c9a964193931b78cbd1
+Author: jezek2@advel.cz
+Date: 2005-09-28T01:49:14
+Branch: cz.advel.metatheme
+
+Modified files:
+        config/main.c metatheme-install.in
+
+ChangeLog: 
+
+Added warning notice to metatheme-install script
+
+-----------------------------------------------------------------
+Revision: b52afc4dd6350b08d1c35c9a964193931b78cbd1
+Ancestor: 164018a669b80d6637f715bfc22c42e8861caa85
+Author: jezek2@advel.cz
+Date: 2005-09-28T01:11:50
+Branch: cz.advel.metatheme
+
+Modified files:
+        configure.in
+
+ChangeLog: 
+
+Added disabling the MSSTYLE Loader when GTK2 is not present
+
+-----------------------------------------------------------------
+Revision: 164018a669b80d6637f715bfc22c42e8861caa85
+Ancestor: a5dab2883520aa28bdd92cb11e30932a21b94f8c
+Author: jezek2@advel.cz
+Date: 2005-09-03T22:28:14
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/msstyle/msstyle.c
+
+ChangeLog: 
+
+Fixed drawing of MT_MENU_ITEM and MT_MENU_ITEM_SEPARATOR
+
+-----------------------------------------------------------------
+Revision: a5dab2883520aa28bdd92cb11e30932a21b94f8c
+Ancestor: 2edac81497036d97e129804f0e86571d41a826aa
+Author: jezek2@advel.cz
+Date: 2005-09-03T22:10:45
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml
+
+ChangeLog: 
+
+Fixed documentation
+
+-----------------------------------------------------------------
+Revision: 2edac81497036d97e129804f0e86571d41a826aa
+Ancestor: 3837f09a4ecb1ac830f24d0a0dcbb9a1cd9f03ff
+Author: jezek2@advel.cz
+Date: 2005-09-03T21:56:29
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        themes/msstyle/msstyle.c toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/java/metatheme/MetaThemeProgressBarUI.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added passing of orientation for progress bar
+
+-----------------------------------------------------------------
+Revision: 3837f09a4ecb1ac830f24d0a0dcbb9a1cd9f03ff
+Ancestor: dadeafed52db41585c2da2fbba911552f6a57f60
+Author: jezek2@advel.cz
+Date: 2005-09-03T21:04:36
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/msstyle/structures.h
+
+ChangeLog: 
+
+Fixed MSSTYLE on 64-bit systems
+
+-----------------------------------------------------------------
+Revision: dadeafed52db41585c2da2fbba911552f6a57f60
+Ancestor: 5eb87670dab10b0c9a063e5e000374316b5eb9c8
+Author: jezek2@advel.cz
+Date: 2005-09-02T11:01:01
+Branch: cz.advel.metatheme
+Tag: metatheme-0.0.5
+
+Modified files:
+        NEWS configure.in
+
+ChangeLog: 
+
+Updated NEWS file for 0.0.5 release
+
+-----------------------------------------------------------------
+Revision: 5eb87670dab10b0c9a063e5e000374316b5eb9c8
+Ancestor: 91cdcabc91e90a12d99953fe472ad71c58dac2a9
+Author: jezek2@advel.cz
+Date: 2005-09-01T18:41:04
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/msstyle/msstyle-config.c
+
+ChangeLog: 
+
+Fixed small bug.
+
+-----------------------------------------------------------------
+Revision: 91cdcabc91e90a12d99953fe472ad71c58dac2a9
+Ancestor: f603dafb71de0b5e164dad783704e36e969e3c7a
+Author: jezek2@advel.cz
+Date: 2005-09-01T15:46:08
+Branch: cz.advel.metatheme
+
+Added files:
+        kde/BlackMesa.kcsrc kde/xTheme.kcsrc
+        themes/msstyle/Makefile.am themes/msstyle/msstyle-config.c
+        themes/msstyle/msstyle-ini.c themes/msstyle/msstyle-ini.h
+        themes/msstyle/msstyle-loader.c
+        themes/msstyle/msstyle-loader.h themes/msstyle/msstyle.c
+        themes/msstyle/structures.h themes/msstyle/themerc
+Modified files:
+        CREDITS config/main.c configure.in
+
+ChangeLog: 
+
+Added MSSTYLE loader
+
+-----------------------------------------------------------------
+Revision: f603dafb71de0b5e164dad783704e36e969e3c7a
+Ancestor: 0965d464997ddc7b9f54a6437b6a17fa9214e9b0
+Author: jezek2@advel.cz
+Date: 2005-09-01T11:44:41
+Branch: cz.advel.metatheme
+
+Modified files:
+        config/main.c config/main.h config/themes.c
+        docs/reference.xml
+
+ChangeLog: 
+
+Added warning dialogs to mt-config, also added support for custom configuration dialogs for themes
+
+-----------------------------------------------------------------
+Revision: 0965d464997ddc7b9f54a6437b6a17fa9214e9b0
+Ancestor: ac6d2d88f4983b678d6941a1571dc86a3b45de9f
+Author: jezek2@advel.cz
+Date: 2005-08-26T15:03:50
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/gtk2/mt_gtk2_patches.h
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added highlighting of scrollbar track when user is page scrolling by mouse
+
+-----------------------------------------------------------------
+Revision: ac6d2d88f4983b678d6941a1571dc86a3b45de9f
+Ancestor: f033ddd5b28b6b1a2f532c4db0db44160e0e832f
+Author: jezek2@advel.cz
+Date: 2005-08-26T14:42:11
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.c
+        metatheme/metatheme.h metatheme/metathemecpp.h
+        toolkits/gtk2/mt_gtk2.c toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added alpha channel to MT_IMAGE
+
+-----------------------------------------------------------------
+Revision: f033ddd5b28b6b1a2f532c4db0db44160e0e832f
+Ancestor: 58d35bbd25ce485a866a0bd57bc6c588ebf1207c
+Author: jezek2@advel.cz
+Date: 2005-07-17T17:25:40
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeComboBoxUI.java
+        toolkits/java/metatheme/MetaThemeIconFactory.java
+        toolkits/java/metatheme/MetaThemeMenuItemUI.java
+        toolkits/java/metatheme/MetaThemeMenuUI.java
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/java/metatheme/MetaThemePopupMenuSeparatorUI.java
+        toolkits/java/metatheme/MetaThemeProgressBarUI.java
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/java/metatheme/MetaThemeScrollButton.java
+        toolkits/java/metatheme/MetaThemeSliderUI.java
+        toolkits/java/metatheme/MetaThemeSplitPaneDivider.java
+        toolkits/java/metatheme/MetaThemeTabbedPaneUI.java
+        toolkits/java/metatheme/MetaThemeTableHeaderUI.java
+        toolkits/java/metatheme/MetaThemeTextFieldUI.java
+        toolkits/java/metatheme/MetaThemeToggleButtonUI.java
+        toolkits/java/metatheme/ThemeEngine.java
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Added support for retrieving information about widget hierarchy
+
+-----------------------------------------------------------------
+Revision: 58d35bbd25ce485a866a0bd57bc6c588ebf1207c
+Ancestor: ae07892dc60d976dd5cc62f0d733120ff8e48b3d
+Author: jezek2@advel.cz
+Date: 2005-07-17T15:57:11
+Branch: cz.advel.metatheme
+
+Modified files:
+        configure.in metatheme/metatheme.c toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Upgraded to Cairo 0.5.1
+
+-----------------------------------------------------------------
+Revision: ae07892dc60d976dd5cc62f0d733120ff8e48b3d
+Ancestor: 4112c4ab394a5fc3b995e2255a7f7a3dad170d7c
+Author: jezek2@advel.cz
+Date: 2005-06-21T00:06:27
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Improved look of Plastik XP buttons
+
+-----------------------------------------------------------------
+Revision: 4112c4ab394a5fc3b995e2255a7f7a3dad170d7c
+Ancestor: 6b8a034d5c9b8ab812f992d37f03ebee327bf3a2
+Author: jezek2@advel.cz
+Date: 2005-06-17T15:14:24
+Branch: cz.advel.metatheme
+
+Modified files:
+        Makefile.base acconfig.h config/Makefile.am configure.in
+        docs/reference.xml metatheme/Makefile.am
+        metatheme/metatheme.c metatheme/metatheme.h
+        toolkits/gtk2/Makefile.am toolkits/gtk2/mt_gtk2.c
+        toolkits/java/Makefile.am toolkits/java/MetaThemeNative.c
+        toolkits/qt/Makefile.am toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added basic support for Cairo
+
+-----------------------------------------------------------------
+Revision: 6b8a034d5c9b8ab812f992d37f03ebee327bf3a2
+Ancestor: b4fa9949fd46572e6febd7c90331d3958f016534
+Author: jezek2@advel.cz
+Date: 2005-05-22T14:06:50
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/MetaThemeSplitPaneDivider.java
+        toolkits/java/metatheme/MetaThemeSplitPaneUI.java
+Modified files:
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+
+ChangeLog: 
+
+Styled JSplitPane
+
+-----------------------------------------------------------------
+Revision: b4fa9949fd46572e6febd7c90331d3958f016534
+Ancestor: fc8651c2ddd9e902e4b06c3b2989b45a0f38f4fd
+Author: jezek2@advel.cz
+Date: 2005-05-16T14:18:52
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added support for retrieving position of scrollbar handle
+
+-----------------------------------------------------------------
+Revision: fc8651c2ddd9e902e4b06c3b2989b45a0f38f4fd
+Ancestor: 42a725cf3dbe6e0dbfcd4781972e695aa6a20221
+Author: jezek2@advel.cz
+Date: 2005-05-16T13:50:00
+Branch: cz.advel.metatheme
+
+Modified files:
+        metathemerc-sample themes/plastik/plastik.c
+        themes/redmond/redmond.c
+
+ChangeLog: 
+
+Improved look of Redmond and Plastik themes
+
+-----------------------------------------------------------------
+Revision: 42a725cf3dbe6e0dbfcd4781972e695aa6a20221
+Ancestor: 1f4791b8c4ab553da5b94167dc897afcba70d4e7
+Author: jezek2@advel.cz
+Date: 2005-05-09T20:09:47
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.c
+        metatheme/metatheme.h metatheme/metathemeInt.h
+        metatheme/metathemecpp.h themes/flat/flat.c
+        themes/industrial/industrial.c themes/plastik/plastik.c
+        themes/redmond/redmond.c toolkits/gtk2/mt_gtk2.c
+        toolkits/java/MetaThemeNative.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added support for multiple toolkits in one process
+
+-----------------------------------------------------------------
+Revision: 1f4791b8c4ab553da5b94167dc897afcba70d4e7
+Ancestor: 946fadf0cd9885942ae763d469f5d1792437ac23
+Author: jezek2@advel.cz
+Date: 2005-03-28T12:32:14
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/Loader.java toolkits/java/mt-java.in
+Modified files:
+        .mt-ignore configure.in toolkits/java/Makefile.am
+        toolkits/java/genconsts
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+
+ChangeLog: 
+
+Added ability to force MetaThemeLookAndFeel in Java applications, also
+fixed two small bugs.
+
+-----------------------------------------------------------------
+Revision: 946fadf0cd9885942ae763d469f5d1792437ac23
+Ancestor: cd4f2d889e0f20f7860e8b38e155e4a7fac40bd7
+Author: jezek2@advel.cz
+Date: 2005-03-20T14:29:44
+Branch: cz.advel.metatheme
+
+Modified files:
+        .mt-attrs
+
+ChangeLog: 
+
+Updated the '.mt-attrs' file
+
+-----------------------------------------------------------------
+Revision: cd4f2d889e0f20f7860e8b38e155e4a7fac40bd7
+Ancestor: 14a63867826e1568e55ef6d3a06ce9e45a19b18e
+Author: jezek2@advel.cz
+Date: 2005-02-22T08:30:34
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/highcolor/highcolor.cpp
+
+ChangeLog: 
+
+Fixed drawing of radio and check buttons in Highcolor
+-----------------------------------------------------------------
+Revision: 14a63867826e1568e55ef6d3a06ce9e45a19b18e
+Ancestor: 2ea95fe665634dda592dcfe5cb12c06ac89a0a3f
+Author: jezek2@advel.cz
+Date: 2005-02-21T01:36:39
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed checking a disabled state of buttons in Gecko-based applications
+-----------------------------------------------------------------
+Revision: 2ea95fe665634dda592dcfe5cb12c06ac89a0a3f
+Ancestor: b1114a28075a81412bbcafde688c25d34f4ab7d4
+Author: jezek2@advel.cz
+Date: 2005-02-17T04:23:41
+Branch: cz.advel.metatheme
+
+Added files:
+        themes/highcolor/b3rc
+Modified files:
+        configure.in metatheme/metatheme.c metatheme/metatheme.h
+        metatheme/metathemeInt.h metatheme/metathemecpp.h
+        metatheme/metathemeqt.h themes/highcolor/Makefile.am
+        themes/highcolor/highcolor.cpp themes/highcolor/highcolor.h
+        themes/industrial/industrial.c themes/plastik/plastik.c
+        themes/redmond/redmond.c toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/gtk2/mt_gtk2_patches.h
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeComboBoxUI.java
+        toolkits/java/metatheme/MetaThemeTabbedPaneUI.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Styled most widgets in Highcolor engine and enhanced the C++ binding
+-----------------------------------------------------------------
+Revision: b1114a28075a81412bbcafde688c25d34f4ab7d4
+Ancestor: 53f0b2fb4feadacdd8c96211493adc568d4dbb4f
+Author: jezek2@advel.cz
+Date: 2005-01-18T22:51:51
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Fixed possible crash when drawing text in GTK2
+-----------------------------------------------------------------
+Revision: 53f0b2fb4feadacdd8c96211493adc568d4dbb4f
+Ancestor: b151dd88eea5163d686f0bb5f01b23c7d5134ab8
+Author: jezek2@advel.cz
+Date: 2005-01-18T22:02:50
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h themes/flat/flat.c
+        themes/highcolor/highcolor.cpp
+        themes/industrial/industrial.c themes/plastik/plastik.c
+        themes/redmond/redmond.c toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeProgressBarUI.java
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Fixed appearance of MT_PROGRESSBAR
+-----------------------------------------------------------------
+Revision: b151dd88eea5163d686f0bb5f01b23c7d5134ab8
+Ancestor: 2508a9a62412a562323ac2cc2da7af97efe6b646
+Author: jezek2@advel.cz
+Date: 2005-01-18T08:04:42
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeNative.java
+
+ChangeLog: 
+
+Moved the mt_draw_pixmap_tiled function to Java code
+-----------------------------------------------------------------
+Revision: 2508a9a62412a562323ac2cc2da7af97efe6b646
+Ancestor: 5f2ff7e4b55f8de01266687d7a711fd028da4a61
+Author: jezek2@advel.cz
+Date: 2005-01-13T17:26:49
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/java/metatheme/ThemeEngine.java
+
+ChangeLog: 
+
+Fixed 64-bit compliance in Java
+-----------------------------------------------------------------
+Revision: 5f2ff7e4b55f8de01266687d7a711fd028da4a61
+Ancestor: c03b30eeb33395ff9ecdd6be7d68830795f614c8
+Author: jezek2@advel.cz
+Date: 2005-01-12T17:38:32
+Branch: cz.advel.metatheme
+Tag: metatheme-0.0.4
+
+Modified files:
+        NEWS configure.in
+
+ChangeLog: 
+
+Updated NEWS file for 0.0.4 release
+-----------------------------------------------------------------
+Revision: c03b30eeb33395ff9ecdd6be7d68830795f614c8
+Ancestor: 4ec321a93f5c849091df972e5c2a8f22c95a2850
+Author: jezek2@advel.cz
+Date: 2004-12-31T11:20:36
+Branch: cz.advel.metatheme
+
+Modified files:
+        README configure.in metathemerc-sample
+        toolkits/java/Makefile.am
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+
+ChangeLog: 
+
+Minor updates
+-----------------------------------------------------------------
+Revision: 4ec321a93f5c849091df972e5c2a8f22c95a2850
+Ancestor: a80c93f7ad2fe4e87a28a6876ca4907a770ab7d7
+Author: jezek2@advel.cz
+Date: 2004-12-31T10:21:07
+Branch: cz.advel.metatheme
+
+Added files:
+        themes/flat/Makefile.am themes/flat/flat.c
+        themes/flat/themerc
+Modified files:
+        CREDITS configure.in
+
+ChangeLog: 
+
+Added Flat theme engine (thanks to Petr Jelinek)
+-----------------------------------------------------------------
+Revision: a80c93f7ad2fe4e87a28a6876ca4907a770ab7d7
+Ancestor: 3fd82011d43d114d475ceff70af314fcf7c5295b
+Author: jezek2@advel.cz
+Date: 2004-12-29T22:26:12
+Branch: cz.advel.metatheme
+
+Modified files:
+        README TODO configure.in metatheme-install.in
+        toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Improved the metatheme-install script
+-----------------------------------------------------------------
+Revision: 3fd82011d43d114d475ceff70af314fcf7c5295b
+Ancestor: 600aaf538be04fdb7ee9cb6cd54abd636b0c4795
+Author: jezek2@advel.cz
+Date: 2004-12-29T17:17:55
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/MetaThemeProgressBarUI.java
+        toolkits/java/metatheme/MetaThemeSliderUI.java
+Modified files:
+        toolkits/java/metatheme/MetaThemeIconFactory.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+
+ChangeLog: 
+
+Styled JProgressBar and JSlider
+-----------------------------------------------------------------
+Revision: 600aaf538be04fdb7ee9cb6cd54abd636b0c4795
+Ancestor: 90107f5ae57172c1c2de597ed5cbca18a9c8ca4e
+Author: jezek2@advel.cz
+Date: 2004-12-27T11:41:53
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/MetaThemeComboBoxUI.java
+        toolkits/java/metatheme/MetaThemeTableHeaderUI.java
+        toolkits/java/metatheme/MetaThemeToggleButtonUI.java
+Modified files:
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeCheckBoxUI.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeMenuItemUI.java
+        toolkits/java/metatheme/MetaThemeRadioButtonUI.java
+        toolkits/java/metatheme/MetaThemeTextFieldUI.java
+        toolkits/java/metatheme/Utils.java
+
+ChangeLog: 
+
+Styled JToolBar, JComboBox, JToggleButton, TitledBorder, JToolTip and JTable
+-----------------------------------------------------------------
+Revision: 90107f5ae57172c1c2de597ed5cbca18a9c8ca4e
+Ancestor: 8b45f326833e4709faf81fdd3646a37067ebe5c6
+Author: jezek2@advel.cz
+Date: 2004-12-19T12:09:13
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        metatheme/metathemecpp.h themes/highcolor/highcolor.cpp
+        themes/highcolor/highcolor.h themes/industrial/industrial.c
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeMenuItemUI.java
+        toolkits/java/metatheme/MetaThemeMenuUI.java
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/java/metatheme/ThemeEngine.java
+        toolkits/java/metatheme/Utils.java toolkits/qt/mt_qt.cpp
+        toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Added basic support for customizing the appearance of texts
+-----------------------------------------------------------------
+Revision: 8b45f326833e4709faf81fdd3646a37067ebe5c6
+Ancestor: f484bf54b5aed6ac4c38945b12177049592c409a
+Author: jezek2@advel.cz
+Date: 2004-11-08T03:22:47
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/MetaThemeCheckBoxUI.java
+        toolkits/java/metatheme/MetaThemeIconFactory.java
+        toolkits/java/metatheme/MetaThemeRadioButtonUI.java
+        toolkits/java/metatheme/Xpm.java
+Modified files:
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/java/metatheme/Utils.java
+
+ChangeLog: 
+
+Styled JCheckBox and JRadioButton
+-----------------------------------------------------------------
+Revision: f484bf54b5aed6ac4c38945b12177049592c409a
+Ancestor: 116dc488900b62ca85bdc3fae2aceff22c439a1b
+Author: jezek2@advel.cz
+Date: 2004-11-08T00:39:11
+Branch: cz.advel.metatheme
+
+Deleted files:
+        metatheme/metathemecpp.cpp
+Added files:
+        metatheme/metathemeqt.h
+Modified files:
+        docs/reference.xml metatheme/Makefile.am
+        metatheme/metatheme.c metatheme/metatheme.h
+        metatheme/metathemeInt.h metatheme/metathemecpp.h
+        themes/highcolor/Makefile.am themes/highcolor/highcolor.h
+        themes/industrial/industrial.c themes/plastik/plastik.c
+
+ChangeLog: 
+
+Cleaned C++ binding and moved color functions to the core library
+-----------------------------------------------------------------
+Revision: 116dc488900b62ca85bdc3fae2aceff22c439a1b
+Ancestor: e0876a3e9d7aa38258626bad62c214cb4329ddc6
+Author: jezek2@advel.cz
+Date: 2004-11-07T23:25:10
+Branch: cz.advel.metatheme
+
+Added files:
+        colors/industrial themes/industrial/Makefile.am
+        themes/industrial/industrial.c themes/industrial/themerc
+Modified files:
+        CREDITS colors/Makefile.am configure.in
+
+ChangeLog: 
+
+Added Industrial theme engine (thanks to Olaf Leidinger)
+-----------------------------------------------------------------
+Revision: e0876a3e9d7aa38258626bad62c214cb4329ddc6
+Ancestor: f0a7937ffd965ce71b5beac0fb7d8ae4d4df0282
+Author: jezek2@advel.cz
+Date: 2004-10-24T13:09:06
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Fixed drawing of QTabBar
+-----------------------------------------------------------------
+Revision: f0a7937ffd965ce71b5beac0fb7d8ae4d4df0282
+Ancestor: 987958aa9876101392b1e7877d6685f1b493759d
+Author: jezek2@advel.cz
+Date: 2004-10-23T17:20:37
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/MetaThemeTabbedPaneUI.java
+Modified files:
+        themes/plastik/plastik.c toolkits/java/Makefile.am
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/java/metatheme/MetaThemeScrollButton.java
+
+ChangeLog: 
+
+Styled JTabbedPane
+-----------------------------------------------------------------
+Revision: 987958aa9876101392b1e7877d6685f1b493759d
+Ancestor: be7f0390e901daab2ebb7f3ebc0f9c1f42d9e4e2
+Author: jezek2@advel.cz
+Date: 2004-10-15T16:58:08
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Added support for hover state of QScrollBar and fixed drawing of MT_SPINBUTTON_DOWN
+-----------------------------------------------------------------
+Revision: be7f0390e901daab2ebb7f3ebc0f9c1f42d9e4e2
+Ancestor: 19f35e49507e050998770d783b74ffb5d2175bee
+Author: jezek2@advel.cz
+Date: 2004-10-02T22:30:25
+Branch: cz.advel.metatheme
+
+Added files:
+        themes/plastik/plastikxp
+Modified files:
+        colors/xp docs/reference.xml metatheme/metatheme.c
+        metatheme/metatheme.h metatheme/metathemeInt.h
+        themes/highcolor/highcolor.cpp themes/plastik/Makefile.am
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Added Plastik XP
+-----------------------------------------------------------------
+Revision: 19f35e49507e050998770d783b74ffb5d2175bee
+Ancestor: b993246384454cd7cd33898dac77fd7599687a8b
+Author: jezek2@advel.cz
+Date: 2004-09-23T23:15:07
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        themes/plastik/plastik.c themes/redmond/radio.xpm
+        themes/redmond/redmond.c toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Fixed invisible check and radio buttons in Konqueror
+-----------------------------------------------------------------
+Revision: b993246384454cd7cd33898dac77fd7599687a8b
+Ancestor: fe0f09750450ab5391afbbc45444c2c3622467ab
+Author: jezek2@advel.cz
+Date: 2004-09-14T20:08:54
+Branch: cz.advel.metatheme
+
+Added files:
+        toolkits/java/metatheme/Makefile.am
+        toolkits/java/metatheme/MetaThemeMenuItemUI.java
+        toolkits/java/metatheme/MetaThemeMenuUI.java
+        toolkits/java/metatheme/MetaThemePopupMenuSeparatorUI.java
+        toolkits/java/metatheme/MetaThemeScrollBarUI.java
+        toolkits/java/metatheme/MetaThemeScrollButton.java
+        toolkits/java/metatheme/MetaThemeTextFieldUI.java
+        toolkits/java/metatheme/ThemeEngine.java
+        toolkits/java/metatheme/Utils.java
+Modified files:
+        configure.in metatheme/metatheme.h toolkits/java/Makefile.am
+        toolkits/java/MetaThemeNative.c toolkits/java/genconsts
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeDefaultTheme.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeNative.java
+
+ChangeLog: 
+
+Styled menus, scrollbars and text entries in Java
+-----------------------------------------------------------------
+Revision: fe0f09750450ab5391afbbc45444c2c3622467ab
+Ancestor: e5c5be8c9325835cb00cb82e9e1ff7ecdd2f2917
+Author: jezek2@advel.cz
+Date: 2004-09-07T00:06:56
+Branch: cz.advel.metatheme
+
+Modified files:
+        acconfig.h configure.in toolkits/qt/Makefile.am
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Removed dependency on KDE
+-----------------------------------------------------------------
+Revision: e5c5be8c9325835cb00cb82e9e1ff7ecdd2f2917
+Ancestor: 5d27a59e733608fbc87250caef62147d119d8a4a
+Author: jezek2@advel.cz
+Date: 2004-09-05T13:47:30
+Branch: cz.advel.metatheme
+
+Modified files:
+        metathemerc-sample toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Added ability to revert the order of dialog buttons to normal
+-----------------------------------------------------------------
+Revision: 5d27a59e733608fbc87250caef62147d119d8a4a
+Ancestor: f6b56512102caba177ba8df625eff8a87e47310e
+Author: jezek2@advel.cz
+Date: 2004-09-02T15:50:09
+Branch: cz.advel.metatheme
+
+Modified files:
+        README
+
+ChangeLog: 
+
+Updated README
+-----------------------------------------------------------------
+Revision: f6b56512102caba177ba8df625eff8a87e47310e
+Ancestor: 869ef9a0767dded36f05b0d3ff9d3b5986b9c8d8
+Author: jezek2@advel.cz
+Date: 2004-09-02T14:11:31
+Branch: cz.advel.metatheme
+
+Added files:
+        metatheme/metathemecpp.cpp metatheme/metathemecpp.h
+        themes/highcolor/Makefile.am themes/highcolor/bitmaps.h
+        themes/highcolor/highcolor.cpp themes/highcolor/highcolor.h
+        themes/highcolor/themerc
+Modified files:
+        configure.in metatheme/Makefile.am
+
+ChangeLog: 
+
+Added C++ binding and early version of Highcolor engine
+-----------------------------------------------------------------
+Revision: 869ef9a0767dded36f05b0d3ff9d3b5986b9c8d8
+Ancestor: 38eac75dffd691a0e48b7aae0db58e15086a7a7b
+Author: jezek2@advel.cz
+Date: 2004-08-29T11:54:43
+Branch: cz.advel.metatheme
+
+Deleted files:
+        toolkits/java/Makefile
+Added files:
+        toolkits/java/Makefile.am toolkits/java/genconsts
+        toolkits/java/metatheme/MetaThemeBorders.java
+        toolkits/java/metatheme/MetaThemeDefaultTheme.java
+Modified files:
+        .mt-attrs .mt-ignore configure.in
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeNative.java
+
+ChangeLog: 
+
+Added basic support for Java
+-----------------------------------------------------------------
+Revision: 38eac75dffd691a0e48b7aae0db58e15086a7a7b
+Ancestor: 5a33480f443151df74b073632a2fc593e7dd2938
+Author: jezek2@advel.cz
+Date: 2004-08-26T01:00:23
+Branch: cz.advel.metatheme
+
+Deleted files:
+        .cvsignore colors/.cvsignore config/.cvsignore
+        docs/.cvsignore metatheme/.cvsignore themes/.cvsignore
+        themes/plastik/.cvsignore themes/redmond/.cvsignore
+        toolkits/.cvsignore toolkits/gtk2/.cvsignore
+        toolkits/java/.cvsignore toolkits/java/metatheme/.cvsignore
+        toolkits/qt/.cvsignore
+
+ChangeLog: 
+
+Removed obsolete .cvsignore files
+-----------------------------------------------------------------
+Revision: 5a33480f443151df74b073632a2fc593e7dd2938
+Ancestor: 8c17bb5cc15117ab070115b3e995afdbcaec8d30
+Author: jezek2@advel.cz
+Date: 2004-08-24T10:52:07
+Branch: cz.advel.metatheme
+Tag: metatheme-0.0.3
+
+Modified files:
+        NEWS configure.in
+
+ChangeLog: 
+
+Updated NEWS file for 0.0.3 release
+-----------------------------------------------------------------
+Revision: 8c17bb5cc15117ab070115b3e995afdbcaec8d30
+Ancestor: fb22d094de45f3f923f6bb3b070baeb0276ef9fd
+Author: jezek2@advel.cz
+Date: 2004-08-23T18:08:26
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2.h
+        toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Fixed height of menu separator and tearoff in GTK2
+-----------------------------------------------------------------
+Revision: fb22d094de45f3f923f6bb3b070baeb0276ef9fd
+Ancestor: fd6b72a0e66281097e5a37c959512c54d986a770
+Author: jezek2@advel.cz
+Date: 2004-08-23T17:19:59
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Fixed background color of QMenuBar and QToolBar
+-----------------------------------------------------------------
+Revision: fd6b72a0e66281097e5a37c959512c54d986a770
+Ancestor: c8a6ebfbca323e4ce3b663d4b24e4cd44227d683
+Author: jezek2@advel.cz
+Date: 2004-08-22T23:19:54
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Removed drawing of pointless border in Nautilus desktop window
+-----------------------------------------------------------------
+Revision: c8a6ebfbca323e4ce3b663d4b24e4cd44227d683
+Ancestor: e0ec37d9b8784e3911845abf8d2ef43666b8d168
+Author: jezek2@advel.cz
+Date: 2004-08-15T13:21:53
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2.h
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Improved appearance of GNOME toolbars
+-----------------------------------------------------------------
+Revision: e0ec37d9b8784e3911845abf8d2ef43666b8d168
+Ancestor: f4fe65c071bcccfea043ee0db41610c28bd69f7d
+Author: jezek2@advel.cz
+Date: 2004-08-14T19:44:11
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Fixed drawing of tooltips and made communication window invisible
+-----------------------------------------------------------------
+Revision: f4fe65c071bcccfea043ee0db41610c28bd69f7d
+Ancestor: b3c493c105239774475b3c84576886d72466eb91
+Author: jezek2@advel.cz
+Date: 2004-08-14T14:53:59
+Branch: cz.advel.metatheme
+
+Modified files:
+        README toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed radio buttons and scrollbars in Gecko based applications
+-----------------------------------------------------------------
+Revision: b3c493c105239774475b3c84576886d72466eb91
+Ancestor: e08e9ba5798c99987242f03831edef729688a8a5
+Author: jezek2@advel.cz
+Date: 2004-08-14T13:38:51
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Styled toggle button in QT toolbar
+-----------------------------------------------------------------
+Revision: e08e9ba5798c99987242f03831edef729688a8a5
+Ancestor: 2d1789a1463e090af711ce2b374e39e48ee5d6c6
+Author: jezek2@advel.cz
+Date: 2004-08-08T02:49:14
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c themes/redmond/redmond.c
+
+ChangeLog: 
+
+Fixed uninitialized black color in theme engines
+-----------------------------------------------------------------
+Revision: 2d1789a1463e090af711ce2b374e39e48ee5d6c6
+Ancestor: 946a09b139c4e2457d679752d85b52f3108cd26e
+Author: jezek2@advel.cz
+Date: 2004-08-08T02:34:47
+Branch: cz.advel.metatheme
+
+Modified files:
+        config/main.c metatheme/refresh.c
+
+ChangeLog: 
+
+Threw away X errors when sending refresh messages to other applications
+-----------------------------------------------------------------
+Revision: 946a09b139c4e2457d679752d85b52f3108cd26e
+Ancestor: ed74b34a1d030b38d3bbad79fe11f406791c4c04
+Author: jezek2@advel.cz
+Date: 2004-08-07T22:27:12
+Branch: cz.advel.metatheme
+
+Deleted files:
+        refresh/.cvsignore refresh/Makefile refresh/refresh.c
+Added files:
+        metatheme/refresh.c
+Modified files:
+        config/main.c docs/reference.xml metatheme/Makefile.am
+        metatheme/metathemeInt.h toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/gtk2/mt_gtk2_style.c
+
+ChangeLog: 
+
+Added ability for reloading configuration in already running applications
+-----------------------------------------------------------------
+Revision: ed74b34a1d030b38d3bbad79fe11f406791c4c04
+Ancestor: c295129cbb5b985a0decceb70f5aa88cc4e67d91
+Author: jezek2@advel.cz
+Date: 2004-08-07T15:12:52
+Branch: cz.advel.metatheme
+
+Added files:
+        config/settings.c config/settings.h
+Modified files:
+        config/Makefile.am config/about.c config/about.h
+        config/color_scheme.c config/color_scheme.h config/colors.c
+        config/colors.h config/fonts.c config/fonts.h config/main.c
+        config/main.h config/preview.c config/preview.h
+        config/themes.c config/themes.h config/util.c config/util.h
+
+ChangeLog: 
+
+Update of the configuration tool
+-----------------------------------------------------------------
+Revision: c295129cbb5b985a0decceb70f5aa88cc4e67d91
+Ancestor: 710ef30525ce8f17a2c2a8451aa3b02d63a874c3
+Author: jezek2@advel.cz
+Date: 2004-08-04T13:29:08
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.c
+        metatheme/metatheme.h metatheme/metathemeInt.h
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2.h
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/gtk2/mt_gtk2_style.c toolkits/gtk2/mt_gtk2_style.h
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Made MetaTheme reentrant
+-----------------------------------------------------------------
+Revision: 710ef30525ce8f17a2c2a8451aa3b02d63a874c3
+Ancestor: ea63b8ff6e450848fbe19256966e6e83a363c4e0
+Author: jezek2@advel.cz
+Date: 2004-07-25T14:51:18
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.c
+        metatheme/metatheme.h metatheme/metathemeInt.h
+        themes/plastik/plastik.c toolkits/gtk2/mt_gtk2.c
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Moved function for drawing gradients to main library
+-----------------------------------------------------------------
+Revision: ea63b8ff6e450848fbe19256966e6e83a363c4e0
+Ancestor: 075b30450eff79f62739613e9a031c64abdc9a69
+Author: jezek2@advel.cz
+Date: 2004-07-12T14:49:20
+Branch: cz.advel.metatheme
+
+Added files:
+        docs/images/notebook.png docs/images/notebook.sxd
+        docs/images/scrollbar.png docs/images/scrollbar.sxd
+Modified files:
+        Makefile.am docs/reference.xml
+
+ChangeLog: 
+
+Updated documentation
+-----------------------------------------------------------------
+Revision: 075b30450eff79f62739613e9a031c64abdc9a69
+Ancestor: e945af2c788b435608d764a1f1bed1a94c92d235
+Author: jezek2@advel.cz
+Date: 2004-07-12T14:25:01
+Branch: cz.advel.metatheme
+
+Modified files:
+        config/main.c
+
+ChangeLog: 
+
+Got rid of usage of non-working BSD extension in struct dirent
+-----------------------------------------------------------------
+Revision: e945af2c788b435608d764a1f1bed1a94c92d235
+Ancestor: f43ccf634beb58e927b426620db4611abc553fb3
+Author: jezek2@advel.cz
+Date: 2004-07-12T12:38:52
+Branch: cz.advel.metatheme
+
+Deleted files:
+        config/gui_util.c config/gui_util.h
+Added files:
+        config/color_scheme.c config/color_scheme.h config/util.c
+        config/util.h
+Modified files:
+        config/Makefile.am config/about.h config/colors.c
+        config/colors.h config/fonts.c config/fonts.h config/main.c
+        config/main.h config/preview.c config/preview.h
+        config/themes.c config/themes.h
+
+ChangeLog: 
+
+Update of the configuration tool
+-----------------------------------------------------------------
+Revision: f43ccf634beb58e927b426620db4611abc553fb3
+Ancestor: e6e0c425363b026cbd468072b02cebd3ee001932
+Author: jezek2@advel.cz
+Date: 2004-07-08T23:37:36
+Branch: cz.advel.metatheme
+
+Modified files:
+        metatheme/metatheme.h themes/plastik/plastik.c
+        toolkits/gtk2/mt_gtk2.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Added a function for changing the color of already existing GC
+-----------------------------------------------------------------
+Revision: e6e0c425363b026cbd468072b02cebd3ee001932
+Ancestor: 10a0a1a38c3464648c36b0f6e1cc5cb3e34eebc8
+Author: jezek2@advel.cz
+Date: 2004-07-03T12:22:25
+Branch: cz.advel.metatheme
+
+Added files:
+        config/about.c config/about.h
+Modified files:
+        config/Makefile.am config/colors.c config/colors.h
+        config/fonts.c config/fonts.h config/gui_util.c
+        config/gui_util.h config/main.c config/main.h
+        config/preview.c config/themes.c config/themes.h
+
+ChangeLog: 
+
+Updated to the latest version of MetaTheme configuration tool
+-----------------------------------------------------------------
+Revision: 10a0a1a38c3464648c36b0f6e1cc5cb3e34eebc8
+Ancestor: 7a5710c447ba4c2620fe2bc48d9680a63827a9b4
+Author: jezek2@advel.cz
+Date: 2004-07-02T20:34:53
+Branch: cz.advel.metatheme
+Tag: metatheme-0.0.2
+
+Modified files:
+        NEWS
+
+ChangeLog: 
+
+Updated NEWS file for 0.0.2 release
+-----------------------------------------------------------------
+Revision: 7a5710c447ba4c2620fe2bc48d9680a63827a9b4
+Ancestor: 28173c5f116b1285f5b547c252f73afa3297124a
+Author: jezek2@advel.cz
+Date: 2004-07-01T01:00:53
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Styled GtkTearoffMenuItem
+-----------------------------------------------------------------
+Revision: 28173c5f116b1285f5b547c252f73afa3297124a
+Ancestor: c23da7413fd9cc3a000bd621e6245a4361d96f8f
+Author: jezek2@advel.cz
+Date: 2004-06-30T17:18:46
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Fixed scrollbar redrawing in QT
+-----------------------------------------------------------------
+Revision: c23da7413fd9cc3a000bd621e6245a4361d96f8f
+Ancestor: e7188f5ae70348a728018f6f054e0ad97baf3b3a
+Author: jezek2@advel.cz
+Date: 2004-06-30T15:45:57
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_style.c
+
+ChangeLog: 
+
+Improved appearance of GtkMenuBar items in GTK 2.4.x
+-----------------------------------------------------------------
+Revision: e7188f5ae70348a728018f6f054e0ad97baf3b3a
+Ancestor: bdb10cdb8095a265a796f58e219b147d04dd9d13
+Author: jezek2@advel.cz
+Date: 2004-06-30T14:55:55
+Branch: cz.advel.metatheme
+
+Modified files:
+        README configure.in toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Disabled support for GTK 2.0.x
+-----------------------------------------------------------------
+Revision: bdb10cdb8095a265a796f58e219b147d04dd9d13
+Ancestor: ae232207bf059e1d4a8cddcf5b4cf91e6e2e65c1
+Author: jezek2@advel.cz
+Date: 2004-06-30T13:35:10
+Branch: cz.advel.metatheme
+
+Modified files:
+        metatheme/metatheme.c
+
+ChangeLog: 
+
+Font names can contain spaces now
+-----------------------------------------------------------------
+Revision: ae232207bf059e1d4a8cddcf5b4cf91e6e2e65c1
+Ancestor: 81392051dd933a733ea5b6fd105424fedad30d8d
+Author: jezek2@advel.cz
+Date: 2004-06-30T01:15:23
+Branch: cz.advel.metatheme
+
+Modified files:
+        .mt-ignore Makefile.am configure.in toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Miscellaneous changes
+-----------------------------------------------------------------
+Revision: 81392051dd933a733ea5b6fd105424fedad30d8d
+Ancestor: c12098010f2d14b6f98c1991dcadb08e37e51ef3
+Author: jezek2@advel.cz
+Date: 2004-06-26T13:55:54
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Styled QFrame
+-----------------------------------------------------------------
+Revision: c12098010f2d14b6f98c1991dcadb08e37e51ef3
+Ancestor: ae2da6f5dec27d3bbfccd84054f1eaf746cbf337
+Author: jezek2@advel.cz
+Date: 2004-06-25T01:36:24
+Branch: cz.advel.metatheme
+
+Modified files:
+        .mt-ignore
+
+ChangeLog: 
+
+Updated ignored files
+-----------------------------------------------------------------
+Revision: ae2da6f5dec27d3bbfccd84054f1eaf746cbf337
+Ancestor: 5f2179bb8c7c649754b50f2e933a85945100ace2
+Author: jezek2@advel.cz
+Date: 2004-06-25T01:13:03
+Branch: cz.advel.metatheme
+
+Added files:
+        .mt-attrs .mt-ignore
+
+ChangeLog: 
+
+Added Monotone specific files
+-----------------------------------------------------------------
+Revision: 5f2179bb8c7c649754b50f2e933a85945100ace2
+Ancestor: 983493a84098b901a885ac7d62c18f257fc9ba80
+Author: jezek2
+Date: 2004-06-24T21:18:27
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c
+
+ChangeLog: 
+
+Added missing parts that disappeared when Plastik was separated from Redmond
+
+-----------------------------------------------------------------
+Revision: 983493a84098b901a885ac7d62c18f257fc9ba80
+Ancestor: 89b0ef5637b7b1b5b695e772d3937bfe4839e1a3
+Author: jezek2
+Date: 2004-06-24T21:06:48
+Branch: cz.advel.metatheme
+
+Modified files:
+        docs/reference.xml metatheme/metatheme.h
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2_draw.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Styled check and radio icons in listviews
+
+-----------------------------------------------------------------
+Revision: 89b0ef5637b7b1b5b695e772d3937bfe4839e1a3
+Ancestor: 46045e0cb2c43e1686fd6f7de0a024fc6cf09558
+Author: jezek2
+Date: 2004-06-24T19:49:07
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Fixed auto clipping code in GTK2
+
+-----------------------------------------------------------------
+Revision: 46045e0cb2c43e1686fd6f7de0a024fc6cf09558
+Ancestor: 1b2c9c6cfc3221d3d1df1d8e92f0d28c68070ea1
+Author: jezek2
+Date: 2004-06-20T15:13:44
+Branch: cz.advel.metatheme
+
+Added files:
+        colors/.cvsignore colors/Makefile.am colors/plastik
+        colors/redmond colors/xp
+Modified files:
+        Makefile.am configure.in metatheme-install.in
+        metatheme/metatheme.c metatheme/metatheme.h
+        metatheme/metathemeInt.h metathemerc-sample
+        themes/plastik/plastik.c themes/redmond/redmond.c
+        toolkits/gtk2/mt_gtk2.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Improved colors handling
+
+-----------------------------------------------------------------
+Revision: 1b2c9c6cfc3221d3d1df1d8e92f0d28c68070ea1
+Ancestor: 5c0b0574d2cba0dde922fb0d5cf946c576bb2ee8
+Author: jezek2
+Date: 2004-06-18T15:12:40
+Branch: cz.advel.metatheme
+
+Deleted files:
+        Makefile.in
+Added files:
+        config/.cvsignore config/Makefile.am config/colors.c
+        config/colors.h config/fonts.c config/fonts.h
+        config/gui_util.c config/gui_util.h config/main.c
+        config/main.h config/preview.c config/preview.h
+        config/themes.c config/themes.h
+Modified files:
+        .cvsignore CREDITS Makefile.am configure.in
+
+ChangeLog: 
+
+Added MetaTheme configuration tool (thanks to Jirka Zajpt)
+
+-----------------------------------------------------------------
+Revision: 5c0b0574d2cba0dde922fb0d5cf946c576bb2ee8
+Ancestor: fd5f69b7b28fbbc2f3bbbceb32229c48d71f6c1e
+Author: jezek2
+Date: 2004-06-18T10:01:06
+Branch: cz.advel.metatheme
+
+Deleted files:
+        config.mk.in metatheme/Makefile themes/Makefile
+        themes/plastik/Makefile themes/redmond/Makefile
+        toolkits/Makefile toolkits/gtk2/Makefile
+        toolkits/qt/Makefile
+Added files:
+        INSTALL Makefile.am Makefile.base acconfig.h
+        metatheme/Makefile.am themes/.cvsignore themes/Makefile.am
+        themes/plastik/Makefile.am themes/redmond/Makefile.am
+        toolkits/.cvsignore toolkits/Makefile.am
+        toolkits/gtk2/Makefile.am toolkits/qt/Makefile.am
+Modified files:
+        .cvsignore Makefile.in acinclude.m4 autogen.sh configure.in
+        metatheme-install.in metatheme/.cvsignore
+        metatheme/metatheme.c themes/plastik/.cvsignore
+        themes/redmond/.cvsignore toolkits/gtk2/.cvsignore
+        toolkits/qt/.cvsignore
+
+ChangeLog: 
+
+Added support for automake
+
+-----------------------------------------------------------------
+Revision: fd5f69b7b28fbbc2f3bbbceb32229c48d71f6c1e
+Ancestor: e57bb8cbf40868569c9dc8081e65cec98f6da7a6
+Author: jezek2
+Date: 2004-06-16T21:36:13
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c
+
+ChangeLog: 
+
+Little improvement of progress bar in Plastik
+
+-----------------------------------------------------------------
+Revision: e57bb8cbf40868569c9dc8081e65cec98f6da7a6
+Ancestor: dab35edfadbafc818a819509766d655f11a08f4c
+Author: jezek2
+Date: 2004-06-16T21:19:46
+Branch: cz.advel.metatheme
+
+Added files:
+        themes/plastik/themerc themes/redmond/themerc
+Modified files:
+        metatheme/metatheme.c themes/plastik/Makefile
+        themes/redmond/Makefile
+
+ChangeLog: 
+
+Changed loading of themes
+
+-----------------------------------------------------------------
+Revision: dab35edfadbafc818a819509766d655f11a08f4c
+Ancestor: 99e449a9a7529de019ca53df9af41b10e8191417
+Author: jezek2
+Date: 2004-06-16T19:09:16
+Branch: cz.advel.metatheme
+
+Modified files:
+        metatheme/metatheme.h toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/gtk2/mt_gtk2_patches.c toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+API and code cleanups
+
+-----------------------------------------------------------------
+Revision: 99e449a9a7529de019ca53df9af41b10e8191417
+Ancestor: cf415069d577e9986d1fcce7332dc70ace810d10
+Author: jezek2
+Date: 2004-06-14T19:50:48
+Branch: cz.advel.metatheme
+
+Modified files:
+        themes/plastik/plastik.c
+
+ChangeLog: 
+
+Fixed some bugs in Plastik
+
+-----------------------------------------------------------------
+Revision: cf415069d577e9986d1fcce7332dc70ace810d10
+Ancestor: 5bf135e14265edc546d5a392541096707000f3ab
+Author: jezek2
+Date: 2004-06-14T11:45:27
+Branch: cz.advel.metatheme
+
+Modified files:
+        metatheme/metatheme.c metatheme/metathemeInt.h
+
+ChangeLog: 
+
+Added ability to save configuration file
+
+-----------------------------------------------------------------
+Revision: 5bf135e14265edc546d5a392541096707000f3ab
+Ancestor: 0328214b28f61f0dea6d4de8a89fb9bd13565e6f
+Author: jezek2
+Date: 2004-06-13T07:47:42
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/qt/mt_qt.cpp
+
+ChangeLog: 
+
+Fixed buttons with image in QT
+
+-----------------------------------------------------------------
+Revision: 0328214b28f61f0dea6d4de8a89fb9bd13565e6f
+Ancestor: 084a99f421698cdb00f8bb733b09e339bc6ba7c6
+Author: jezek2
+Date: 2004-06-12T11:08:04
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed GtkToggleToolButton
+
+-----------------------------------------------------------------
+Revision: 084a99f421698cdb00f8bb733b09e339bc6ba7c6
+Ancestor: a6226d771b8ebd27e2b1c5a90a291e4b349d05cb
+Author: jezek2
+Date: 2004-06-12T10:56:37
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed GtkComboBox
+
+-----------------------------------------------------------------
+Revision: a6226d771b8ebd27e2b1c5a90a291e4b349d05cb
+Ancestor: e8ca73b5bead83a6ec7702248dfbc61e5192df37
+Author: jezek2
+Date: 2004-06-11T19:11:21
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c
+
+ChangeLog: 
+
+Fixed position of notebook steppers in GTK 2.4.x
+
+-----------------------------------------------------------------
+Revision: e8ca73b5bead83a6ec7702248dfbc61e5192df37
+Ancestor: 8992db56c1969617c3f2e1d83c06d1419a761ffa
+Author: jezek2
+Date: 2004-06-11T18:55:28
+Branch: cz.advel.metatheme
+
+Modified files:
+        TODO toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed GtkRuler and GtkCurve
+
+-----------------------------------------------------------------
+Revision: 8992db56c1969617c3f2e1d83c06d1419a761ffa
+Ancestor: 942d6e1124b161fbaab661bb6e3c8930ee4f5e47
+Author: jezek2
+Date: 2004-06-06T16:09:58
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed appearance of toolbar items in GTK 2.4.x
+
+-----------------------------------------------------------------
+Revision: 942d6e1124b161fbaab661bb6e3c8930ee4f5e47
+Ancestor: 1d0d9b4c60043c3b111c4e9370b4ff3579a4132d
+Author: jezek2
+Date: 2004-06-06T15:32:08
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2.c toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Made menu's appearance in GTK 2.4.x more compatible with prior versions
+
+-----------------------------------------------------------------
+Revision: 1d0d9b4c60043c3b111c4e9370b4ff3579a4132d
+Ancestor: 496059af9baed0903354584e807949de775ef31e
+Author: jezek2
+Date: 2004-06-06T14:17:22
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/Makefile toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed bad appearance of menu separator in GTK 2.4.x
+
+-----------------------------------------------------------------
+Revision: 496059af9baed0903354584e807949de775ef31e
+Ancestor: 9cf41fe26b1bb78548eadf7fb3ec92cbbc75e8f4
+Author: jezek2
+Date: 2004-06-06T13:51:15
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Added a little better handling of (un)realize in GTK2
+
+-----------------------------------------------------------------
+Revision: 9cf41fe26b1bb78548eadf7fb3ec92cbbc75e8f4
+Ancestor: 4951b8e0bd96911e790e0d3e20d74fe30f8563ee
+Author: jezek2
+Date: 2004-06-05T22:34:43
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_draw.c
+
+ChangeLog: 
+
+Fixed two compilation problems
+
+-----------------------------------------------------------------
+Revision: 4951b8e0bd96911e790e0d3e20d74fe30f8563ee
+Ancestor: e87bef8ad5fd3ea57b360ecb255dd4590d9f23ea
+Author: jezek2
+Date: 2004-06-05T22:18:35
+Branch: cz.advel.metatheme
+
+Deleted files:
+        Makefile config.mk-dist
+Added files:
+        Makefile.in acinclude.m4 autogen.sh config.mk.in
+        configure.in install-sh metatheme-install.in
+Modified files:
+        .cvsignore README metatheme/Makefile metatheme/metatheme.c
+        metathemerc-sample themes/Makefile themes/plastik/Makefile
+        themes/redmond/Makefile toolkits/Makefile
+        toolkits/gtk2/.cvsignore toolkits/gtk2/Makefile
+        toolkits/qt/Makefile
+
+ChangeLog: 
+
+Added support for autoconf
+
+-----------------------------------------------------------------
+Revision: e87bef8ad5fd3ea57b360ecb255dd4590d9f23ea
+Ancestor: ab66cd88040b0a79b8e5ffb3873f6b069a7897e2
+Author: jezek2
+Date: 2004-06-04T15:42:20
+Branch: cz.advel.metatheme
+
+Modified files:
+        toolkits/gtk2/mt_gtk2_patches.c
+
+ChangeLog: 
+
+Fixed support for older GTK versions
+
+-----------------------------------------------------------------
+Revision: ab66cd88040b0a79b8e5ffb3873f6b069a7897e2
+Ancestor: 
+Author: jezek2
+Date: 2004-06-03T23:31:47
+Branch: cz.advel.metatheme
+Tag: metatheme-0.0.1
+
+Added files:
+        .cvsignore COPYING CREDITS Makefile NEWS README TODO
+        config.mk-dist docs/.cvsignore docs/reference.xml
+        kde/Redmond 2000 (Plastik).kcsrc kde/Redmond 2000.kcsrc
+        metatheme/.cvsignore metatheme/Makefile
+        metatheme/metatheme.c metatheme/metatheme.h
+        metatheme/metathemeInt.h metathemerc-sample
+        refresh/.cvsignore refresh/Makefile refresh/refresh.c
+        themes/Makefile themes/plastik/.cvsignore
+        themes/plastik/Makefile themes/plastik/plastik.c
+        themes/redmond/.cvsignore themes/redmond/Makefile
+        themes/redmond/radio.xpm themes/redmond/redmond.c
+        toolkits/Makefile toolkits/gtk2/.cvsignore
+        toolkits/gtk2/Makefile toolkits/gtk2/mt_gtk2.c
+        toolkits/gtk2/mt_gtk2.h toolkits/gtk2/mt_gtk2_draw.c
+        toolkits/gtk2/mt_gtk2_patches.c
+        toolkits/gtk2/mt_gtk2_patches.h
+        toolkits/gtk2/mt_gtk2_style.c toolkits/gtk2/mt_gtk2_style.h
+        toolkits/java/.cvsignore toolkits/java/Makefile
+        toolkits/java/MetaThemeNative.c
+        toolkits/java/metatheme/.cvsignore
+        toolkits/java/metatheme/MetaThemeButtonUI.java
+        toolkits/java/metatheme/MetaThemeLookAndFeel.java
+        toolkits/java/metatheme/MetaThemeNative.java
+        toolkits/qt/.cvsignore toolkits/qt/Makefile
+        toolkits/qt/mt_qt.cpp toolkits/qt/mt_qt.h
+
+ChangeLog: 
+
+Imported sources
+
+ChangeLog: 
+
+Initial revision
+

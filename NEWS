@@ -1,0 +1,59 @@
+Version 0.0.6 (2005/10/01)
+==========================
+
+- Styled menubar item, toolbar handle and dropdown item in MSSTYLE
+- Fixed drawing of menus and progressbar in MSSTYLE
+- Fixed MSSTYLE on 64-bit systems
+- Added warning notice to metatheme-install script
+
+Version 0.0.5 (2005/09/01)
+==========================
+
+- Added Highcolor/B3 theme and MSSTYLE themes loader
+- Fixed checking a disabled state of buttons in Gecko-based applications
+- Added ability to force MetaTheme in Java applications
+- Added support for multiple toolkits in one process
+- Improved look of Redmond and Plastik themes
+- Styled JSplitPane
+- Added basic support for Cairo
+- Added support for retrieving information about widget hierarchy
+- Added alpha channel to MT_IMAGE
+
+Version 0.0.4 (2004/12/31)
+==========================
+
+- Initial support for Java/SWING toolkit
+- Added three new themes: Plastik XP, Industrial and Flat
+- Removed dependency on KDE
+- Added ability to revert the order of dialog buttons to normal in GTK2
+- Fixed invisible check and radio buttons in Konqueror
+- Added basic support for customizing the appearance of texts
+- Cleaned C++ binding and QT compatibility layer
+
+Version 0.0.3 (2004/08/23)
+==========================
+
+- Added configuration tool with ability for on-the-fly switching of themes
+- Made MetaTheme reentrant
+- Styled toggle button in QT toolbar
+- Fixed radio buttons, scrollbars and tooltips in Gecko based applications
+- Improved appearance of GNOME toolbars
+- Removed drawing of pointless border in Nautilus desktop window
+- Other bugfixes and improvements
+
+Version 0.0.2 (2004/07/01)
+==========================
+
+- New build system
+- Fixed bad appearance in GTK 2.4 (some things not done yet)
+- Fixed GtkRuler and GtkCurve widgets
+- Fixed bugs in Plastik
+- Styled check and radio icons in listviews
+- Styled QFrame and GtkTearoffMenuItem
+- Changed configuration file
+- Other bugfixes and improvements
+
+Version 0.0.1 (2004/06/01)
+==========================
+
+- Initial release.

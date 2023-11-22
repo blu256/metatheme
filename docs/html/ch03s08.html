@@ -1,0 +1,12 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>8.&nbsp;Widget hierarchy</title><link rel="stylesheet" href="html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.67.0"><link rel="start" href="index.html" title="MetaTheme - The Reference Book"><link rel="up" href="ch03.html" title="Chapter&nbsp;3.&nbsp;Public API"><link rel="prev" href="ch03s07.html" title="7.&nbsp;Drawing functions"><link rel="next" href="re21.html" title="mt_widget_ref"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">8.&nbsp;Widget hierarchy</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Public API</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="re21.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e1687"></a>8.&nbsp;Widget hierarchy</h2></div></div></div><p>These functions are for limited interacting with widgets.</p><pre class="programlisting">#define mt_is_widget(widget) ((widget) &amp;&amp; *(widget))
+
+typedef void *MT_WIDGET;
+typedef void (*mt_destroy_func)(void *data);
+
+MT_WIDGET *<a href="re21.html" title="mt_widget_ref">mt_widget_ref</a>(MT_WIDGET *widget);
+void       <a href="re22.html" title="mt_widget_unref">mt_widget_unref</a>(MT_WIDGET *widget);
+MT_WIDGET *<a href="re23.html" title="mt_widget_get_parent">mt_widget_get_parent</a>(MT_WIDGET *widget, MT_WIDGET *result);
+void       <a href="re24.html" title="mt_widget_set_data">mt_widget_set_data</a>(MT_WIDGET *widget, void *data, mt_destroy_func data_dispose);
+void      *<a href="re25.html" title="mt_widget_get_data">mt_widget_get_data</a>(MT_WIDGET *widget);</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="re21.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">7.&nbsp;Drawing functions&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;mt_widget_ref</td></tr></table></div></body></html>

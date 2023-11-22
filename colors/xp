@@ -1,0 +1,11 @@
+name        = XP
+base_bg     = 236, 233, 216
+base_fg     =   0,   0,   0
+window_bg   = 255, 255, 255
+window_fg   =   0,   0,   0
+button_bg   = 244, 244, 240
+button_fg   =   0,   0,   0
+selected_bg =  74, 121, 205
+selected_fg = 255, 255, 255
+disabled_bg = 238, 238, 230
+disabled_fg = 172, 168, 153

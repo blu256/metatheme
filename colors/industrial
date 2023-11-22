@@ -1,0 +1,11 @@
+name        = Industrial
+base_bg     = 246, 246, 246
+base_fg     =   0,   0,   0
+window_bg   = 255, 255, 255
+window_fg   =   0,   0,   0
+button_bg   = 246, 246, 246
+button_fg   =   0,   0,   0
+selected_bg = 153, 166, 191
+selected_fg =   0,   0,   0
+disabled_bg = 217, 217, 217
+disabled_fg =  64,  64,  64

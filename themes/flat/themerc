@@ -1,0 +1,4 @@
+name        = Flat
+engine      = flat/libmt_flat.so
+description = Flat style
+author      = Petr Jelinek <pjmodos@centrum.cz>

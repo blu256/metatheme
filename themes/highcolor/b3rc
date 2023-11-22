@@ -1,0 +1,7 @@
+name        = B3
+engine      = highcolor/libmt_highcolor.so
+description =
+author      = Karol Szwed <gallium@kde.org>, Fredrik Höglund <fredrik@kde.org>
+
+[settings]
+b3 = 1

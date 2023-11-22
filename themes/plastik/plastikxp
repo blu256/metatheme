@@ -1,0 +1,7 @@
+name        = Plastik XP
+engine      = plastik/libmt_plastik.so
+description = An XP modification of Plastik
+author      = Martin Dvorak <jezek2@advel.cz>
+
+[settings]
+xp = 1

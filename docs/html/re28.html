@@ -1,0 +1,26 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>MT_ENGINE</title><link rel="stylesheet" href="html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.67.0"><link rel="start" href="index.html" title="MetaTheme - The Reference Book"><link rel="up" href="ch04s02.html" title="2.&nbsp;Theme engines"><link rel="prev" href="ch04s02.html" title="2.&nbsp;Theme engines"><link rel="next" href="ch04s03.html" title="3.&nbsp;Configuration files"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">MT_ENGINE</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&nbsp;</td><th width="60%" align="center">2.&nbsp;Theme engines</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s03.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="mt-engine"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>MT_ENGINE &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">typedef struct {
+   MT_TOOLKIT *toolkit;
+   MT_LIBRARY *library;
+   int refcount;
+
+   char *name;
+   void *data;
+   MT_CONFIG *config;
+
+   MT_COLOR_PALETTE palette;
+   int metric[MT_METRIC_MAX];
+   MT_POINT metric_size[MT_METRIC_SIZE_MAX];
+   char *font;
+   int font_size;
+
+   void *dlhandle;
+   int realized;
+
+   void (*init)(MT_ENGINE *engine, MT_TOOLKIT *mt);
+   void (*exit)(MT_ENGINE *engine);
+   void (*realize)(MT_ENGINE *engine);
+   void (*draw_widget)(MT_ENGINE *engine, MT_WINDOW *win, MT_RECTANGLE *area, int type, int state, int x, int y, int width, int height, MT_WIDG
+   void (*draw_string)(MT_ENGINE *engine, MT_WINDOW *win, int type, int state, MT_STRING *str);
+} MT_ENGINE;</pre></div><div class="refsect1" lang="en"><a name="d0e1862"></a><h2>Structure Members</h2><div class="variablelist"><dl><dt><span class="term">toolkit</span></dt><dd><p>points to MT_TOOLKIT structure which is used to calling the <code class="literal">mt_*</code> functions</p></dd><dt><span class="term">library</span></dt><dd><p>points to MetaTheme library instance which this engine uses</p></dd><dt><span class="term">refcount</span></dt><dd><p>reference counter</p></dd><dt><span class="term">name</span></dt><dd><p>the name of theme engine</p></dd><dt><span class="term">data</span></dt><dd><p>points to internal data of theme engine</p></dd><dt><span class="term">config</span></dt><dd><p>themerc configuration file</p></dd><dt><span class="term">palette</span></dt><dd><p>palette</p></dd><dt><span class="term">metric</span></dt><dd><p>metrics</p></dd><dt><span class="term">metric_size</span></dt><dd><p>size metrics</p></dd><dt><span class="term">font</span></dt><dd><p>font family</p></dd><dt><span class="term">font_size</span></dt><dd><p>font size</p></dd><dt><span class="term">dlhandle</span></dt><dd><p>handle obtained from <code class="literal">dlopen()</code></p></dd><dt><span class="term">realized</span></dt><dd><p>this is optional and used only in some toolkit backends in their own way</p></dd><dt><span class="term">init, </span><span class="term">exit, </span><span class="term">realize, </span><span class="term">draw_widget, </span><span class="term">draw_string</span></dt><dd><p>theme engine's functions (see their <a href="ch05s01.html" title="1.&nbsp;Exported functions">description</a>)</p></dd></dl></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ch04s02.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.&nbsp;Theme engines&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;3.&nbsp;Configuration files</td></tr></table></div></body></html>

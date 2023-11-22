@@ -1,0 +1,103 @@
+#!/bin/sh
+METATHEMEDIR=@METATHEMEDIR@
+
+PKG_CONFIG=@PKG_CONFIG@
+GTK2_PREFIX=@GTK2_PREFIX@
+
+USE_GTK2=@USE_GTK2@
+USE_QT=@USE_QT@
+
+HAVE_KDE=@HAVE_KDE@
+
+# update_file <file> <sed expression>
+update_file ()
+{
+	test -f "$1" && cat "$1" | sed -e "$2" > "$1"-tmp && mv "$1"-tmp "$1"
+}
+
+if ! test "$1" = "-u"; then
+	# warn user before proceeding:
+	if ! test "$1" = "-q" && ! test "$DISPLAY" = ""; then
+		echo "Activation of MetaTheme might have effect of crashing all programs in"
+		echo "this X session. Please save all your unsaved work before proceeding."
+		echo
+		echo -n "Do you want to activate MetaTheme? (y/n) "; read answer
+		case "$answer" in
+			y*|Y*) ;;
+			*) exit 0 ;;
+		esac
+	fi
+	
+	# configuration file:
+	test -d $HOME/.metatheme || mkdir $HOME/.metatheme
+	test -f $HOME/.metatheme/config || cp $METATHEMEDIR/metathemerc-sample $HOME/.metatheme/config
+	
+	echo -n "Activating toolkits:"
+
+	# GTK2:
+	if test "$USE_GTK2" = "1"; then
+		config=$HOME/.gtkrc-2.0
+		test -f "$config" && cp "$config" "$config"-old
+		(
+			echo "# -- THEME AUTO-WRITTEN DO NOT EDIT"
+			echo "include \"$GTK2_PREFIX/share/themes/MetaTheme/gtk-2.0/gtkrc\""
+			echo "# -- THEME AUTO-WRITTEN DO NOT EDIT"
+		) > "$config"
+		gconftool-2 -s /desktop/gnome/interface/gtk_theme -t string MetaTheme > /dev/null 2>&1
+		echo -n " GTK2"
+	fi
+
+	# QT:
+	if test "$USE_QT" = "1"; then
+		config=$HOME/.qt/qtrc
+		if test -f "$config"; then
+			update_file "$config" 's/^style *=.*/style=metatheme/' && echo -n " QT"
+		else
+			mkdir -p $HOME/.qt > /dev/null 2>&1
+			mv "$config" "$config"~ > /dev/null 2>&1
+			(
+				echo "[General]"
+				echo "style=metatheme"
+			) > "$config" && echo -n " QT"
+		fi
+	fi
+
+	# QT/KDE:
+	if test "$USE_QT" = "1" && test "$HAVE_KDE" = "yes"; then
+		config="$HOME/.kde/share/config/kdeglobals"
+		if test -f "$config"; then
+			update_file "$config" 's/^widgetStyle *=.*/widgetStyle=metatheme/' && echo -n " QT/KDE"
+		else
+			mkdir -p $HOME/.kde/share/config > /dev/null 2>&1
+			(
+				echo "[General]"
+				echo "widgetStyle=metatheme"
+			) > "$config" && echo -n " QT/KDE"
+		fi
+	fi
+
+else
+	echo -n "Deactivating toolkits:"
+
+	# GTK2:
+	if test "$USE_GTK2" = "1"; then
+		config=$HOME/.gtkrc-2.0
+		test -f "$config" && grep "MetaTheme/gtk-2.0/gtkrc" "$config" > /dev/null 2>&1 && rm "$config"
+		gconftool-2 -s /desktop/gnome/interface/gtk_theme -t string Default > /dev/null 2>&1
+		echo -n " GTK2"
+	fi
+
+	# QT:
+	if test "$USE_QT" = "1"; then
+		config=$HOME/.qt/qtrc
+		update_file "$config" 's/^style *= *metatheme/style=windows/i' && echo -n " QT"
+	fi
+
+	# QT/KDE:
+	if test "$USE_QT" = "1" && test "$HAVE_KDE" = "yes"; then
+		config=$HOME/.kde/share/config/kdeglobals
+		update_file "$config" 's/^widgetStyle *= *metatheme/widgetStyle=windows/i' && echo -n " QT/KDE"
+	fi
+fi
+
+echo " ."

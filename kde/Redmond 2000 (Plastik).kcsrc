@@ -1,0 +1,26 @@
+[Color Scheme]
+Name=Redmond 2000 (Plastik)
+activeBackground=50,98,132
+activeBlend=153,153,153
+activeForeground=255,255,255
+activeTitleBtnBg=212,208,200
+alternateBackground=240,240,240
+background=212,208,200
+buttonBackground=212,208,200
+buttonForeground=0,0,0
+contrast=7
+foreground=0,0,0
+frame=212,208,200
+handle=212,208,200
+inactiveBackground=128,128,128
+inactiveBlend=192,192,192
+inactiveForeground=212,208,200
+inactiveFrame=212,208,200
+inactiveHandle=212,208,200
+inactiveTitleBtnBg=212,208,200
+linkColor=0,0,192
+selectBackground=10,36,106
+selectForeground=255,255,255
+visitedLinkColor=128,0,128
+windowBackground=255,255,255
+windowForeground=0,0,0

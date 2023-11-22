@@ -1,0 +1,4 @@
+name        = Industrial
+engine      = industrial/libmt_industrial.so
+description = A variant of the GTK+ style Industrial
+author      = Olaf Leidinger <leidola@web.de>

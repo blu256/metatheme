@@ -1,0 +1,10 @@
+theme    = plastik
+colors   = redmond
+font     = Tahoma 11
+
+[gtk2]
+swap_buttons = 1
+
+[plastik]
+enhanced = 0
+highlight_notebook = 1

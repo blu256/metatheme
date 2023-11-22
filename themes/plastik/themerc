@@ -1,0 +1,4 @@
+name        = Plastik
+engine      = plastik/libmt_plastik.so
+description = A simple and clean style
+author      = Sandro Giessl <ceebx@users.sourceforge.net>

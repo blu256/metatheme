@@ -1,0 +1,116 @@
+MetaTheme
+=========
+
+MetaTheme is a project dedicated to unification of appearance between
+different graphics toolkits (currently GTK2, QT and Java).
+
+The program is designed as a thin layer between toolkits and theme engines,
+creating unified API by which each theme engine can draw. The result is that
+every application uses the same code for drawing, making the appearance
+same across different applications. MetaTheme also adjusts behaviour a bit,
+so the overall effect of unification is impressive.
+
+Some applications have their own toolkits which are used only by themselves.
+Cardinal examples of such applications are Mozilla, Firefox and OpenOffice.
+They provide support for pixmap themes, and popular themes exists for them.
+Though as they are pixmap based, you can't easily change how they look.
+Particularly, it's quite impossible to change color theme. Not everyone
+likes the default. Also, the behaviour of these toolkits is unaffected, so
+the application may behave differently than other applications.
+
+There is planned support for Firefox (and maybe Mozilla too) in future. For
+OpenOffice, you can at least try the KDE integration build of it.
+
+Official site: http://www.metatheme.org/
+
+Prerequisites
+=============
+
+General:
+- GLib 2.0 or later
+
+For GTK2 support and configuration tools:
+- GTK2 2.2 or later
+
+For QT/KDE support:
+- QT 3.3
+- KDE 3.2 or later
+
+For Java/SWING support:
+- JDK 1.5
+
+For development:
+- Autoconf 2.13
+- Automake 1.4
+(or similar versions)
+
+Installation
+============
+
+- Unpack the archive somewhere in your home directory.
+- Run './configure'.
+- Run 'make'.
+- Run 'make install' as root.
+
+- Run 'metatheme-install' in terminal as an ordinary user. This will
+  activate MetaTheme in all supported toolkits (except Java, which is
+  enabled at previous step).
+- Make sure there is no other gtkrc file active. If yes, disable it or it
+  will interfere with MetaTheme.
+- Restart your session.
+
+For GNOME users:
+- Don't change themes or controls in GNOME Theme Manager. Only window
+  borders and icons. For deactivation see the next section.
+
+Configuration:
+- Run 'mt-config' to start MetaTheme configuration tool. Please beware
+  that the on-the-fly applying of changes is still experimental.
+
+Optional:
+- You can use the kde/*.kcsrc files for color settings of some window
+  decorations in KDE.
+
+Deactivation
+============
+
+- Run 'metatheme-install -u' as an ordinary user. This should deactivate
+  MetaTheme in all supported toolkits and set safe defaults.
+- Restart your session.
+
+Notes
+=====
+
+- MetaTheme might have significant impact to stability of runned programs.
+
+- You may have problems with on-the-fly switching between MetaTheme and other
+  themes. Although it may work for you, it is not recommended now.
+
+- Font and color settings are obtained from the '~/.metatheme/config' file,
+  overriding any default settings in particular toolkit.
+
+- If you have invisible text in XChat's input box, you will need to disable
+  the 'Use the Text box font and colors' option in Preferences -> Interface
+  -> Input box. Probably you have to restart it after doing that.
+
+- Currently, MetaTheme is aimed towards KDE, although it doesn't directly
+  depend on it.
+
+- If you have different font sizes in QT and GTK applications, check if you
+  have the same DPI value for both axes. You can check it by running this
+  command:
+  
+  $ xdpyinfo | grep resolution
+
+- Antialiased fonts in Java can be enabled by passing parameter
+  "-Dswing.aatext=true" when running Java application. Also, please note,
+  that Java can use only TrueType fonts.
+
+Contact
+=======
+
+E-mail: metatheme-dev@lists.advel.cz
+        Martin Dvorak <jezek2@advel.cz>
+
+IRC:    jezek2 at FreeNode (#freedesktop.org)
+        jezek2 at IRCNet
