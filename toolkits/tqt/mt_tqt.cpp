@@ -1224,7 +1224,9 @@ void MetaThemeStyle::drawControl(ControlElement element,
             if (btn->isToggleButton()) toggleButton = true;
             if (btn->isDefault()) defaultButton = true;
          }
-         TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+
+         mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL, MT_BUTTON, state, r.x(), r.y(), r.width(), r.height(), &data);
+
          toggleButton = false;
          defaultButton = false;
          break;
