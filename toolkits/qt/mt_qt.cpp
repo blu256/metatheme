@@ -47,10 +47,10 @@
 #include <tqlineedit.h>
 #include <tqobjectlist.h>
 #ifdef HAVE_KDE
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmap.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 #endif
 
 #include <malloc.h>
@@ -514,13 +514,13 @@ Q_EXPORT_PLUGIN(MetaThemeStylePlugin)
 
 MetaThemeStyle::MetaThemeStyle()
 #ifdef HAVE_KDE
-   :KStyle(AllowMenuTransparency), kickerMode(false)
+   :TDEStyle(AllowMenuTransparency), kickerMode(false)
 #endif
 {
    TQSettings settings;
-   pseudo3D = settings.readBoolEntry("/KStyle/Settings/Pseudo3D", true);
-   roundedCorners = settings.readBoolEntry("/KStyle/Settings/RoundedCorners", true);
-   useTextShadows = settings.readBoolEntry("/KStyle/Settings/UseTextShadows", false);
+   pseudo3D = settings.readBoolEntry("/TDEStyle/Settings/Pseudo3D", true);
+   roundedCorners = settings.readBoolEntry("/TDEStyle/Settings/RoundedCorners", true);
+   useTextShadows = settings.readBoolEntry("/TDEStyle/Settings/UseTextShadows", false);
    reverseLayout = TQApplication::reverseLayout();
 
    metatheme_toolkit_init(&mt);
@@ -549,14 +549,14 @@ MetaThemeStyle::MetaThemeStyle()
    toolButtonDropDownActiveWidget = NULL;
 
 #ifdef HAVE_KDE
-   qtonly = (tqApp && tqApp->inherits("KApplication"))? false : true;
+   qtonly = (tqApp && tqApp->inherits("TDEApplication"))? false : true;
 #else
    qtonly = true;
 #endif
 
 #ifdef HAVE_KDE
    if (!qtonly) {
-      connect(kapp, SIGNAL(kdisplayFontChanged()), this, SLOT(updateFont()));
+      connect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
    }
 #endif
 }
@@ -566,7 +566,7 @@ MetaThemeStyle::~MetaThemeStyle()
 {
 #ifdef HAVE_KDE
    if (!qtonly && kapp) {
-      disconnect(kapp, SIGNAL(kdisplayFontChanged()), this, SLOT(updateFont()));
+      disconnect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
    }
 #endif
 
@@ -596,7 +596,7 @@ void MetaThemeStyle::polish(TQWidget *widget)
    if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
        widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
        widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
-       widget->inherits("KToolBarButton") || widget->inherits("TQLineEdit") ||
+       widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
        widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
       widget->installEventFilter(this);
    }
@@ -607,8 +607,8 @@ void MetaThemeStyle::polish(TQWidget *widget)
    }
 
 #ifdef HAVE_KDE
-   if (widget->inherits("KToolBarButton")) {
-      static_cast<KToolBarButton*>(widget)->modeChange();
+   if (widget->inherits("TDEToolBarButton")) {
+      static_cast<TDEToolBarButton*>(widget)->modeChange();
    }
 #endif
 
@@ -647,7 +647,7 @@ void MetaThemeStyle::polish(TQWidget *widget)
       }
    }
 
-   KStyle::polish(widget);
+   TDEStyle::polish(widget);
 }
 
 
@@ -656,7 +656,7 @@ void MetaThemeStyle::unPolish(TQWidget *widget)
    if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
        widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
        widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
-       widget->inherits("KToolBarButton") || widget->inherits("TQLineEdit") ||
+       widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
        widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
       widget->removeEventFilter(this);
    }
@@ -692,12 +692,12 @@ void MetaThemeStyle::unPolish(TQWidget *widget)
       }
    }
 
-   KStyle::unPolish(widget);
+   TDEStyle::unPolish(widget);
 }
 
 
 #ifdef HAVE_KDE
-void MetaThemeStyle::drawKStylePrimitive(KStylePrimitive kpe,
+void MetaThemeStyle::drawTDEStylePrimitive(TDEStylePrimitive kpe,
                                       TQPainter *p,
                                       const TQWidget *widget,
                                       const TQRect &r,
@@ -707,7 +707,7 @@ void MetaThemeStyle::drawKStylePrimitive(KStylePrimitive kpe,
 {
    switch (kpe) {
       default:
-         KStyle::drawKStylePrimitive(kpe, p, widget, r, cg, flags, opt);
+         TDEStyle::drawTDEStylePrimitive(kpe, p, widget, r, cg, flags, opt);
    }
 }
 #endif
@@ -1228,7 +1228,7 @@ void MetaThemeStyle::drawControl(ControlElement element,
             if (btn->isToggleButton()) toggleButton = true;
             if (btn->isDefault()) defaultButton = true;
          }
-         KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+         TDEStyle::drawControl(element, p, widget, r, cg, flags, opt);
          toggleButton = false;
          defaultButton = false;
          break;
@@ -1284,7 +1284,7 @@ void MetaThemeStyle::drawControl(ControlElement element,
       }
 
       default:
-         KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+         TDEStyle::drawControl(element, p, widget, r, cg, flags, opt);
    }
 }
 
@@ -1582,7 +1582,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
             }
 
 #ifdef HAVE_KDE
-            if (toolbutton->inherits("KToolBarButton") && toolbutton->popup()) {
+            if (toolbutton->inherits("TDEToolBarButton") && toolbutton->popup()) {
                type = MT_TOOLBAR_ITEM_DROPDOWN;
                data.flags = 0;
                if (widget == toolButtonDropDownActiveWidget) {
@@ -1611,10 +1611,10 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
 
 #ifdef HAVE_KDE
          // hack:
-         if (toolbutton->inherits("KToolBarButton") && toolbutton->popup()) {
+         if (toolbutton->inherits("TDEToolBarButton") && toolbutton->popup()) {
             const TQObject *parent = toolbutton->parent();
 
-            if (parent && parent->inherits("KToolBar") && static_cast<const KToolBar *>(parent)->iconText() == KToolBar::IconTextRight) {
+            if (parent && parent->inherits("TDEToolBar") && static_cast<const TDEToolBar *>(parent)->iconText() == TDEToolBar::IconTextRight) {
                /* nothing */
             }
             else {
@@ -1628,7 +1628,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          }
 
          // hack:
-         if (toolbutton->inherits("KToolBarButton") && (flags & Style_Down)) {
+         if (toolbutton->inherits("TDEToolBarButton") && (flags & Style_Down)) {
             p->translate(mt_engine->metric_size[MT_TOOLBAR_ITEM_TEXT_OFFSET].x - 1, mt_engine->metric_size[MT_TOOLBAR_ITEM_TEXT_OFFSET].y - 1);
          }
 #endif
@@ -1663,7 +1663,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
       }
 
       default:
-         KStyle::drawComplexControl(control, p, widget, r, cg, flags, controls, active, opt);
+         TDEStyle::drawComplexControl(control, p, widget, r, cg, flags, controls, active, opt);
    }
 }
 
@@ -1695,7 +1695,7 @@ void MetaThemeStyle::drawItem(TQPainter *p,
       stringType = 0;
    }
    else {
-      KStyle::drawItem(p, r, flags, g, enabled, pixmap, text, len, penColor);
+      TDEStyle::drawItem(p, r, flags, g, enabled, pixmap, text, len, penColor);
    }
 }
 
@@ -1716,7 +1716,7 @@ TQRect MetaThemeStyle::subRect(SubRect r, const TQWidget *widget) const
       }
 
       default:
-         return KStyle::subRect(r, widget);
+         return TDEStyle::subRect(r, widget);
    }
 }
 
@@ -1778,7 +1778,7 @@ TQRect MetaThemeStyle::querySubControlMetrics(ComplexControl control,
       }
    }
 
-   return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
+   return TDEStyle::querySubControlMetrics(control, widget, subcontrol, opt);
 }
 
 
@@ -1952,7 +1952,7 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 #endif
    }
 
-   return KStyle::pixelMetric(m, widget);
+   return TDEStyle::pixelMetric(m, widget);
 }
 
 
@@ -2025,7 +2025,7 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
 
       case CT_SpinBox:
       {
-         TQSize ret = KStyle::sizeFromContents (t, widget, s, opt);
+         TQSize ret = TDEStyle::sizeFromContents (t, widget, s, opt);
          ret.setHeight(TQMAX(ret.height(), 21));
          return ret;
       }
@@ -2046,14 +2046,14 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
          h += mt_engine->metric_size[MT_TOOLBAR_ITEM_BORDER].y*2;
 
 #ifdef HAVE_KDE
-         if (widget->inherits("KToolBarButton") && button->popup()) {
+         if (widget->inherits("TDEToolBarButton") && button->popup()) {
             w += mt_engine->metric[MT_TOOLBAR_ITEM_DROPDOWN_WIDTH];
          }
 
          // additional space for buttons with text in right of icon:
-         if (widget->inherits("KToolBarButton")) {
+         if (widget->inherits("TDEToolBarButton")) {
             const TQObject *parent = button->parent();
-            if (parent && parent->inherits("KToolBar") && static_cast<const KToolBar *>(parent)->iconText() == KToolBar::IconTextRight) {
+            if (parent && parent->inherits("TDEToolBar") && static_cast<const TDEToolBar *>(parent)->iconText() == TDEToolBar::IconTextRight) {
                w += 3;
             }
          }
@@ -2063,7 +2063,7 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
       }
    }
 
-   return KStyle::sizeFromContents (t, widget, s, opt);
+   return TDEStyle::sizeFromContents (t, widget, s, opt);
 }
 
 
@@ -2216,7 +2216,7 @@ int MetaThemeStyle::styleHint(StyleHint stylehint, const TQWidget *widget, const
 #endif
    }
 
-   return KStyle::styleHint(stylehint, widget, opt, returnData);
+   return TDEStyle::styleHint(stylehint, widget, opt, returnData);
 }
 
 
@@ -2228,7 +2228,7 @@ void MetaThemeStyle::updateFont()
 
 bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
 {
-   if (KStyle::eventFilter(obj, ev)) return true;
+   if (TDEStyle::eventFilter(obj, ev)) return true;
 
    if (!obj->isWidgetType()) return false;
 
@@ -2325,8 +2325,8 @@ bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
    }
 
 #ifdef HAVE_KDE
-   if (obj->inherits("KToolBarButton")) {
-      KToolBarButton* button = static_cast<KToolBarButton*>(obj);
+   if (obj->inherits("TDEToolBarButton")) {
+      TDEToolBarButton* button = static_cast<TDEToolBarButton*>(obj);
 
       if (ev->type() == TQEvent::MouseButtonPress && button->popup()) {
          if (static_cast<TQMouseEvent*>(ev)->x() >= button->width() - mt_engine->metric[MT_TOOLBAR_ITEM_DROPDOWN_WIDTH]) {
@@ -2369,7 +2369,7 @@ bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
       }
    }
 
-   if (!qstrcmp(obj->name(), "kde toolbar widget")) {
+   if (!qstrcmp(obj->name(), "tde toolbar widget")) {
       TQWidget* lb = static_cast<TQWidget*>(obj);
       if (lb->backgroundMode() == TQt::PaletteButton) lb->setBackgroundMode(TQt::PaletteBackground);
       lb->removeEventFilter(this);
@@ -2489,7 +2489,7 @@ void MetaThemeStyle::setFont()
    TQApplication::setFont(qfont, true);
    TQApplication::setFont(qfont, true, "TQMenuBar");
    TQApplication::setFont(qfont, true, "TQPopupMenu");
-   TQApplication::setFont(qfont, true, "KPopupTitle");
+   TQApplication::setFont(qfont, true, "TDEPopupTitle");
 
    // "patch" standard TQStyleSheet to follow our fonts
    TQStyleSheet *sheet = TQStyleSheet::defaultSheet();

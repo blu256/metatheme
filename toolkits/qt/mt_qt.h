@@ -25,7 +25,7 @@
 #endif
 
 #ifdef HAVE_KDE
-#include <kstyle.h>
+#include <tdestyle.h>
 #else
 #include <tqwindowsstyle.h>
 #endif
@@ -38,11 +38,11 @@ extern "C" {
 };
 
 #ifndef HAVE_KDE
-#define KStyle TQWindowsStyle
+#define TDEStyle TQWindowsStyle
 #endif
 
 
-class MetaThemeStyle: public KStyle
+class MetaThemeStyle: public TDEStyle
 {
    Q_OBJECT
 
@@ -59,7 +59,7 @@ public:
    virtual void unPolish(TQWidget *widget);
 
 #ifdef HAVE_KDE
-   void drawKStylePrimitive(KStylePrimitive kpe,
+   void drawTDEStylePrimitive(TDEStylePrimitive kpe,
       TQPainter *p,
       const TQWidget *widget,
       const TQRect &r,

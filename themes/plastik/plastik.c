@@ -45,7 +45,7 @@
  * Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
  *           (C) 2000 Dirk Mueller          <mueller@kde.org>
  *           (C) 2001 Martijn Klingens      <klingens@kde.org>
- * Progressbar code based on KStyle,
+ * Progressbar code based on TDEStyle,
  * Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  */
 
