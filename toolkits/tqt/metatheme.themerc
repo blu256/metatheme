@@ -1,0 +1,6 @@
+[Misc]
+Name=MetaTheme
+Comment=A common style engine for TQt, GTK+2 and Java/SWING 
+
+[KDE]
+WidgetStyle=metatheme

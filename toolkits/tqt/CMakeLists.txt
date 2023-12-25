@@ -34,3 +34,14 @@ tde_add_library(mt_tqt SHARED AUTOMOC
 
   DESTINATION ${METATHEMEDIR}/toolkits
 )
+
+install(
+  FILES metatheme.themerc
+  DESTINATION ${DATA_INSTALL_DIR}/tdestyle/themes
+)
+
+# Create a symlink so that TDE sees the library
+add_custom_command(
+    TARGET mt_tqt-shared POST_BUILD
+    COMMAND ln -sf ${METATHEMEDIR}/toolkits/libmt_tqt.so ${PLUGIN_INSTALL_DIR}/plugins/styles/metatheme.so
+)
