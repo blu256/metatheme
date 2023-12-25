@@ -17,18 +17,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MT_QT_H
-#define MT_QT_H
+#ifndef MT_TQT_H
+#define MT_TQT_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#ifdef HAVE_KDE
 #include <tdestyle.h>
-#else
-#include <tqwindowsstyle.h>
-#endif
 
 #include <tqbitmap.h>
 #include <tqptrdict.h>
@@ -37,14 +33,9 @@ extern "C" {
 #include "metathemeInt.h"
 };
 
-#ifndef HAVE_KDE
-#define TDEStyle TQWindowsStyle
-#endif
-
-
 class MetaThemeStyle: public TDEStyle
 {
-   Q_OBJECT
+   TQ_OBJECT
 
 public:
    MetaThemeStyle();
@@ -52,13 +43,12 @@ public:
 
    int retrieveState(SFlags flags) const;
    void retrieveColors(const TQWidget* widget, SFlags flags, const TQColorGroup &cg, MT_WIDGET_DATA *data, PrimitiveElement pe = PE_CustomBase) const;
-   
+
    virtual void polish(TQApplication *app);
    virtual void polish(TQPalette &);
-   virtual void polish(TQWidget *widget);
-   virtual void unPolish(TQWidget *widget);
+   virtual void polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr);
+   virtual void unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr);
 
-#ifdef HAVE_KDE
    void drawTDEStylePrimitive(TDEStylePrimitive kpe,
       TQPainter *p,
       const TQWidget *widget,
@@ -66,7 +56,6 @@ public:
       const TQColorGroup &cg,
       SFlags flags = Style_Default,
       const TQStyleOption& = TQStyleOption::Default) const;
-#endif
 
    void drawPrimitive(PrimitiveElement pe,
       TQPainter *p,
@@ -77,27 +66,33 @@ public:
 
    void drawControl(ControlElement element,
       TQPainter *p,
-      const TQWidget *widget,
+      const TQStyleControlElementData &ceData,
+      ControlElementFlags elementFlags,
       const TQRect &r,
       const TQColorGroup &cg,
       SFlags flags = Style_Default,
-      const TQStyleOption& = TQStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default,
+      const TQWidget *widget = 0) const;
 
    void drawControlMask(ControlElement element,
       TQPainter *p,
-      const TQWidget *widget,
+      const TQStyleControlElementData &ceData,
+      ControlElementFlags elementFlags,
       const TQRect &r,
-      const TQStyleOption& = TQStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default,
+      const TQWidget *widget = 0) const;
 
    void drawComplexControl(ComplexControl control,
       TQPainter *p,
-      const TQWidget *widget,
+      const TQStyleControlElementData &ceData,
+      ControlElementFlags elementFlags,
       const TQRect &r,
       const TQColorGroup &cg,
       SFlags flags = Style_Default,
       SCFlags controls = SC_All,
       SCFlags active = SC_None,
-      const TQStyleOption& = TQStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default,
+      const TQWidget *widget = 0) const;
 
    void drawItem(TQPainter *p,
       const TQRect &r,
@@ -109,24 +104,35 @@ public:
       int len = -1,
       const TQColor *penColor = 0) const;
 
-   int pixelMetric(PixelMetric m,
-      const TQWidget *widget = 0) const;
+   int pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData,
+                   ControlElementFlags elementFlags, const TQWidget *widget = 0) const;
 
-   TQRect subRect(SubRect r,
-      const TQWidget *widget) const;
+   TQRect subRect(SubRect r, const TQStyleControlElementData &ceData,
+                  ControlElementFlags elementFlags, const TQWidget *widget) const;
 
    TQRect querySubControlMetrics(ComplexControl control,
+      const TQStyleControlElementData &ceData,
+      ControlElementFlags elementFlags,
       const TQWidget *widget,
       SubControl subcontrol,
       const TQStyleOption &opt = TQStyleOption::Default) const;
 
    TQSize sizeFromContents(TQStyle::ContentsType t,
-                          const TQWidget *w,
-                          const TQSize &s,
-                          const TQStyleOption &o) const;
+                           const TQStyleControlElementData &ceData,
+                           ControlElementFlags elementFlags,
+                           const TQWidget *w,
+                           const TQSize &s,
+                           const TQStyleOption &o) const;
 
-   int styleHint(StyleHint stylehint, const TQWidget *widget = 0, const TQStyleOption &opt = TQStyleOption::Default, TQStyleHintReturn *returnData = 0) const;
-   bool eventFilter(TQObject *, TQEvent *);
+   int styleHint(StyleHint stylehint,
+                 const TQStyleControlElementData &ceData,
+                 ControlElementFlags elementFlags,
+                 const TQWidget *widget = 0,
+                 const TQStyleOption &opt = TQStyleOption::Default,
+                 TQStyleHintReturn *returnData = 0) const;
+   bool objectEventHandler(const TQStyleControlElementData &ceData,
+                           ControlElementFlags elementFlags, void* source,
+                           TQEvent *ev );
    void setColorPalette(MT_COLOR_PALETTE *pal);
    void setFont();
 
@@ -155,12 +161,12 @@ private:
 
 class MetaThemeHelper: public TQObject
 {
-   Q_OBJECT
-   
+   TQ_OBJECT
+
 public slots:
    void widgetDestroyedForData(TQObject *obj);
    void widgetDestroyedForRef(TQObject *obj);
 
 };
 
-#endif /* MT_QT_H */
+#endif /* MT_TQT_H */

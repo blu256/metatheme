@@ -20,7 +20,7 @@
 #ifndef HIGHCOLOR_H
 #define HIGHCOLOR_H
 
-#include "metathementqt.h"
+#include "metathemetqt.h"
 
 
 class HighColorEngine: public ThemeEngine

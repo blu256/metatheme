@@ -46,18 +46,17 @@
 #include <tqstylesheet.h>
 #include <tqlineedit.h>
 #include <tqobjectlist.h>
-#ifdef HAVE_KDE
+
 #include <tdeapplication.h>
 #include <kpixmap.h>
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>
-#endif
 
 #include <malloc.h>
 #include <stdlib.h>
 
-#include "mt_ntqt.h"
-#include "mt_qt.moc"
+#include "mt_tqt.h"
+#include "mt_tqt.moc"
 
 #define MT_STRING_SET_TYPE(type, state) { stringType = (type); stringState = (state); }
 
@@ -509,13 +508,11 @@ public:
    }
 };
 
-Q_EXPORT_PLUGIN(MetaThemeStylePlugin)
+TQ_EXPORT_PLUGIN(MetaThemeStylePlugin)
 
 
 MetaThemeStyle::MetaThemeStyle()
-#ifdef HAVE_KDE
    :TDEStyle(AllowMenuTransparency), kickerMode(false)
-#endif
 {
    TQSettings settings;
    pseudo3D = settings.readBoolEntry("/TDEStyle/Settings/Pseudo3D", true);
@@ -548,27 +545,19 @@ MetaThemeStyle::MetaThemeStyle()
    toolButtonPopup = false;
    toolButtonDropDownActiveWidget = NULL;
 
-#ifdef HAVE_KDE
    qtonly = (tqApp && tqApp->inherits("TDEApplication"))? false : true;
-#else
-   qtonly = true;
-#endif
 
-#ifdef HAVE_KDE
    if (!qtonly) {
       connect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
    }
-#endif
 }
 
 
 MetaThemeStyle::~MetaThemeStyle()
 {
-#ifdef HAVE_KDE
    if (!qtonly && kapp) {
       disconnect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
    }
-#endif
 
    if (mt_engine) {
       MT_LIBRARY *mt_library = mt_engine->library;
@@ -591,112 +580,119 @@ void MetaThemeStyle::polish(TQPalette &pal)
 }
 
 
-void MetaThemeStyle::polish(TQWidget *widget)
+void MetaThemeStyle::polish(const TQStyleControlElementData &ceData,
+                            ControlElementFlags elementFlags, void *ptr)
 {
-   if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
-       widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
-       widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
-       widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
-       widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
-      widget->installEventFilter(this);
-   }
+   if (ceData.widgetObjectTypes.contains("TQWidget")) {
+        TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-   if (widget->inherits("TQScrollBar")) {
-      widget->installEventFilter(this);
-      widget->setMouseTracking(true);
-   }
+        if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
+            widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
+            widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
+            widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
+            widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
+            widget->installEventFilter(this);
+        }
 
-#ifdef HAVE_KDE
-   if (widget->inherits("TDEToolBarButton")) {
-      static_cast<TDEToolBarButton*>(widget)->modeChange();
-   }
-#endif
+        if (widget->inherits("TQScrollBar")) {
+            widget->installEventFilter(this);
+            widget->setMouseTracking(true);
+        }
 
-   if (widget->inherits("TQTipLabel")) {
-      TQPalette pal(widget->palette());
-      pal.setColor(TQPalette::Active, TQColorGroup::Background, TQColor(255, 255, 225));
-      widget->setPalette(pal);
-   }
+        if (widget->inherits("TDEToolBarButton")) {
+            static_cast<TDEToolBarButton*>(widget)->modeChange();
+        }
 
-   if (widget->inherits("TQToolBar") || widget->inherits("TQToolButton") || widget->inherits("TQMenuBar")) {
-      if (widget->backgroundMode() == TQt::PaletteButton) {
-         widget->setBackgroundMode(TQt::PaletteBackground);
-      }
-   }
+        if (widget->inherits("TQTipLabel")) {
+            TQPalette pal(widget->palette());
+            pal.setColor(TQPalette::Active, TQColorGroup::Background, TQColor(255, 255, 225));
+            widget->setPalette(pal);
+        }
 
-   if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
-      if (!qstrcmp(widget->name(), "tab pages")) {
-         widget->installEventFilter(this);
-      }
-      else if (widget->backgroundMode() == TQt::PaletteBackground && !widget->ownPalette() && !tabWidgets.find(widget)) {
-         TQWidget *w = widget;
-         while (w) {
-            if (w->inherits("TQScrollView") || w->inherits("TQWorkspace")) {
-               break;
+        if (widget->inherits("TQToolBar") || widget->inherits("TQToolButton") || widget->inherits("TQMenuBar")) {
+            if (widget->backgroundMode() == TQt::PaletteButton) {
+                widget->setBackgroundMode(TQt::PaletteBackground);
             }
+        }
 
-            if (!qstrcmp(w->name(), "tab pages")) {
-               tabWidgets.replace(widget, w);
-               widget->installEventFilter(this);
-               widget->setBackgroundMode(TQt::NoBackground);
-               break;
+        if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
+            if (!qstrcmp(widget->name(), "tab pages")) {
+                widget->installEventFilter(this);
             }
+            else if (widget->backgroundMode() == TQt::PaletteBackground && !widget->ownPalette() && !tabWidgets.find(widget)) {
+                TQWidget *w = widget;
+                while (w) {
+                    if (w->inherits("TQScrollView") || w->inherits("TQWorkspace")) {
+                    break;
+                    }
 
-            w = w->parentWidget(true);
-         }
-      }
+                    if (!qstrcmp(w->name(), "tab pages")) {
+                    tabWidgets.replace(widget, w);
+                    widget->installEventFilter(this);
+                    widget->setBackgroundMode(TQt::NoBackground);
+                    break;
+                    }
+
+                    w = w->parentWidget(true);
+                }
+            }
+       }
    }
-
-   TDEStyle::polish(widget);
+   TDEStyle::polish(ceData, elementFlags, ptr);
 }
 
 
-void MetaThemeStyle::unPolish(TQWidget *widget)
+void MetaThemeStyle::unPolish(const TQStyleControlElementData &ceData,
+                              ControlElementFlags elementFlags, void *ptr)
 {
-   if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
-       widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
-       widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
-       widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
-       widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
-      widget->removeEventFilter(this);
-   }
 
-   if (widget->inherits("TQScrollBar")) {
-      widget->removeEventFilter(this);
-      widget->setMouseTracking(false);
-   }
+    if (ceData.widgetObjectTypes.contains("TQWidget")) {
+        TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-   if (widget->inherits("TQLineEdit") && widget->backgroundPixmap()) {
-      widget->setBackgroundMode(TQt::PaletteBase);
-   }
+        if (widget->inherits("TQPushButton") || widget->inherits("TQComboBox") ||
+            widget->inherits("TQSpinWidget") || widget->inherits("TQSlider") ||
+            widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
+            widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
+            widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
+            widget->removeEventFilter(this);
+        }
 
-   if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
-      if (!qstrcmp(widget->name(), "tab pages")) {
-         widget->removeEventFilter(this);
+        if (widget->inherits("TQScrollBar")) {
+            widget->removeEventFilter(this);
+            widget->setMouseTracking(false);
+        }
 
-         // unpolish all registered widgets with this tab pages widget:
-         TQPtrDictIterator<TQWidget> it(tabWidgets);
-         while (it.current()) {
-            if (it.current() == widget) {
-               unPolish((TQWidget *)it.currentKey());
+        if (widget->inherits("TQLineEdit") && widget->backgroundPixmap()) {
+            widget->setBackgroundMode(TQt::PaletteBase);
+        }
+
+        if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
+            if (!qstrcmp(widget->name(), "tab pages")) {
+                widget->removeEventFilter(this);
+
+                // unpolish all registered widgets with this tab pages widget:
+                TQPtrDictIterator<TQWidget> it(tabWidgets);
+                while (it.current()) {
+                    if (it.current() == widget) {
+                        TQStyle::unPolish((TQWidget *)it.currentKey());
+                    }
+                    ++it;
+                }
             }
-            ++it;
-         }
-      }
 
-      if (tabWidgets.find(widget)) {
-         widget->removeEventFilter(this);
-         widget->setBackgroundMode(TQt::PaletteBackground);
+            if (tabWidgets.find(widget)) {
+                widget->removeEventFilter(this);
+                widget->setBackgroundMode(TQt::PaletteBackground);
 
-         tabWidgets.remove(widget);
-      }
-   }
+                tabWidgets.remove(widget);
+            }
+        }
+    }
 
-   TDEStyle::unPolish(widget);
+    TDEStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 
-#ifdef HAVE_KDE
 void MetaThemeStyle::drawTDEStylePrimitive(TDEStylePrimitive kpe,
                                       TQPainter *p,
                                       const TQWidget *widget,
@@ -710,7 +706,6 @@ void MetaThemeStyle::drawTDEStylePrimitive(TDEStylePrimitive kpe,
          TDEStyle::drawTDEStylePrimitive(kpe, p, widget, r, cg, flags, opt);
    }
 }
-#endif
 
 
 int MetaThemeStyle::retrieveState(SFlags flags) const
@@ -984,11 +979,13 @@ draw:
 
 void MetaThemeStyle::drawControl(ControlElement element,
                               TQPainter *p,
-                              const TQWidget *widget,
+                              const TQStyleControlElementData &ceData,
+                              ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
                               SFlags flags,
-                              const TQStyleOption& opt) const
+                              const TQStyleOption& opt,
+                              const TQWidget *widget) const
 {
    if (widget == hoverWidget) flags |= Style_MouseOver;
 
@@ -1012,7 +1009,7 @@ void MetaThemeStyle::drawControl(ControlElement element,
          TQMenuItem *mi = opt.menuItem();
          int alignment = AlignCenter|ShowPrefix|DontClip|SingleLine;
 #if TQT_VERSION >= 0x030300
-         if (!styleHint(SH_UnderlineAccelerator, widget, TQStyleOption::Default, 0)) alignment |= NoAccel;
+         if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, widget, TQStyleOption::Default, 0)) alignment |= NoAccel;
 #endif
 
          TQRect r2 = r;
@@ -1083,9 +1080,9 @@ void MetaThemeStyle::drawControl(ControlElement element,
             TQString ts;
             int tleft;
 
-#if TQT_VERSION >= 0x030300
-            if (!styleHint(SH_UnderlineAccelerator, widget)) text_flags |= NoAccel;
-#endif
+            if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, widget)) {
+                text_flags |= NoAccel;
+            }
             text_flags |= (TQApplication::reverseLayout()? AlignRight : AlignLeft);
 
             if (t >= 0) {
@@ -1207,11 +1204,9 @@ void MetaThemeStyle::drawControl(ControlElement element,
          }
 
          int alignment = AlignCenter | ShowPrefix;
-#if TQT_VERSION >= 0x030300
-         if (!styleHint(SH_UnderlineAccelerator, widget, TQStyleOption::Default, 0)) {
+         if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, widget, TQStyleOption::Default, 0)) {
             alignment |= NoAccel;
          }
-#endif
 
          drawItem(p, tr, alignment, cg, flags & Style_Enabled, 0, t->text());
 
@@ -1228,7 +1223,7 @@ void MetaThemeStyle::drawControl(ControlElement element,
             if (btn->isToggleButton()) toggleButton = true;
             if (btn->isDefault()) defaultButton = true;
          }
-         TDEStyle::drawControl(element, p, widget, r, cg, flags, opt);
+         TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
          toggleButton = false;
          defaultButton = false;
          break;
@@ -1243,8 +1238,8 @@ void MetaThemeStyle::drawControl(ControlElement element,
 
          // shift button contents if pushed:
          if (active) {
-            x += pixelMetric(PM_ButtonShiftHorizontal, widget);
-            y += pixelMetric(PM_ButtonShiftVertical, widget);
+            x += pixelMetric(PM_ButtonShiftHorizontal, ceData, elementFlags, widget);
+            y += pixelMetric(PM_ButtonShiftVertical, ceData, elementFlags, widget);
             flags |= Style_Sunken;
          }
 
@@ -1278,22 +1273,24 @@ void MetaThemeStyle::drawControl(ControlElement element,
          drawItem(p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, button->colorGroup(), button->isEnabled(), button->pixmap(), button->text(), -1, &button->colorGroup().buttonText());
 
          if (flags & Style_HasFocus) {
-            drawPrimitive(PE_FocusRect, p, visualRect(subRect(SR_PushButtonFocusRect, widget), widget), cg, flags);
+            drawPrimitive(PE_FocusRect, p, visualRect(subRect(SR_PushButtonFocusRect, ceData, elementFlags, widget), widget), cg, flags);
          }
          break;
       }
 
       default:
-         TDEStyle::drawControl(element, p, widget, r, cg, flags, opt);
+         TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
    }
 }
 
 
 void MetaThemeStyle::drawControlMask(ControlElement element,
-                              TQPainter *p,
-                              const TQWidget *widget,
-                              const TQRect &r,
-                              const TQStyleOption& opt) const
+                                     TQPainter *p,
+                                     const TQStyleControlElementData &ceData,
+                                     ControlElementFlags elementFlags,
+                                     const TQRect &r,
+                                     const TQStyleOption& opt,
+                                     const TQWidget *widget) const
 {
    TQColorGroup cg(color1, color1, color1, color1, color1, color1, color1, color1, color0);
 
@@ -1324,14 +1321,16 @@ void MetaThemeStyle::drawControlMask(ControlElement element,
 
 
 void MetaThemeStyle::drawComplexControl(ComplexControl control,
-                                     TQPainter *p,
-                                     const TQWidget *widget,
-                                     const TQRect &r,
-                                     const TQColorGroup &cg,
-                                     SFlags flags,
-                                     SCFlags controls,
-                                     SCFlags active,
-                                     const TQStyleOption& opt) const
+                                        TQPainter *p,
+                                        const TQStyleControlElementData &ceData,
+                                        ControlElementFlags elementFlags,
+                                        const TQRect &r,
+                                        const TQColorGroup &cg,
+                                        SFlags flags,
+                                        SCFlags controls,
+                                        SCFlags active,
+                                        const TQStyleOption& opt,
+                                        const TQWidget *widget) const
 {
    MT_WIDGET_DATA data;
    int type=0, state=retrieveState(flags);
@@ -1350,13 +1349,13 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
             data.flags |= MT_SCROLLBAR_UNSCROLLABLE;
          }
 
-         subline = querySubControlMetrics(control, widget, SC_ScrollBarSubLine, opt);
-         addline = querySubControlMetrics(control, widget, SC_ScrollBarAddLine, opt);
-         subpage = querySubControlMetrics(control, widget, SC_ScrollBarSubPage, opt);
-         addpage = querySubControlMetrics(control, widget, SC_ScrollBarAddPage, opt);
-         slider  = querySubControlMetrics(control, widget, SC_ScrollBarSlider,  opt);
-         first   = querySubControlMetrics(control, widget, SC_ScrollBarFirst,   opt);
-         last    = querySubControlMetrics(control, widget, SC_ScrollBarLast,    opt);
+         subline = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarSubLine, opt);
+         addline = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarAddLine, opt);
+         subpage = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarSubPage, opt);
+         addpage = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarAddPage, opt);
+         slider  = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarSlider,  opt);
+         first   = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarFirst,   opt);
+         last    = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarLast,    opt);
 
          if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
             if (hoverWidget == widget && hoverPart == 2 && !scrollbar->draggingSlider()) state |= MT_HOVER;
@@ -1523,15 +1522,15 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          p->save();
          
          if (controls & SC_ComboBoxFrame) {
-            re = querySubControlMetrics(control, widget, SC_ComboBoxFrame, opt);
+            re = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ComboBoxFrame, opt);
             p->setClipRect(re);
             mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL, MT_CHOICE, state, re.x(), re.y(), re.width(), re.height(), &data);
          }
          if (controls & SC_ComboBoxEditField) {
-            re = querySubControlMetrics(control, widget, SC_ComboBoxEditField, opt);
+            re = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ComboBoxEditField, opt);
          }
          if (controls & SC_ComboBoxArrow) {
-            re = querySubControlMetrics(control, widget, SC_ComboBoxArrow, opt);
+            re = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ComboBoxArrow, opt);
             p->setClipRect(re);
             mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL, MT_CHOICE_BUTTON, state, re.x(), re.y(), re.width(), re.height(), &data);
          }
@@ -1545,8 +1544,8 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          const TQToolButton *toolbutton = (const TQToolButton *) widget;
 
          TQRect button, menuarea;
-         button   = visualRect(querySubControlMetrics(control, widget, SC_ToolButton, opt), widget);
-         menuarea = visualRect(querySubControlMetrics(control, widget, SC_ToolButtonMenu, opt), widget);
+         button   = visualRect(querySubControlMetrics(control, ceData, elementFlags, widget, SC_ToolButton, opt), widget);
+         menuarea = visualRect(querySubControlMetrics(control, ceData, elementFlags, widget, SC_ToolButtonMenu, opt), widget);
 
          if (toolbutton->parent() && toolbutton->parent()->inherits("TQTabBar")) {
             type = (opt.arrowType() == TQt::LeftArrow)? MT_NOTEBOOK_ARROW_LEFT : MT_NOTEBOOK_ARROW_RIGHT;
@@ -1581,7 +1580,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
                if (flags & Style_On) state |= MT_ACTIVE;
             }
 
-#ifdef HAVE_KDE
             if (toolbutton->inherits("TDEToolBarButton") && toolbutton->popup()) {
                type = MT_TOOLBAR_ITEM_DROPDOWN;
                data.flags = 0;
@@ -1589,7 +1587,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
                   data.flags |= MT_TOOLBAR_ITEM_DROPDOWN_ACTIVE;
                }
             }
-#endif
 
             mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL, type, state, button.x(), button.y(), button.width(), button.height(), &data);
          }
@@ -1609,7 +1606,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
             drawPrimitive(PE_FocusRect, p, fr, c);
          }
 
-#ifdef HAVE_KDE
          // hack:
          if (toolbutton->inherits("TDEToolBarButton") && toolbutton->popup()) {
             const TQObject *parent = toolbutton->parent();
@@ -1631,7 +1627,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          if (toolbutton->inherits("TDEToolBarButton") && (flags & Style_Down)) {
             p->translate(mt_engine->metric_size[MT_TOOLBAR_ITEM_TEXT_OFFSET].x - 1, mt_engine->metric_size[MT_TOOLBAR_ITEM_TEXT_OFFSET].y - 1);
          }
-#endif
 
          // hack:
          if (toolbutton->isToggleButton() && (flags & Style_On) && !(flags & Style_Down)) {
@@ -1643,8 +1638,8 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
       case CC_Slider:
       {
          const TQSlider *sl = (const TQSlider *)widget;
-         TQRect groove = querySubControlMetrics(CC_Slider, widget, SC_SliderGroove, opt);
-         TQRect handle = querySubControlMetrics(CC_Slider, widget, SC_SliderHandle, opt);
+         TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, widget, SC_SliderGroove, opt);
+         TQRect handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, widget, SC_SliderHandle, opt);
 
          data.orientation = (sl->orientation() == Horizontal)? MT_HORIZONTAL : MT_VERTICAL;
 
@@ -1653,7 +1648,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          }
 
          if (controls & SC_SliderTickmarks) {
-            TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags, SC_SliderTickmarks, active, opt);
+            TQCommonStyle::drawComplexControl(control, p, ceData, elementFlags, r, cg, flags, SC_SliderTickmarks, active, opt, widget);
          }
 
          if (controls & SC_SliderHandle) {
@@ -1663,7 +1658,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
       }
 
       default:
-         TDEStyle::drawComplexControl(control, p, widget, r, cg, flags, controls, active, opt);
+         TDEStyle::drawComplexControl(control, p, ceData, elementFlags, r, cg, flags, controls, active, opt, widget);
    }
 }
 
@@ -1700,7 +1695,8 @@ void MetaThemeStyle::drawItem(TQPainter *p,
 }
 
 
-TQRect MetaThemeStyle::subRect(SubRect r, const TQWidget *widget) const
+TQRect MetaThemeStyle::subRect(SubRect r, const TQStyleControlElementData &ceData,
+                               ControlElementFlags elementFlags, const TQWidget *widget) const
 {
    switch (r) {
       case SR_ProgressBarGroove:
@@ -1716,15 +1712,17 @@ TQRect MetaThemeStyle::subRect(SubRect r, const TQWidget *widget) const
       }
 
       default:
-         return TDEStyle::subRect(r, widget);
+         return TDEStyle::subRect(r, ceData, elementFlags, widget);
    }
 }
 
 
 TQRect MetaThemeStyle::querySubControlMetrics(ComplexControl control,
-                                          const TQWidget *widget,
-                                          SubControl subcontrol,
-                                          const TQStyleOption &opt) const
+                                              const TQStyleControlElementData &ceData,
+                                              ControlElementFlags elementFlags,
+                                              const TQWidget *widget,
+                                              SubControl subcontrol,
+                                              const TQStyleOption &opt) const
 {
    if (!widget) {
       return TQRect();
@@ -1778,11 +1776,12 @@ TQRect MetaThemeStyle::querySubControlMetrics(ComplexControl control,
       }
    }
 
-   return TDEStyle::querySubControlMetrics(control, widget, subcontrol, opt);
+   return TDEStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
 }
 
 
-int MetaThemeStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
+int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData,
+                                ControlElementFlags elementFlags, const TQWidget *widget) const
 {
    switch (m) {
       case PM_ButtonMargin: return 0; /* MT_BUTTON_BORDER: real value is returned by sizeFromContents method */
@@ -1952,14 +1951,16 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 #endif
    }
 
-   return TDEStyle::pixelMetric(m, widget);
+   return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
 }
 
 
 TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
-                                    const TQWidget *widget,
-                                    const TQSize &s,
-                                    const TQStyleOption &opt) const
+                                        const TQStyleControlElementData &ceData,
+                                        ControlElementFlags elementFlags,
+                                        const TQWidget *widget,
+                                        const TQSize &s,
+                                        const TQStyleOption &opt) const
 {
    switch (t) {
 
@@ -1967,7 +1968,7 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
       {
          const TQPushButton *button = (const TQPushButton *)widget;
          int w = s.width(), h = s.height();
-         int fw = pixelMetric(PM_DefaultFrameWidth, widget) * 2;
+         int fw = pixelMetric(PM_DefaultFrameWidth, ceData, elementFlags, widget) * 2;
          int m = button->isToggleButton()? MT_BUTTON_TOGGLE_BORDER : MT_BUTTON_BORDER;
 
          w += mt_engine->metric_size[m].x*2 + fw;
@@ -2025,7 +2026,7 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
 
       case CT_SpinBox:
       {
-         TQSize ret = TDEStyle::sizeFromContents (t, widget, s, opt);
+         TQSize ret = TDEStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
          ret.setHeight(TQMAX(ret.height(), 21));
          return ret;
       }
@@ -2045,7 +2046,6 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
          w += mt_engine->metric_size[MT_TOOLBAR_ITEM_BORDER].x*2;
          h += mt_engine->metric_size[MT_TOOLBAR_ITEM_BORDER].y*2;
 
-#ifdef HAVE_KDE
          if (widget->inherits("TDEToolBarButton") && button->popup()) {
             w += mt_engine->metric[MT_TOOLBAR_ITEM_DROPDOWN_WIDTH];
          }
@@ -2057,17 +2057,21 @@ TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
                w += 3;
             }
          }
-#endif
 
          return TQSize(w, h);
       }
    }
 
-   return TDEStyle::sizeFromContents (t, widget, s, opt);
+   return TDEStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
 }
 
 
-int MetaThemeStyle::styleHint(StyleHint stylehint, const TQWidget *widget, const TQStyleOption &opt, TQStyleHintReturn *returnData) const
+int MetaThemeStyle::styleHint(StyleHint stylehint,
+                              const TQStyleControlElementData &ceData,
+                              ControlElementFlags elementFlags,
+                              const TQWidget *widget,
+                              const TQStyleOption &opt,
+                              TQStyleHintReturn *returnData) const
 {
    switch (stylehint) {
 
@@ -2095,7 +2099,7 @@ int MetaThemeStyle::styleHint(StyleHint stylehint, const TQWidget *widget, const
          return TQt::AlignLeft;
 
       case SH_Header_ArrowAlignment: // the placement of the sorting indicator may appear in list or table headers. Possible values are TQt::Left or TQt::Right.
-         return TQt::Right;
+         return TQt::DockRight;
 
       case SH_Slider_SnapToValue: // sliders snap to values while moving, like Windows
          return 1;
@@ -2216,7 +2220,7 @@ int MetaThemeStyle::styleHint(StyleHint stylehint, const TQWidget *widget, const
 #endif
    }
 
-   return TDEStyle::styleHint(stylehint, widget, opt, returnData);
+   return TDEStyle::styleHint(stylehint, ceData, elementFlags, opt, returnData, widget);
 }
 
 
@@ -2226,9 +2230,16 @@ void MetaThemeStyle::updateFont()
 }
 
 
-bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
+bool MetaThemeStyle::objectEventHandler(const TQStyleControlElementData &ceData,
+                                        ControlElementFlags elementFlags, void* source,
+                                        TQEvent *ev )
 {
-   if (TDEStyle::eventFilter(obj, ev)) return true;
+   if (TDEStyle::objectEventHandler(ceData, elementFlags, source, ev)) {
+      return true;
+   }
+
+   if (!ceData.widgetObjectTypes.contains("TQObject")) return false;
+   TQObject *obj = reinterpret_cast<TQObject *>(source);
 
    if (!obj->isWidgetType()) return false;
 
@@ -2300,9 +2311,9 @@ bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
          oldPart = 0;
       }
 
-      subline = querySubControlMetrics(CC_ScrollBar, scrollbar, SC_ScrollBarSubLine);
-      addline = querySubControlMetrics(CC_ScrollBar, scrollbar, SC_ScrollBarAddLine);
-      slider  = querySubControlMetrics(CC_ScrollBar, scrollbar, SC_ScrollBarSlider);
+      subline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSubLine);
+      addline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarAddLine);
+      slider  = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSlider);
 
       hoverPart = 0;
       if (slider.contains(mev->pos())) {
@@ -2324,7 +2335,6 @@ bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
       return false;
    }
 
-#ifdef HAVE_KDE
    if (obj->inherits("TDEToolBarButton")) {
       TDEToolBarButton* button = static_cast<TDEToolBarButton*>(obj);
 
@@ -2342,7 +2352,6 @@ bool MetaThemeStyle::eventFilter(TQObject *obj, TQEvent *ev)
          toolButtonDropDownActiveWidget = NULL;
       }
    }
-#endif
 
    if ((obj->inherits("TQLineEdit") || obj->inherits("TQComboBox")) && ev->type() == TQEvent::Paint) {
       TQWidget *le = static_cast<TQWidget*>(obj);

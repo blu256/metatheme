@@ -22,7 +22,7 @@
  *
  * KDE3 HighColor Style (version 1.0)
  * Copyright (C) 2001-2002 Karol Szwed      <gallium@kde.org>
- *           (C) 2001-2002 Fredrik Höglund  <fredrik@kde.org> 
+ *           (C) 2001-2002 Fredrik Hï¿½glund  <fredrik@kde.org> 
  *
  * Drawing routines adapted from the KDE2 HCStyle,
  * Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
@@ -1334,7 +1334,7 @@ void HighColorEngine::qDrawShadePanel( TQPainter *p, int x, int y, int w, int h,
    return;
     if ( !( w > 0 && h > 0 && lineWidth >= 0 ) ) {
 #if defined(QT_CHECK_RANGE)
-       tqWarning( "qDrawShadePanel() Invalid parameters." );
+       fprintf(stderr, "qDrawShadePanel() Invalid parameters.");
 #endif
     }
     TQColor shade = g.dark();

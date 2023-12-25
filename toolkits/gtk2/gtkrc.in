@@ -1,0 +1,5 @@
+style "metatheme"
+{
+    engine "@METATHEMEDIR@/toolkits/libmt_gtk2.so" {}
+}
+widget_class "*" style "metatheme"

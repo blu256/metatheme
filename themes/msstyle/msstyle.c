@@ -95,6 +95,7 @@ void metatheme_init(MT_ENGINE *engine)
 
    DATA(ms) = ms_open_theme(theme);
    if (!DATA(ms)) {
+      fprintf(stderr, "Error while loading theme.\n");
       goto redmond;
    }
 
