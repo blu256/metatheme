@@ -629,7 +629,8 @@ void MetaThemeStyle::polish(const TQStyleControlElementData &ceData,
                     if (!qstrcmp(w->name(), "tab pages")) {
                     tabWidgets.replace(widget, w);
                     widget->installEventFilter(this);
-                    widget->setBackgroundMode(TQt::NoBackground);
+                    //TODO: Why was this this needed?
+                    //widget->setBackgroundMode(TQt::NoBackground);
                     break;
                     }
 
@@ -694,12 +695,12 @@ void MetaThemeStyle::unPolish(const TQStyleControlElementData &ceData,
 
 
 void MetaThemeStyle::drawTDEStylePrimitive(TDEStylePrimitive kpe,
-                                      TQPainter *p,
-                                      const TQWidget *widget,
-                                      const TQRect &r,
-                                      const TQColorGroup &cg,
-                                      SFlags flags,
-                                      const TQStyleOption& opt) const
+                                           TQPainter *p,
+                                           const TQWidget *widget,
+                                           const TQRect &r,
+                                           const TQColorGroup &cg,
+                                           SFlags flags,
+                                           const TQStyleOption& opt) const
 {
    switch (kpe) {
       default:
@@ -978,14 +979,14 @@ draw:
 
 
 void MetaThemeStyle::drawControl(ControlElement element,
-                              TQPainter *p,
-                              const TQStyleControlElementData &ceData,
-                              ControlElementFlags elementFlags,
-                              const TQRect &r,
-                              const TQColorGroup &cg,
-                              SFlags flags,
-                              const TQStyleOption& opt,
-                              const TQWidget *widget) const
+                                TQPainter *p,
+                                const TQStyleControlElementData &ceData,
+                                ControlElementFlags elementFlags,
+                                const TQRect &r,
+                                const TQColorGroup &cg,
+                                SFlags flags,
+                                const TQStyleOption& opt,
+                                const TQWidget *widget) const
 {
    if (widget == hoverWidget) flags |= Style_MouseOver;
 
