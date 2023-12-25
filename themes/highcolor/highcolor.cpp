@@ -29,7 +29,7 @@
  *           (C) 2000 Dirk Mueller          <mueller@kde.org>
  *           (C) 2001 Martijn Klingens      <klingens@kde.org>
  *
- * Qt GUI Toolkit
+ * TQt GUI Toolkit
  * Copyright (C) 1999-2003 Trolltech AS.  All rights reserved.
  */
 
@@ -130,8 +130,8 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
 {
    bool highcolor = true;
    GC gc;
-   QPainter *p = &gc;
-   QColorGroup cg(this);
+   TQPainter *p = &gc;
+   TQColorGroup cg(this);
    int flags = 0;
    int type = styleType;
    Rect r(rect);
@@ -157,7 +157,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
       case MT_NOTEBOOK:
       {
          bool sunken = (widgetType == MT_BORDER_OUT || widgetType == MT_MENU || widgetType == MT_NOTEBOOK)? false : true;
-         //QPen oldPen = p->pen();
+         //TQPen oldPen = p->pen();
          int x,y,w,h;
          r.rect(&x, &y, &w, &h);
          int x2 = x+w-1;
@@ -206,43 +206,43 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
       case MT_ARROW_LEFT:
       case MT_ARROW_RIGHT:
       {
-         QPointArray a;
+         TQPointArray a;
          
          if ( type != B3 ) {
             // HighColor & Default arrows
             switch(widgetType) {
                case PE_ArrowUp:
-                  a.setPoints(QCOORDARRLEN(u_arrow), u_arrow);
+                  a.setPoints(TQCOORDARRLEN(u_arrow), u_arrow);
                   break;
 
                case PE_ArrowDown:
-                  a.setPoints(QCOORDARRLEN(d_arrow), d_arrow);
+                  a.setPoints(TQCOORDARRLEN(d_arrow), d_arrow);
                   break;
 
                case PE_ArrowLeft:
-                  a.setPoints(QCOORDARRLEN(l_arrow), l_arrow);
+                  a.setPoints(TQCOORDARRLEN(l_arrow), l_arrow);
                   break;
 
                default:
-                  a.setPoints(QCOORDARRLEN(r_arrow), r_arrow);
+                  a.setPoints(TQCOORDARRLEN(r_arrow), r_arrow);
             }
          } else {
             // B3 arrows
             switch(widgetType) {
                case PE_ArrowUp:
-                  a.setPoints(QCOORDARRLEN(B3::u_arrow), B3::u_arrow);
+                  a.setPoints(TQCOORDARRLEN(B3::u_arrow), B3::u_arrow);
                   break;
 
                case PE_ArrowDown:
-                  a.setPoints(QCOORDARRLEN(B3::d_arrow), B3::d_arrow);
+                  a.setPoints(TQCOORDARRLEN(B3::d_arrow), B3::d_arrow);
                   break;
 
                case PE_ArrowLeft:
-                  a.setPoints(QCOORDARRLEN(B3::l_arrow), B3::l_arrow);
+                  a.setPoints(TQCOORDARRLEN(B3::l_arrow), B3::l_arrow);
                   break;
 
                default:
-                  a.setPoints(QCOORDARRLEN(B3::r_arrow), B3::r_arrow);
+                  a.setPoints(TQCOORDARRLEN(B3::r_arrow), B3::r_arrow);
             }
          }
             
@@ -287,12 +287,12 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
             if (flags & Style_Horizontal) {
                p->drawLine(x, y, x2, y);
                p->drawLine(x, y2, x2, y2);
-               renderGradient(p, QRect(x, y+1, w, h-2),
+               renderGradient(p, TQRect(x, y+1, w, h-2),
                         cg.mid(), false);
             } else {
                p->drawLine(x, y, x, y2);
                p->drawLine(x2, y, x2, y2);
-               renderGradient(p, QRect(x+1, y, w-2, h),
+               renderGradient(p, TQRect(x+1, y, w-2, h),
                         cg.mid(), true);
             }   
          } else {
@@ -303,12 +303,12 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
             if (flags & Style_Horizontal) {
                p->drawLine(x, y, x2, y);
                p->drawLine(x, y2, x2, y2);
-               p->fillRect( QRect(x, y+1, w, h-2), 
+               p->fillRect( TQRect(x, y+1, w, h-2), 
                      flags & Style_Down ? cg.button() : cg.midlight() );
             } else {
                p->drawLine(x, y, x, y2);
                p->drawLine(x2, y, x2, y2);
-               p->fillRect( QRect(x+1, y, w-2, h), 
+               p->fillRect( TQRect(x+1, y, w-2, h), 
                      flags & Style_Down ? cg.button() : cg.midlight() );
             }
          }
@@ -441,10 +441,10 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
 
          if ( sunken )
             kDrawBeButton( p, x, y, w, h, cg, true,
-                  &cg.brush(QColorGroup::Mid) );
+                  &cg.brush(TQColorGroup::Mid) );
 
          else if ( flags & Style_MouseOver && !flat ) {
-            QBrush brush(cg.button().light(110));
+            TQBrush brush(cg.button().light(110));
             kDrawBeButton( p, x, y, w, h, cg, false, &brush );
          }
 
@@ -453,7 +453,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
             if ( flags & Style_MouseOver )
                p->fillRect(r, cg.button().light(110));
             else
-               renderGradient(p, QRect(x, y, w-1, h-1),
+               renderGradient(p, TQRect(x, y, w-1, h-1),
                            cg.button(), false);
 
             p->setPen(cg.button().light(75));
@@ -487,11 +487,11 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
             p->drawLine(x+1, y+2, x+1, y2-1);
             p->drawLine(x2-2, y+3, x2-2, y2-2);
 
-            renderGradient(p, QRect(x+4, y+4, w-6, h-6),
+            renderGradient(p, TQRect(x+4, y+4, w-6, h-6),
                         cg.button(), false);
          } else
             kDrawBeButton(p, x, y, w, h, cg, false,
-                       &cg.brush(QColorGroup::Button));
+                       &cg.brush(TQColorGroup::Button));
 
          if (!sunken) {
             gc.setColor(cg.light());
@@ -508,7 +508,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          bool sunken = on || down;
          int x2 = x+w-1;
          int y2 = y+h-1;
-         //QPen oldPen = p->pen();
+         //TQPen oldPen = p->pen();
 
          // Bevel
          p->setPen(sunken ? cg.mid() : cg.light());
@@ -524,7 +524,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          if (sunken)
             p->fillRect(x+1, y+1, w-3, h-3, cg.button());
          else
-            renderGradient( p, QRect(x+1, y+1, w-3, h-3),
+            renderGradient( p, TQRect(x+1, y+1, w-3, h-3),
                          cg.button(), !horizontal );
          //p->setPen( oldPen );
          break;
@@ -541,7 +541,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
 
          if ( active )
             qDrawShadePanel( p, r.x(), r.y(), r.width(), r.height(), cg, true, 1,
-                             &cg.brush(QColorGroup::Midlight) );
+                             &cg.brush(TQColorGroup::Midlight) );
          // Draw a solid background
          else
             p->fillRect( r, cg.button() );
@@ -620,8 +620,8 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
             p->drawLine(r.x(), y2, x2, y2);
             p->drawLine(x2, r.y(), x2, y2);
 
-            // ### Qt should specify Style_Horizontal where appropriate
-            renderGradient( p, QRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2),
+            // ### TQt should specify Style_Horizontal where appropriate
+            renderGradient( p, TQRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2),
                         cg.button(), 
                         (r.width() < r.height()) && (widgetType != MT_MENUBAR) );
          }
@@ -639,7 +639,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          
          /*
          if (xBmp.isNull()) {
-            xBmp = QBitmap(7, 7, x_bits, true);
+            xBmp = TQBitmap(7, 7, x_bits, true);
             xBmp.setMask(xBmp);
          }
          */
@@ -712,10 +712,10 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
 
          /*
          if (lightBmp.isNull()) {
-            lightBmp  = QBitmap(13, 13, radiooff_light_bits,  true);
-            grayBmp   = QBitmap(13, 13, radiooff_gray_bits,   true);
-            dgrayBmp  = QBitmap(13, 13, radiooff_dgray_bits,  true);
-            centerBmp = QBitmap(13, 13, radiooff_center_bits, true);
+            lightBmp  = TQBitmap(13, 13, radiooff_light_bits,  true);
+            grayBmp   = TQBitmap(13, 13, radiooff_gray_bits,   true);
+            dgrayBmp  = TQBitmap(13, 13, radiooff_dgray_bits,  true);
+            centerBmp = TQBitmap(13, 13, radiooff_center_bits, true);
             centerBmp.setMask( centerBmp );
          }
 
@@ -741,7 +741,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          // Indicator "dot"
          if ( on ) {
             int x=r.x(), y=r.y();
-            QColor color = /*flags & Style_NoChange*/false ?
+            TQColor color = /*flags & Style_NoChange*/false ?
                cg.dark() : cg.text();
             
             p->setPen(color);
@@ -766,11 +766,11 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          bool horizontal = (data->orientation == MT_HORIZONTAL);
          int gcenter = (horizontal ? r.height() : r.width()) / 2;
 
-         QRect gr;
+         TQRect gr;
          if (horizontal)
-            gr = QRect(r.x(), r.y()+gcenter-3, r.width(), 7);
+            gr = TQRect(r.x(), r.y()+gcenter-3, r.width(), 7);
          else
-            gr = QRect(r.x()+gcenter-3, r.y(), 7, r.height());
+            gr = TQRect(r.x()+gcenter-3, r.y(), 7, r.height());
 
          int x,y,w,h;
          gr.rect(&x, &y, &w, &h);
@@ -820,7 +820,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          p->setPen(cg.mid());
          p->drawLine(x+3, y2-2, x2-2, y2-2);
          p->drawLine(x2-2, y+3, x2-2, y2-2);
-         renderGradient(p, QRect(x+3, y+3, w-6, h-6), 
+         renderGradient(p, TQRect(x+3, y+3, w-6, h-6), 
                      cg.button(), !horizontal);
 
          // Paint riffles
@@ -976,7 +976,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          r.rect(&x, &y, &w, &h);
          int x2 = x+w-1;
          int y2 = y+h-1;
-         //QPen oldPen = p->pen();
+         //TQPen oldPen = p->pen();
 
          // Outer frame (round style)
          p->setPen(cg.shadow());
@@ -1175,7 +1175,7 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          p->drawPoint(x2,y);
          p->drawPoint(x2,y2);
 
-         renderGradient( p, QRect(x+2, y+2, w-4, h-4),
+         renderGradient( p, TQRect(x+2, y+2, w-4, h-4),
                      cg.button(), false);
 
          p->setPen(sunken ? cg.light() : cg.mid());
@@ -1187,10 +1187,10 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          p->drawLine(x+1, y+2, x+1, y2-2);
 
          // Get the button bounding box
-         /*QRect ar = QStyle::visualRect(
+         /*TQRect ar = TQStyle::visualRect(
             querySubControlMetrics(CC_ComboBox, widget, SC_ComboBoxArrow),
             widget );*/
-         QRect ar(r.right() - 18, r.y() + 2, 18, r.height() - 4);
+         TQRect ar(r.right() - 18, r.y() + 2, 18, r.height() - 4);
 
          /*
          // Are we enabled?
@@ -1205,10 +1205,10 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          //drawPrimitive(PE_ArrowDown, p, ar, cg, flags);
          drawWidget(win, area, MT_ARROW_DOWN, state & ~MT_ACTIVE, ar, NULL);
 
-         /*QRect re = QStyle::visualRect(
+         /*TQRect re = TQStyle::visualRect(
             querySubControlMetrics( CC_ComboBox, widget,
                                    SC_ComboBoxEditField), widget );*/
-         QRect re(r.x() + 3, r.y() + 3, r.width() - 6 - 18, r.height() - 6);
+         TQRect re(r.x() + 3, r.y() + 3, r.width() - 6 - 18, r.height() - 6);
          gc.setColor(whiteColor);
          gc.drawRectangle(true, re);
 
@@ -1231,13 +1231,13 @@ void HighColorEngine::drawWidget(const Window &win, const Rect &area, int widget
          if ( cb->hasFocus() && !cb->editable() ) {
             // Draw the contents
             p->fillRect( re.x(), re.y(), re.width(), re.height(),
-                      cg.brush( QColorGroup::Highlight ) );
+                      cg.brush( TQColorGroup::Highlight ) );
 
-            //QRect re = QStyle::visualRect( 
+            //TQRect re = TQStyle::visualRect( 
             //         subRect(SR_ComboBoxFocusRect, cb), widget);
 
             //drawPrimitive( PE_FocusRect, p, re, cg,
-            //            Style_FocusAtBorder, QStyleOption(cg.highlight()));
+            //            Style_FocusAtBorder, TQStyleOption(cg.highlight()));
          }
          */
          break;
@@ -1285,7 +1285,7 @@ void HighColorEngine::drawString(const Window &win, int type, int state, MT_STRI
 }
 
 
-void HighColorEngine::kDrawBeButton(QPainter *p, int x, int y, int w, int h, const QColorGroup &g, bool sunken, const QBrush *fill)
+void HighColorEngine::kDrawBeButton(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g, bool sunken, const TQBrush *fill)
 {
     int x2 = x+w-1;
     int y2 = y+h-1;
@@ -1326,27 +1326,27 @@ void HighColorEngine::kDrawBeButton(QPainter *p, int x, int y, int w, int h, con
 }
 
 
-void HighColorEngine::qDrawShadePanel( QPainter *p, int x, int y, int w, int h,
-            const QColorGroup &g, bool sunken,
-            int lineWidth, const QBrush *fill )
+void HighColorEngine::qDrawShadePanel( TQPainter *p, int x, int y, int w, int h,
+            const TQColorGroup &g, bool sunken,
+            int lineWidth, const TQBrush *fill )
 {
     if ( w == 0 || h == 0 )
    return;
     if ( !( w > 0 && h > 0 && lineWidth >= 0 ) ) {
 #if defined(QT_CHECK_RANGE)
-       qWarning( "qDrawShadePanel() Invalid parameters." );
+       tqWarning( "qDrawShadePanel() Invalid parameters." );
 #endif
     }
-    QColor shade = g.dark();
-    QColor light = g.light();
+    TQColor shade = g.dark();
+    TQColor light = g.light();
     if ( fill ) {
    if ( fill->color() == shade )
        shade = g.shadow();
    if ( fill->color() == light )
        light = g.midlight();
     }
-    QPen oldPen = p->pen();         // save pen
-    QPointArray a( 4*lineWidth );
+    TQPen oldPen = p->pen();         // save pen
+    TQPointArray a( 4*lineWidth );
     if ( sunken )
    p->setPen( shade );
     else
@@ -1389,8 +1389,8 @@ void HighColorEngine::qDrawShadePanel( QPainter *p, int x, int y, int w, int h,
     }
     p->drawLineSegments( a );
     if ( fill ) {            // fill with fill color
-   QBrush oldBrush = p->brush();
-   //p->setPen( Qt::NoPen );
+   TQBrush oldBrush = p->brush();
+   //p->setPen( TQt::NoPen );
    //p->setBrush( *fill );
    p->fillRect( x+lineWidth, y+lineWidth, w-lineWidth*2, h-lineWidth*2, *fill );
    p->setBrush( oldBrush );
@@ -1400,7 +1400,7 @@ void HighColorEngine::qDrawShadePanel( QPainter *p, int x, int y, int w, int h,
 
 
 // TODO
-void HighColorEngine::renderGradient(QPainter* p, const QRect& r, QColor clr, bool horizontal, int px, int py, int pwidth, int pheight)
+void HighColorEngine::renderGradient(TQPainter* p, const TQRect& r, TQColor clr, bool horizontal, int px, int py, int pwidth, int pheight)
 {
    if (styleType != HighColor) {
       p->fillRect(r, clr);
@@ -1411,7 +1411,7 @@ void HighColorEngine::renderGradient(QPainter* p, const QRect& r, QColor clr, bo
 }
 
 
-void HighColorEngine::drawBevel(QPainter* p, const Rect& r, const QColorGroup& cg, int flags)
+void HighColorEngine::drawBevel(TQPainter* p, const Rect& r, const TQColorGroup& cg, int flags)
 {
    bool down = flags & Style_Down;
    bool on   = flags & Style_On;
@@ -1438,13 +1438,13 @@ void HighColorEngine::drawBevel(QPainter* p, const Rect& r, const QColorGroup& c
       if (sunken)
          p->fillRect(x+2, y+2, w-4, h-4, cg.button());
       else
-         renderGradient( p, QRect(x+2, y+2, w-4, h-4),
+         renderGradient( p, TQRect(x+2, y+2, w-4, h-4),
                       cg.button(), (flags & Style_Horizontal)? MT_HORIZONTAL : MT_VERTICAL );
    }
 }
 
 
-void HighColorEngine::drawBitmap(QPainter *p, int x, int y, int w, int h, const unsigned char *bits, bool inv)
+void HighColorEngine::drawBitmap(TQPainter *p, int x, int y, int w, int h, const unsigned char *bits, bool inv)
 {
    int i,j,offset;
    unsigned char m;

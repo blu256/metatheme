@@ -2,7 +2,7 @@ include $(top_srcdir)/Makefile.base
 
 INCLUDES += $(QT_CFLAGS)
 
-noinst_HEADERS = mt_qt.h
+noinst_HEADERS = mt_ntqt.h
 
 toolkitdir = $(QT_STYLES_DIR)
 toolkit_LTLIBRARIES = metatheme.la
@@ -15,5 +15,5 @@ CLEANFILES = mt_qt.moc
 
 mt_qt.cpp: mt_qt.moc
 
-mt_qt.moc: mt_qt.h
-	$(QT_MOC) mt_qt.h -o mt_qt.moc
+mt_qt.moc: mt_ntqt.h
+	$(QT_MOC) mt_ntqt.h -o mt_qt.moc

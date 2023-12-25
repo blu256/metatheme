@@ -31,22 +31,22 @@ static const unsigned char radiomask_bits[] = {
 static const unsigned char x_bits[] = {0x63, 0x77, 0x3e, 0x1c, 0x3e, 0x77, 0x63};
  
 // Arrow bitmaps
-static const QCOORD u_arrow[]={-1,-3, 0,-3, -2,-2, 1,-2, -3,-1, 2,-1, -4,0, 3,0, -4,1, 3,1};
-static const QCOORD d_arrow[]={-4,-2, 3,-2, -4,-1, 3,-1, -3,0, 2,0, -2,1, 1,1, -1,2, 0,2};
-static const QCOORD l_arrow[]={-3,-1, -3,0, -2,-2, -2,1, -1,-3, -1,2, 0,-4, 0,3, 1,-4, 1,3};
-static const QCOORD r_arrow[]={-2,-4, -2,3, -1,-4, -1,3, 0,-3, 0,2, 1,-2, 1,1, 2,-1, 2,0};
+static const TQCOORD u_arrow[]={-1,-3, 0,-3, -2,-2, 1,-2, -3,-1, 2,-1, -4,0, 3,0, -4,1, 3,1};
+static const TQCOORD d_arrow[]={-4,-2, 3,-2, -4,-1, 3,-1, -3,0, 2,0, -2,1, 1,1, -1,2, 0,2};
+static const TQCOORD l_arrow[]={-3,-1, -3,0, -2,-2, -2,1, -1,-3, -1,2, 0,-4, 0,3, 1,-4, 1,3};
+static const TQCOORD r_arrow[]={-2,-4, -2,3, -1,-4, -1,3, 0,-3, 0,2, 1,-2, 1,1, 2,-1, 2,0};
 
 namespace B3 {
-	const QCOORD u_arrow[]={ 0,-2, 0,-2, -1,-1, 1,-1, -2,0, 2,0, -3,1, 3,1 };
-	const QCOORD d_arrow[]={ -3,-2, 3,-2, -2,-1, 2,-1, -1,0, 1,0, 0,1, 0,1 };
-	const QCOORD l_arrow[]={ 1,-3, 1,-3, 0,-2, 1,-2, -1,-1, 1,-1, -2,0, 1,0, -1,1, 1,1, 0,2, 1,2, 1,3, 1,3 };
-	const QCOORD r_arrow[]={ -2,-3, -2,-3, -2,-2, -1,-2, -2,-1, 0,-1, -2,0, 1,0, -2,1, 0,1, -2,2, -1,2, -2,3, -2,3 };
+	const TQCOORD u_arrow[]={ 0,-2, 0,-2, -1,-1, 1,-1, -2,0, 2,0, -3,1, 3,1 };
+	const TQCOORD d_arrow[]={ -3,-2, 3,-2, -2,-1, 2,-1, -1,0, 1,0, 0,1, 0,1 };
+	const TQCOORD l_arrow[]={ 1,-3, 1,-3, 0,-2, 1,-2, -1,-1, 1,-1, -2,0, 1,0, -1,1, 1,1, 0,2, 1,2, 1,3, 1,3 };
+	const TQCOORD r_arrow[]={ -2,-3, -2,-3, -2,-2, -1,-2, -2,-1, 0,-1, -2,0, 1,0, -2,1, 0,1, -2,2, -1,2, -2,3, -2,3 };
 }
 
-#define QCOORDARRLEN(x) sizeof(x)/(sizeof(QCOORD)*2)
+#define TQCOORDARRLEN(x) sizeof(x)/(sizeof(TQCOORD)*2)
 
 
-// Fix Qt's wacky image positions
+// Fix TQt's wacky image positions
 static const char * const hc_minimize_xpm[] = {
 "12 12 2 1",
 "# c #000000",

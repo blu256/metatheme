@@ -20,7 +20,7 @@
 /**
  * Based on code from Plastik engine from KDE and color management code from QT.
  *
- * Qt GUI Toolkit
+ * TQt GUI Toolkit
  * Copyright (C) 1999-2003 Trolltech AS.  All rights reserved.
  *
  * Plastik widget style for KDE 3

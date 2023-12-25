@@ -27,18 +27,18 @@
 #ifdef HAVE_KDE
 #include <kstyle.h>
 #else
-#include <qwindowsstyle.h>
+#include <tqwindowsstyle.h>
 #endif
 
-#include <qbitmap.h>
-#include <qptrdict.h>
+#include <tqbitmap.h>
+#include <tqptrdict.h>
 
 extern "C" {
 #include "metathemeInt.h"
 };
 
 #ifndef HAVE_KDE
-#define KStyle QWindowsStyle
+#define KStyle TQWindowsStyle
 #endif
 
 
@@ -51,88 +51,88 @@ public:
    virtual ~MetaThemeStyle();
 
    int retrieveState(SFlags flags) const;
-   void retrieveColors(const QWidget* widget, SFlags flags, const QColorGroup &cg, MT_WIDGET_DATA *data, PrimitiveElement pe = PE_CustomBase) const;
+   void retrieveColors(const TQWidget* widget, SFlags flags, const TQColorGroup &cg, MT_WIDGET_DATA *data, PrimitiveElement pe = PE_CustomBase) const;
    
-   virtual void polish(QApplication *app);
-   virtual void polish(QPalette &);
-   virtual void polish(QWidget *widget);
-   virtual void unPolish(QWidget *widget);
+   virtual void polish(TQApplication *app);
+   virtual void polish(TQPalette &);
+   virtual void polish(TQWidget *widget);
+   virtual void unPolish(TQWidget *widget);
 
 #ifdef HAVE_KDE
    void drawKStylePrimitive(KStylePrimitive kpe,
-      QPainter *p,
-      const QWidget *widget,
-      const QRect &r,
-      const QColorGroup &cg,
+      TQPainter *p,
+      const TQWidget *widget,
+      const TQRect &r,
+      const TQColorGroup &cg,
       SFlags flags = Style_Default,
-      const QStyleOption& = QStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default) const;
 #endif
 
    void drawPrimitive(PrimitiveElement pe,
-      QPainter *p,
-      const QRect &r,
-      const QColorGroup &cg,
+      TQPainter *p,
+      const TQRect &r,
+      const TQColorGroup &cg,
       SFlags flags = Style_Default,
-      const QStyleOption &opt = QStyleOption::Default) const;
+      const TQStyleOption &opt = TQStyleOption::Default) const;
 
    void drawControl(ControlElement element,
-      QPainter *p,
-      const QWidget *widget,
-      const QRect &r,
-      const QColorGroup &cg,
+      TQPainter *p,
+      const TQWidget *widget,
+      const TQRect &r,
+      const TQColorGroup &cg,
       SFlags flags = Style_Default,
-      const QStyleOption& = QStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default) const;
 
    void drawControlMask(ControlElement element,
-      QPainter *p,
-      const QWidget *widget,
-      const QRect &r,
-      const QStyleOption& = QStyleOption::Default) const;
+      TQPainter *p,
+      const TQWidget *widget,
+      const TQRect &r,
+      const TQStyleOption& = TQStyleOption::Default) const;
 
    void drawComplexControl(ComplexControl control,
-      QPainter *p,
-      const QWidget *widget,
-      const QRect &r,
-      const QColorGroup &cg,
+      TQPainter *p,
+      const TQWidget *widget,
+      const TQRect &r,
+      const TQColorGroup &cg,
       SFlags flags = Style_Default,
       SCFlags controls = SC_All,
       SCFlags active = SC_None,
-      const QStyleOption& = QStyleOption::Default) const;
+      const TQStyleOption& = TQStyleOption::Default) const;
 
-   void drawItem(QPainter *p,
-      const QRect &r,
+   void drawItem(TQPainter *p,
+      const TQRect &r,
       int flags,
-      const QColorGroup &g,
+      const TQColorGroup &g,
       bool enabled,
-      const QPixmap *pixmap,
-      const QString& text,
+      const TQPixmap *pixmap,
+      const TQString& text,
       int len = -1,
-      const QColor *penColor = 0) const;
+      const TQColor *penColor = 0) const;
 
    int pixelMetric(PixelMetric m,
-      const QWidget *widget = 0) const;
+      const TQWidget *widget = 0) const;
 
-   QRect subRect(SubRect r,
-      const QWidget *widget) const;
+   TQRect subRect(SubRect r,
+      const TQWidget *widget) const;
 
-   QRect querySubControlMetrics(ComplexControl control,
-      const QWidget *widget,
+   TQRect querySubControlMetrics(ComplexControl control,
+      const TQWidget *widget,
       SubControl subcontrol,
-      const QStyleOption &opt = QStyleOption::Default) const;
+      const TQStyleOption &opt = TQStyleOption::Default) const;
 
-   QSize sizeFromContents(QStyle::ContentsType t,
-                          const QWidget *w,
-                          const QSize &s,
-                          const QStyleOption &o) const;
+   TQSize sizeFromContents(TQStyle::ContentsType t,
+                          const TQWidget *w,
+                          const TQSize &s,
+                          const TQStyleOption &o) const;
 
-   int styleHint(StyleHint stylehint, const QWidget *widget = 0, const QStyleOption &opt = QStyleOption::Default, QStyleHintReturn *returnData = 0) const;
-   bool eventFilter(QObject *, QEvent *);
+   int styleHint(StyleHint stylehint, const TQWidget *widget = 0, const TQStyleOption &opt = TQStyleOption::Default, TQStyleHintReturn *returnData = 0) const;
+   bool eventFilter(TQObject *, TQEvent *);
    void setColorPalette(MT_COLOR_PALETTE *pal);
    void setFont();
 
-   QWidget *hoverWidget;
+   TQWidget *hoverWidget;
    int hoverPart;
-   QWidget *toolButtonDropDownActiveWidget;
+   TQWidget *toolButtonDropDownActiveWidget;
 
 protected slots:
    void updateFont();
@@ -141,25 +141,25 @@ private:
    // disable copy constructor and = operator
    MetaThemeStyle(const MetaThemeStyle &);
    MetaThemeStyle &operator =(const MetaThemeStyle &);
-   QStyle *winstyle;
+   TQStyle *winstyle;
 
    bool pseudo3D, useTextShadows, roundedCorners, reverseLayout, kickerMode;
 
 private:
    MT_ENGINE *mt_engine;
-   QPalette qpalette;
-   QFont qfont;
+   TQPalette qpalette;
+   TQFont qfont;
    bool qtonly;
-   QPtrDict<QWidget> tabWidgets;
+   TQPtrDict<TQWidget> tabWidgets;
 };
 
-class MetaThemeHelper: public QObject
+class MetaThemeHelper: public TQObject
 {
    Q_OBJECT
    
 public slots:
-   void widgetDestroyedForData(QObject *obj);
-   void widgetDestroyedForRef(QObject *obj);
+   void widgetDestroyedForData(TQObject *obj);
+   void widgetDestroyedForRef(TQObject *obj);
 
 };
 

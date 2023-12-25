@@ -22,7 +22,7 @@
 
 namespace metathemeqt {
 
-class QPointArray;
+class TQPointArray;
 
 #define MT_EXT metathemeqt
 
@@ -43,12 +43,12 @@ public: \
    void fillRect(const Rect &rect, const Color &color); \
    void drawRect(int x, int y, int width, int height); \
    void drawRect(const Rect &rect); \
-   void drawLineSegments(const QPointArray& a); \
+   void drawLineSegments(const TQPointArray& a); \
    Color pen() const { return Color((MT_COLOR *)&col); } \
    Color brush() const { return Color((MT_COLOR *)&col); }
 
 #define MT_EXT_THEMEENGINE \
-   friend class QColorGroup;
+   friend class TQColorGroup;
 
 #include "metathemecpp.h"
 
@@ -56,13 +56,13 @@ public: \
 /*** QT COMPATIBILITY CLASSES ***/
 /********************************/
 
-#define QPainter GC
-#define QRect Rect
-#define QPen Color
-#define QBrush Color
-#define QColor Color
+#define TQPainter GC
+#define TQRect Rect
+#define TQPen Color
+#define TQBrush Color
+#define TQColor Color
 
-#define QCOORD signed int
+#define TQCOORD signed int
 
 enum {
    Style_Horizontal = 0x0001,
@@ -74,7 +74,7 @@ enum {
    Style_Enabled    = 0x0040
 };
 
-class QColorGroup
+class TQColorGroup
 {
 public:
    enum ColorRole {
@@ -85,7 +85,7 @@ public:
    };
 
 public:
-   QColorGroup(ThemeEngine *engine);
+   TQColorGroup(ThemeEngine *engine);
 
    Color shadow() const;
    Color light() const;
@@ -107,16 +107,16 @@ private:
    Color brushes[NColorRoles];
 };
 
-class QPointArray
+class TQPointArray
 {
 public:
-   QPointArray();
-   QPointArray(int nPoints);
-   QPointArray(int nPoints, const QCOORD* points);
-   virtual ~QPointArray();
+   TQPointArray();
+   TQPointArray(int nPoints);
+   TQPointArray(int nPoints, const TQCOORD* points);
+   virtual ~TQPointArray();
 
    void setPoint(int i, int x, int y);
-   void setPoints(int nPoints, const QCOORD* points);
+   void setPoints(int nPoints, const TQCOORD* points);
    void translate(int dx, int dy);
 
 private:
@@ -138,23 +138,23 @@ inline void GC::fillRect(int x, int y, int width, int height, const Color &color
 inline void GC::fillRect(const Rect &rect, const Color &color) { setColor(color); drawRectangle(true, rect.x(), rect.y(), rect.right(), rect.bottom()); }
 inline void GC::drawRect(int x, int y, int width, int height) { drawRectangle(false, x, y, x+width-1, y+height-1); }
 inline void GC::drawRect(const Rect &rect) { drawRectangle(false, rect.x(), rect.y(), rect.right(), rect.bottom()); }
-inline void GC::drawLineSegments(const QPointArray& a) { drawPolygon(false, a.p, a.np); }
+inline void GC::drawLineSegments(const TQPointArray& a) { drawPolygon(false, a.p, a.np); }
 
-inline QColorGroup::QColorGroup(ThemeEngine *engine) { this->engine = engine->engine; }
-inline Color QColorGroup::shadow() const { return Color(&engine->palette[MT_BUTTON_SHADOW]); }
-inline Color QColorGroup::light() const { return Color(&engine->palette[MT_BUTTON_LIGHT]); }
-inline Color QColorGroup::mid() const { return Color(&engine->palette[MT_BUTTON_MID]); }
-inline Color QColorGroup::midlight() const { return Color(&engine->palette[MT_BUTTON_MIDLIGHT]); }
-inline Color QColorGroup::dark() const { return Color(&engine->palette[MT_BUTTON_DARK]); }
-inline Color QColorGroup::button() const { return Color(&engine->palette[MT_BUTTON_BACKGROUND]); }
-inline Color QColorGroup::buttonText() const { return Color(&engine->palette[MT_BUTTON_FOREGROUND]); }
-inline Color QColorGroup::base() const { return Color(&engine->palette[MT_WINDOW_BACKGROUND]); }
-inline Color QColorGroup::text() const { return Color(&engine->palette[MT_WINDOW_FOREGROUND]); }
-inline Color QColorGroup::background() const { return Color(&engine->palette[MT_BACKGROUND]); }
-inline Color QColorGroup::highlight() const { return Color(&engine->palette[MT_SELECTED_BACKGROUND]); }
-inline Color QColorGroup::highlightedText() const { return Color(&engine->palette[MT_SELECTED_FOREGROUND]); }
+inline TQColorGroup::TQColorGroup(ThemeEngine *engine) { this->engine = engine->engine; }
+inline Color TQColorGroup::shadow() const { return Color(&engine->palette[MT_BUTTON_SHADOW]); }
+inline Color TQColorGroup::light() const { return Color(&engine->palette[MT_BUTTON_LIGHT]); }
+inline Color TQColorGroup::mid() const { return Color(&engine->palette[MT_BUTTON_MID]); }
+inline Color TQColorGroup::midlight() const { return Color(&engine->palette[MT_BUTTON_MIDLIGHT]); }
+inline Color TQColorGroup::dark() const { return Color(&engine->palette[MT_BUTTON_DARK]); }
+inline Color TQColorGroup::button() const { return Color(&engine->palette[MT_BUTTON_BACKGROUND]); }
+inline Color TQColorGroup::buttonText() const { return Color(&engine->palette[MT_BUTTON_FOREGROUND]); }
+inline Color TQColorGroup::base() const { return Color(&engine->palette[MT_WINDOW_BACKGROUND]); }
+inline Color TQColorGroup::text() const { return Color(&engine->palette[MT_WINDOW_FOREGROUND]); }
+inline Color TQColorGroup::background() const { return Color(&engine->palette[MT_BACKGROUND]); }
+inline Color TQColorGroup::highlight() const { return Color(&engine->palette[MT_SELECTED_BACKGROUND]); }
+inline Color TQColorGroup::highlightedText() const { return Color(&engine->palette[MT_SELECTED_FOREGROUND]); }
 
-inline const Color &QColorGroup::brush(ColorRole role)
+inline const Color &TQColorGroup::brush(ColorRole role)
 {
    switch (role) {
       case Mid: brushes[role] = mid(); break;
@@ -165,13 +165,13 @@ inline const Color &QColorGroup::brush(ColorRole role)
    return brushes[role];
 }
 
-inline QPointArray::QPointArray(): np(0), p(NULL) { }
-inline QPointArray::QPointArray(int nPoints): np(nPoints) { p = (MT_POINT *)malloc(sizeof(MT_POINT) * nPoints); }
-inline QPointArray::QPointArray(int nPoints, const QCOORD* points): np(0), p(NULL) { setPoints(nPoints, points); }
-inline QPointArray::~QPointArray() { if (p) free(p); }
-inline void QPointArray::setPoint(int i, int x, int y) { p[i].x = x; p[i].y = y; }
+inline TQPointArray::TQPointArray(): np(0), p(NULL) { }
+inline TQPointArray::TQPointArray(int nPoints): np(nPoints) { p = (MT_POINT *)malloc(sizeof(MT_POINT) * nPoints); }
+inline TQPointArray::TQPointArray(int nPoints, const TQCOORD* points): np(0), p(NULL) { setPoints(nPoints, points); }
+inline TQPointArray::~TQPointArray() { if (p) free(p); }
+inline void TQPointArray::setPoint(int i, int x, int y) { p[i].x = x; p[i].y = y; }
 
-inline void QPointArray::setPoints(int nPoints, const QCOORD* points)
+inline void TQPointArray::setPoints(int nPoints, const TQCOORD* points)
 {
    int i;
 
@@ -185,7 +185,7 @@ inline void QPointArray::setPoints(int nPoints, const QCOORD* points)
    }
 }
 
-inline void QPointArray::translate(int dx, int dy)
+inline void TQPointArray::translate(int dx, int dy)
 {
    int i;
 

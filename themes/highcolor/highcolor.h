@@ -20,7 +20,7 @@
 #ifndef HIGHCOLOR_H
 #define HIGHCOLOR_H
 
-#include "metathemeqt.h"
+#include "metathementqt.h"
 
 
 class HighColorEngine: public ThemeEngine
@@ -34,11 +34,11 @@ public:
    virtual void drawString(const Window &win, int type, int state, MT_STRING *str);
 
 private:
-   void kDrawBeButton(QPainter *p, int x, int y, int w, int h, const QColorGroup &g, bool sunken, const QBrush *fill);
-   void qDrawShadePanel(QPainter *p, int x, int y, int w, int h, const QColorGroup &g, bool sunken, int lineWidth, const QBrush *fill);
-   void renderGradient(QPainter* p, const QRect& r, QColor clr, bool horizontal, int px=0, int py=0, int pwidth=-1, int pheight=-1);
-   void drawBevel(QPainter* p, const Rect& r, const QColorGroup& cg, int flags);
-   void drawBitmap(QPainter *p, int x, int y, int w, int h, const unsigned char *bits, bool inv=false);
+   void kDrawBeButton(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g, bool sunken, const TQBrush *fill);
+   void qDrawShadePanel(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g, bool sunken, int lineWidth, const TQBrush *fill);
+   void renderGradient(TQPainter* p, const TQRect& r, TQColor clr, bool horizontal, int px=0, int py=0, int pwidth=-1, int pheight=-1);
+   void drawBevel(TQPainter* p, const Rect& r, const TQColorGroup& cg, int flags);
+   void drawBitmap(TQPainter *p, int x, int y, int w, int h, const unsigned char *bits, bool inv=false);
 
 private:
    enum StyleType { HighColor = 0, Default, B3 };
