@@ -24,12 +24,14 @@ endif( )
 
 # Configuration tool: needs gtk+2 support
 if( BUILD_CONFIG_TOOL AND NOT WITH_TOOLKIT_GTK2 )
-  tde_message_fatal( "The configuration tool requires GTK+2 support." )
+  message( NOTICE "The configuration tool requires GTK+2 support, auto-enabling" )
+  set(WITH_TOOLKIT_GTK2 ON)
 endif( )
 
 # MSStyle engine: needs gtk+2 support
 if( WITH_ENGINE_MSSTYLE AND NOT WITH_TOOLKIT_GTK2 )
-  tde_message_fatal( "The MSSTYLE theme engine requires GTK+2 support." )
+  message( NOTICE "The MSSTYLE theme engine requires GTK+2 support, auto-enabling" )
+  set(WITH_TOOLKIT_GTK2 ON)
 endif( )
 
 # Optional Cairo support
@@ -54,9 +56,10 @@ if( WITH_TOOLKIT_GTK2 )
     OUTPUT_VARIABLE GTK2_BIN_VERSION
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
+  message( STATUS "GTK+2 version: ${GTK2_VERSION}" )
   set( INSTALL_PATH_GTK2_ENGINES "${GTK2_LIBDIR}/gtk-2.0/${GTK2_BIN_VERSION}/engines"
        CACHE PATH "The directory in which to install the theme engine library" )
-  message( STATUS "  theme engine lib directory: ${INSTALL_PATH_GTK2_ENGINES}" )
+  message( STATUS "  theme engine library directory: ${INSTALL_PATH_GTK2_ENGINES}" )
   set( INSTALL_PATH_GTK2_THEMES "${GTK2_PREFIX}/share/themes"
        CACHE PATH "The directory in which to install the theme data" )
   MESSAGE( STATUS "  theme engine data directory: ${INSTALL_PATH_GTK2_THEMES}" )
