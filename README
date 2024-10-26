@@ -29,28 +29,34 @@ Prerequisites
 General:
 - GLib 2.0 or later
 
+For building:
+- CMake
+- TDE CMake modules
+
 For GTK2 support and configuration tools:
 - GTK2 2.2 or later
 
-For QT/KDE support:
-- QT 3.3
-- KDE 3.2 or later
+For TQt/TDE support:
+- TDE R14.1 or later
 
 For Java/SWING support:
 - JDK 1.5
 
-For development:
-- Autoconf 2.13
-- Automake 1.4
-(or similar versions)
 
 Installation
 ============
 
 - Unpack the archive somewhere in your home directory.
-- Run './configure'.
-- Run 'make'.
-- Run 'make install' as root.
+- Invoke CMake as following:
+  $ cmake -B build -DCMAKE_INSTALL_PREFIX=/opt/trinity \
+                   -DCMAKE_INSTALL_RPATH_USR_LINK_PATH=ON \
+                   [your build flags]
+    
+  Define any build flags (see below) you want like this: -D[BUILD_FLAG]=[ON/OFF]
+  e.g. -DWITH_COLORSCHEMES=ON
+
+- Run 'make -C build'.
+- Run 'make -C build install' as root.
 
 - Run 'metatheme-install' in terminal as an ordinary user. This will
   activate MetaTheme in all supported toolkits (except Java, which is
@@ -59,17 +65,47 @@ Installation
   will interfere with MetaTheme.
 - Restart your session.
 
-For GNOME users:
-- Don't change themes or controls in GNOME Theme Manager. Only window
-  borders and icons. For deactivation see the next section.
-
 Configuration:
 - Run 'mt-config' to start MetaTheme configuration tool. Please beware
   that the on-the-fly applying of changes is still experimental.
 
 Optional:
-- You can use the kde/*.kcsrc files for color settings of some window
-  decorations in KDE.
+- You can use the *.kcsrc files for color settings of some window
+  decorations in TDE.
+
+Build flags
+===========
+
+Options:
+- WITH_ALL_OPTIONS:        Enable all available options and theme engines
+                           (OFF by default)
+- WITH_TOOLKIT_TQT:        Enable support for TQt toolkit
+                           (ON by default)
+- WITH_TOOLKIT_GTK2:       Enable support for Gtk+2 toolkit
+                           (Required by the configuration tool and the
+                            MSSTYLE theme engine)
+- WITH_TOOLKIT_JAVA:       Enable support for JAVA/SWING toolkit
+                           (Build not supported yet)
+- WITH_CAIRO:              Enable support for Cairo
+- WITH_COLORSCHEMES:       Enable installation of TDE colorschemes
+
+Theme engines:
+- WITH_ALL_ENGINES:        Enable all theme engines
+- WITH_ENGINE_REDMOND:     Enable Redmond 2000 theme engine
+- WITH_ENGINE_PLASTIK:     Enable Plastik theme engine
+- WITH_ENGINE_HIGHCOLOR:   Enable Highcolor theme engine
+- WITH_ENGINE_INDUSTRIAL:  Enable Industrial theme engine
+- WITH_ENGINE_FLAT:        Enable Flat theme engine
+- WITH_ENGINE_MSSTYLE:     Enable MSSTYLE theme engine
+                           (requires Gtk+2 support)
+
+Modules:
+- BUILD_ALL:               Build all optional modules
+                           (ON by default)
+- BUILD_DOC:               Build documentation
+- BUILD_TRANSLATIONS:      Build translations
+- BUILD_CONFIG_TOOL:       Build configuration tool
+                           (requires Gtk+2 support)
 
 Deactivation
 ============
@@ -81,7 +117,7 @@ Deactivation
 Notes
 =====
 
-- MetaTheme might have significant impact to stability of runned programs.
+- MetaTheme might have significant impact on the stability of running programs.
 
 - You may have problems with on-the-fly switching between MetaTheme and other
   themes. Although it may work for you, it is not recommended now.
@@ -105,12 +141,3 @@ Notes
 - Antialiased fonts in Java can be enabled by passing parameter
   "-Dswing.aatext=true" when running Java application. Also, please note,
   that Java can use only TrueType fonts.
-
-Contact
-=======
-
-E-mail: metatheme-dev@lists.advel.cz
-        Martin Dvorak <jezek2@advel.cz>
-
-IRC:    jezek2 at FreeNode (#freedesktop.org)
-        jezek2 at IRCNet
