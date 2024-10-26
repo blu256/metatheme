@@ -98,7 +98,7 @@ void MetaThemeHelper::widgetDestroyedForData(TQObject *obj)
    dispose_func(data);
    widgetData.remove(obj);
    widgetDataDispose.remove(obj);
-   TQObject::disconnect(obj, SIGNAL(destroyed(TQObject *)), this, SLOT(widgetDestroyedForData(TQObject *)));
+   TQObject::disconnect(obj, TQ_SIGNAL(destroyed(TQObject *)), this, TQ_SLOT(widgetDestroyedForData(TQObject *)));
 }
 
 
@@ -113,7 +113,7 @@ void MetaThemeHelper::widgetDestroyedForRef(TQObject *obj)
       }
    }
 
-   TQObject::disconnect(obj, SIGNAL(destroyed(TQObject *)), this, SLOT(widgetDestroyedForRef(TQObject *)));
+   TQObject::disconnect(obj, TQ_SIGNAL(destroyed(TQObject *)), this, TQ_SLOT(widgetDestroyedForRef(TQObject *)));
 }
 
 
@@ -370,7 +370,7 @@ static MT_WIDGET *_mt_widget_ref(MT_WIDGET *widget)
    widgetRefs.insert(result, result);
    
    TQWidget *w = (TQWidget *)*widget;
-   TQObject::connect(w, SIGNAL(destroyed(TQObject *)), &helper, SLOT(widgetDestroyedForRef(TQObject *)));
+   TQObject::connect(w, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForRef(TQObject *)));
 
    return result;
 }
@@ -384,7 +384,7 @@ static void _mt_widget_unref(MT_WIDGET *widget)
    if (handle && *handle == NULL) return;
 
    widgetRefs.remove(widget);
-   TQObject::disconnect((TQWidget *)*widget, SIGNAL(destroyed(TQObject *)), &helper, SLOT(widgetDestroyedForRef(TQObject *)));
+   TQObject::disconnect((TQWidget *)*widget, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForRef(TQObject *)));
    free(widget);
 }
 
@@ -422,7 +422,7 @@ static void _mt_widget_set_data(MT_WIDGET *widget, void *data, mt_destroy_func d
          widgetDataDispose.remove(w);
       }
    
-      TQObject::disconnect(w, SIGNAL(destroyed(TQObject *)), &helper, SLOT(widgetDestroyedForData(TQObject *)));
+      TQObject::disconnect(w, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForData(TQObject *)));
    }
 
    if (!data) return;
@@ -430,7 +430,7 @@ static void _mt_widget_set_data(MT_WIDGET *widget, void *data, mt_destroy_func d
    widgetData.replace(w, data);
    if (data_dispose) {
       widgetDataDispose.replace(w, (void *)data_dispose);
-      TQObject::connect(w, SIGNAL(destroyed(TQObject *)), &helper, SLOT(widgetDestroyedForData(TQObject *)));
+      TQObject::connect(w, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForData(TQObject *)));
    }
 }
 
@@ -548,7 +548,7 @@ MetaThemeStyle::MetaThemeStyle()
    qtonly = (tqApp && tqApp->inherits("TDEApplication"))? false : true;
 
    if (!qtonly) {
-      connect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
+      connect(kapp, TQ_SIGNAL(tdedisplayFontChanged()), this, TQ_SLOT(updateFont()));
    }
 }
 
@@ -556,7 +556,7 @@ MetaThemeStyle::MetaThemeStyle()
 MetaThemeStyle::~MetaThemeStyle()
 {
    if (!qtonly && kapp) {
-      disconnect(kapp, SIGNAL(tdedisplayFontChanged()), this, SLOT(updateFont()));
+      disconnect(kapp, TQ_SIGNAL(tdedisplayFontChanged()), this, TQ_SLOT(updateFont()));
    }
 
    if (mt_engine) {
