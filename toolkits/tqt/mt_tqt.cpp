@@ -324,7 +324,7 @@ static void _mt_draw_string(MT_WINDOW *win, MT_STRING *str, int x_offset, int y_
    TQRect r(s->r);
    const TQColor *penColor = s->penColor;
    TQColor tmpColor;
-   
+
    r.moveBy(x_offset, y_offset);
 
    if (color) {
@@ -368,7 +368,7 @@ static MT_WIDGET *_mt_widget_ref(MT_WIDGET *widget)
 
    // mark the reference mapping:
    widgetRefs.insert(result, result);
-   
+
    TQWidget *w = (TQWidget *)*widget;
    TQObject::connect(w, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForRef(TQObject *)));
 
@@ -416,12 +416,12 @@ static void _mt_widget_set_data(MT_WIDGET *widget, void *data, mt_destroy_func d
    // check if it already contains data and free them:
    if (widgetData[w]) {
       mt_destroy_func destroy_func = (mt_destroy_func)widgetDataDispose[w];
-      
+
       if (destroy_func) {
          destroy_func(widgetData[w]);
          widgetDataDispose.remove(w);
       }
-   
+
       TQObject::disconnect(w, TQ_SIGNAL(destroyed(TQObject *)), &helper, TQ_SLOT(widgetDestroyedForData(TQObject *)));
    }
 
@@ -478,7 +478,7 @@ static MT_TOOLKIT mt = {
 
    NULL,
    NULL,
-   
+
    _mt_widget_ref,
    _mt_widget_unref,
    _mt_widget_get_parent,
@@ -540,7 +540,6 @@ MetaThemeStyle::MetaThemeStyle()
    setColorPalette(&(mt_engine->palette));
    setFont();
 
-   hoverWidget = 0;
    hoverPart = 0;
    toolButtonPopup = false;
    toolButtonDropDownActiveWidget = NULL;
@@ -591,11 +590,11 @@ void MetaThemeStyle::polish(const TQStyleControlElementData &ceData,
             widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
             widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
             widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
-            widget->installEventFilter(this);
+            installObjectEventHandler(ceData, elementFlags, ptr, this);
         }
 
         if (widget->inherits("TQScrollBar")) {
-            widget->installEventFilter(this);
+            installObjectEventHandler(ceData, elementFlags, ptr, this);
             widget->setMouseTracking(true);
         }
 
@@ -617,7 +616,7 @@ void MetaThemeStyle::polish(const TQStyleControlElementData &ceData,
 
         if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
             if (!qstrcmp(widget->name(), "tab pages")) {
-                widget->installEventFilter(this);
+                installObjectEventHandler(ceData, elementFlags, ptr, this);
             }
             else if (widget->backgroundMode() == TQt::PaletteBackground && !widget->ownPalette() && !tabWidgets.find(widget)) {
                 TQWidget *w = widget;
@@ -628,9 +627,8 @@ void MetaThemeStyle::polish(const TQStyleControlElementData &ceData,
 
                     if (!qstrcmp(w->name(), "tab pages")) {
                     tabWidgets.replace(widget, w);
-                    widget->installEventFilter(this);
-                    //TODO: Why was this this needed?
-                    //widget->setBackgroundMode(TQt::NoBackground);
+                    installObjectEventHandler(ceData, elementFlags, ptr, this);
+                    widget->setBackgroundMode(TQt::NoBackground);
                     break;
                     }
 
@@ -655,11 +653,11 @@ void MetaThemeStyle::unPolish(const TQStyleControlElementData &ceData,
             widget->inherits("TQCheckBox") || widget->inherits("TQRadioButton") ||
             widget->inherits("TDEToolBarButton") || widget->inherits("TQLineEdit") ||
             widget->inherits("TQComboBox") || widget->inherits("TQFrame")) {
-            widget->removeEventFilter(this);
+            removeObjectEventHandler(ceData, elementFlags, ptr, this);
         }
 
         if (widget->inherits("TQScrollBar")) {
-            widget->removeEventFilter(this);
+            removeObjectEventHandler(ceData, elementFlags, ptr, this);
             widget->setMouseTracking(false);
         }
 
@@ -669,7 +667,7 @@ void MetaThemeStyle::unPolish(const TQStyleControlElementData &ceData,
 
         if (mt_engine->metric[MT_NOTEBOOK_IS_FILLED]) {
             if (!qstrcmp(widget->name(), "tab pages")) {
-                widget->removeEventFilter(this);
+                removeObjectEventHandler(ceData, elementFlags, ptr, this);
 
                 // unpolish all registered widgets with this tab pages widget:
                 TQPtrDictIterator<TQWidget> it(tabWidgets);
@@ -682,7 +680,7 @@ void MetaThemeStyle::unPolish(const TQStyleControlElementData &ceData,
             }
 
             if (tabWidgets.find(widget)) {
-                widget->removeEventFilter(this);
+                removeObjectEventHandler(ceData, elementFlags, ptr, this);
                 widget->setBackgroundMode(TQt::PaletteBackground);
 
                 tabWidgets.remove(widget);
@@ -959,13 +957,11 @@ void MetaThemeStyle::drawPrimitive(PrimitiveElement pe,
          return;
       }
 
-#if TQT_VERSION >= 0x030300
       case PE_RubberBand:
       {
          p->drawWinFocusRect(r);
          return;
       }
-#endif
 
       default:
          break;
@@ -988,8 +984,6 @@ void MetaThemeStyle::drawControl(ControlElement element,
                                 const TQStyleOption& opt,
                                 const TQWidget *widget) const
 {
-   if (widget == hoverWidget) flags |= Style_MouseOver;
-
    int state = retrieveState(flags);
    MT_WIDGET_DATA data;
 
@@ -1009,9 +1003,7 @@ void MetaThemeStyle::drawControl(ControlElement element,
 
          TQMenuItem *mi = opt.menuItem();
          int alignment = AlignCenter|ShowPrefix|DontClip|SingleLine;
-#if TQT_VERSION >= 0x030300
          if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, widget, TQStyleOption::Default, 0)) alignment |= NoAccel;
-#endif
 
          TQRect r2 = r;
          if (state & MT_ACTIVE) {
@@ -1218,7 +1210,6 @@ void MetaThemeStyle::drawControl(ControlElement element,
       }
 
       case CE_PushButton:
-         if (widget == hoverWidget) flags |= Style_MouseOver;
          if (widget) {
             TQPushButton *btn = (TQPushButton *)widget;
             if (btn->isToggleButton()) toggleButton = true;
@@ -1361,7 +1352,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          last    = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ScrollBarLast,    opt);
 
          if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
-            if (hoverWidget == widget && hoverPart == 2 && !scrollbar->draggingSlider()) state |= MT_HOVER;
+            if (flags & Style_MouseOver && hoverPart == 2 && !scrollbar->draggingSlider()) state |= MT_HOVER;
 
             mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL,
                   (scrollbar->orientation() == TQt::Horizontal)? MT_SCROLLBAR_ARROW_LEFT : MT_SCROLLBAR_ARROW_UP,
@@ -1373,7 +1364,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
          }
 
          if ((controls & SC_ScrollBarAddLine) && addline.isValid()) {
-            if (hoverWidget == widget && hoverPart == 3 && !scrollbar->draggingSlider()) state |= MT_HOVER;
+            if (flags & Style_MouseOver && hoverPart == 3 && !scrollbar->draggingSlider()) state |= MT_HOVER;
 
             mt_engine->draw_widget(mt_engine, (MT_WINDOW *)p, NULL,
                   (scrollbar->orientation() == TQt::Horizontal)? MT_SCROLLBAR_ARROW_RIGHT : MT_SCROLLBAR_ARROW_DOWN,
@@ -1401,7 +1392,7 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
                return;
             }
 
-            if ((hoverWidget == widget && hoverPart == 1) || scrollbar->draggingSlider()) state |= MT_HOVER;
+            if ((flags & Style_MouseOver && hoverPart == 1) || scrollbar->draggingSlider()) state |= MT_HOVER;
 
             if (data.orientation == MT_VERTICAL) {
                data.handle_position = slider.y() - subpage.y();
@@ -1473,7 +1464,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
 
          if (controls & SC_SpinWidgetUp) {
             flags = Style_Default;
-            if (hoverWidget == widget) flags |= Style_MouseOver;
             if (active == SC_SpinWidgetUp) {
                flags |= Style_On;
                flags |= Style_Sunken;
@@ -1495,7 +1485,6 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
 
          if (controls & SC_SpinWidgetDown) {
             flags = Style_Default;
-            if (hoverWidget == widget) flags |= Style_MouseOver;
             if (active == SC_SpinWidgetDown ) {
                flags |= Style_On;
                flags |= Style_Sunken;
@@ -1520,10 +1509,10 @@ void MetaThemeStyle::drawComplexControl(ComplexControl control,
       case CC_ComboBox:
       {
          TQRect re;
-         if (hoverWidget == widget) state |= MT_HOVER;
+         if (flags & Style_MouseOver) state |= MT_HOVER;
 
          p->save();
-         
+
          if (controls & SC_ComboBoxFrame) {
             re = querySubControlMetrics(control, ceData, elementFlags, widget, SC_ComboBoxFrame, opt);
             p->setClipRect(re);
@@ -1787,7 +1776,7 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
                                 ControlElementFlags elementFlags, const TQWidget *widget) const
 {
    switch (m) {
-      case PM_ButtonMargin: return 0; /* MT_BUTTON_BORDER: real value is returned by sizeFromContents method */
+      case PM_ButtonMargin: return MT_BUTTON_BORDER;  // the real value is returned by sizeFromContents method
       case PM_ButtonDefaultIndicator: return 0;
 
       case PM_MenuButtonIndicator: // width of the menu button indicator proportional to the widget height.
@@ -1815,13 +1804,11 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_SpinBoxFrameWidth: // frame width of a spin box.
          return mt_engine->metric[MT_BORDER]; // TODO
 
-#if TQT_VERSION >= 0x030200
       case PM_MDIFrameWidth: // frame width of an MDI window.
          return mt_engine->metric[MT_BORDER]; // TODO
 
       case PM_MDIMinimizedWidth: // width of a minimized MSI window.
          return 120; // TODO
-#endif
 
       case PM_MaximumDragDistance: // Some feels require the scrollbar or other sliders to jump back to the original position when the mouse pointer is too far away while dragging. A value of -1 disables this behavior.
          return -1;
@@ -1859,13 +1846,11 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_MenuBarFrameWidth: // frame width of a menubar.
          return TQMAX(mt_engine->metric_size[MT_MENUBAR_BORDER].x, mt_engine->metric_size[MT_MENUBAR_BORDER].y); // TODO: handle by sizeFromContents, how?
 
-#if TQT_VERSION >= 0x030300
       case PM_MenuBarItemSpacing: // spacing between menubar items.
          return mt_engine->metric[MT_MENUBAR_ITEM_SPACING];
 
       case PM_ToolBarItemSpacing: // spacing between toolbar items.
          return 0;
-#endif
 
       case PM_TabBarTabOverlap: // number of pixels the tabs should overlap.
          return mt_engine->metric[MT_NOTEBOOK_TAB_OVERLAP];
@@ -1882,12 +1867,9 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_TabBarBaseOverlap: // number of pixels the tab bar overlaps the tab bar base.
          return mt_engine->metric[MT_NOTEBOOK_OVERLAP] - 2;
 
-#if TQT_VERSION >= 0x030300
       case PM_TabBarScrollButtonWidth:
          return mt_engine->metric[MT_NOTEBOOK_ARROW_WIDTH];
-#endif
 
-#if TQT_VERSION >= 0x030200
       case PM_TabBarTabShiftHorizontal: // horizontal pixel shift when a tab is selected.
          return 0;
 
@@ -1901,7 +1883,6 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
          }
          return mt_engine->metric[MT_NOTEBOOK_TEXT_OFFSET];
       }
-#endif
 
       case PM_ProgressBarChunkWidth: // width of a chunk in a progress bar indicator.
          break;
@@ -1912,13 +1893,11 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_TitleBarHeight: // height of the title bar.
          break;
 
-#if TQT_VERSION >= 0x030200
       case PM_PopupMenuFrameHorizontalExtra: // additional border, e.g. for panels
          return mt_engine->metric_size[MT_MENU_BORDER].x - mt_engine->metric[MT_BORDER];
 
       case PM_PopupMenuFrameVerticalExtra: // additional border, e.g. for panels
          return mt_engine->metric_size[MT_MENU_BORDER].y - mt_engine->metric[MT_BORDER];
-#endif
 
       case PM_IndicatorWidth: // width of a check box indicator.
       case PM_IndicatorHeight: // height of a checkbox indicator.
@@ -1934,7 +1913,6 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_CheckListButtonSize: // area (width/height) of the checkbox/radiobutton in a TQCheckListItem
          return mt_engine->metric[MT_CHECKBOX_SIZE];
 
-#if TQT_VERSION >= 0x030200
       case PM_CheckListControllerSize: // area (width/height) of the controller in a TQCheckListItem
          break;
 
@@ -1951,19 +1929,17 @@ int MetaThemeStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
       case PM_HeaderGripMargin:
       case PM_HeaderMargin:
          break;
-#endif
    }
 
    return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
 }
 
-
-TQSize MetaThemeStyle::sizeFromContents(ContentsType t,
+TQSize MetaThemeStyle::sizeFromContents(TQStyle::ContentsType t,
                                         const TQStyleControlElementData &ceData,
                                         ControlElementFlags elementFlags,
-                                        const TQWidget *widget,
                                         const TQSize &s,
-                                        const TQStyleOption &opt) const
+                                        const TQStyleOption &opt,
+                                        const TQWidget *widget) const
 {
    switch (t) {
 
@@ -2090,10 +2066,8 @@ int MetaThemeStyle::styleHint(StyleHint stylehint,
       case SH_ScrollBar_MiddleClickAbsolutePosition: // a boolean value. If TRUE, middle clicking on a scrollbar causes the slider to jump to that position. If FALSE, the middle clicking is ignored.
          return 1;
 
-#if TQT_VERSION >= 0x030200
       case SH_ScrollBar_LeftClickAbsolutePosition: // a boolean value. If TRUE, left clicking on a scrollbar causes the slider to jump to that position. If FALSE, the left clicking will behave as appropriate for each control.
          return 0;
-#endif
 
       case SH_ScrollBar_ScrollWhenPointerLeavesControl: // a boolean value. If TRUE, when clicking a scrollbar SubControl, holding the mouse button down and moving the pointer outside the SubControl, the scrollbar continues to scroll. If FALSE, the scollbar stops scrolling when the pointer leaves the SubControl.
          return 1;
@@ -2164,13 +2138,11 @@ int MetaThemeStyle::styleHint(StyleHint stylehint,
       case SH_TabBar_SelectMouseType: // which type of mouse event should cause a tab to be selected.
          return TQEvent::MouseButtonPress;
 
-#if TQT_VERSION >= 0x030200
       case SH_ListViewExpand_SelectMouseType: // which type of mouse event should cause a listview expansion to be selected.
          return TQEvent::MouseButtonPress;
 
       case SH_TabBar_PreferNoArrows: // whether a tabbar should suggest a size to prevent scoll arrows.
          return 0; // TODO
-#endif
 
       case SH_ComboBox_Popup: // allows popups as a combobox dropdown menu.
          return 0;
@@ -2196,17 +2168,12 @@ int MetaThemeStyle::styleHint(StyleHint stylehint,
       case SH_GroupBox_TextLabelColor: // how to paint a groupbox's text label.
          return (int)(widget? widget->paletteForegroundColor().rgb() : 0);
 
-#if TQT_VERSION >= 0x030200
       case SH_DialogButtons_DefaultButton: // which buttons gets the default status in a dialog's button widget.
          return 0x01/*TQDialogButtons::Accept*/;
-#endif
 
-#if TQT_VERSION >= 0x030300
       case SH_ToolButton_Uses3D: // indicates whether TQToolButtons should use a 3D frame when the mouse is over them
          return 1;
-#endif
 
-#if TQT_VERSION >= 0x030200
       case SH_ToolBox_SelectedPageTitleBold: // Boldness of the selected page title in a TQToolBox.
          return 0;
 
@@ -2215,12 +2182,9 @@ int MetaThemeStyle::styleHint(StyleHint stylehint,
 
       case SH_Table_GridLineColor:
          return (int)(widget? widget->colorGroup().mid().rgb() : 0);
-#endif
 
-#if TQT_VERSION >= 0x030300
       case SH_UnderlineAccelerator: // whether accelerators are underlined
          return 1;
-#endif
    }
 
    return TDEStyle::styleHint(stylehint, ceData, elementFlags, opt, returnData, widget);
@@ -2287,55 +2251,51 @@ bool MetaThemeStyle::objectEventHandler(const TQStyleControlElementData &ceData,
       }
    }
 
-   if (obj->inherits("TQPushButton") || obj->inherits("TQComboBox") || obj->inherits("TQSpinWidget") ||
-       obj->inherits("TQSpinWidget") || obj->inherits("TQCheckBox") ||
-       obj->inherits("TQRadioButton") || obj->inherits("TQScrollBar")) {
+   if (obj->inherits("TQScrollBar")) {
+      TQWidget *scroll = static_cast<TQWidget*>(obj);
+      switch (ev->type())
+      {
+          case TQEvent::Leave: { hoverPart = 0; }
+          case TQEvent::Enter: {
+              if (scroll->isEnabled()) {
+                  scroll->repaint(false);
+              }
+              break;
+          }
+          case TQEvent::MouseMove:
+          case TQEvent::MouseButtonRelease: {
+              TQScrollBar *scrollbar = static_cast<TQScrollBar*>(obj);
+              TQMouseEvent *mev = static_cast<TQMouseEvent*>(ev);
+              TQRect subline, addline, slider;
+              int oldPart = hoverPart;
 
-      if ((ev->type() == TQEvent::Enter) && static_cast<TQWidget*>(obj)->isEnabled()) {
-         TQWidget* button = static_cast<TQWidget*>(obj);
-         hoverWidget = button;
-         button->repaint(false);
+              if (ev->type() == TQEvent::MouseButtonRelease) {
+                  oldPart = 0;
+              }
+
+              subline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSubLine);
+              addline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarAddLine);
+              slider  = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSlider);
+
+              hoverPart = 0;
+              if (slider.contains(mev->pos())) {
+                  hoverPart = 1;
+              }
+              else if (subline.contains(mev->pos())) {
+                  hoverPart = 2;
+              }
+              else if (addline.contains(mev->pos())) {
+                  hoverPart = 3;
+              }
+
+              if (hoverPart != oldPart && (!scrollbar->draggingSlider() || ev->type() == TQEvent::MouseButtonRelease))
+              {
+                  scrollbar->update();
+              }
+
+              return false;
+          }
       }
-      else if ((ev->type() == TQEvent::Leave) && (obj == hoverWidget)) {
-         TQWidget* button = static_cast<TQWidget*>(obj);
-         hoverWidget = 0;
-         hoverPart = 0;
-         button->repaint(false);
-      }
-   }
-
-   if (obj->inherits("TQScrollBar") && (ev->type() == TQEvent::MouseMove || ev->type() == TQEvent::MouseButtonRelease)) {
-      TQScrollBar *scrollbar = static_cast<TQScrollBar*>(obj);
-      TQMouseEvent *mev = static_cast<TQMouseEvent*>(ev);
-      TQRect subline, addline, slider;
-      int oldPart = hoverPart;
-
-      if (ev->type() == TQEvent::MouseButtonRelease) {
-         oldPart = 0;
-      }
-
-      subline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSubLine);
-      addline = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarAddLine);
-      slider  = querySubControlMetrics(CC_ScrollBar, ceData, elementFlags, scrollbar, SC_ScrollBarSlider);
-
-      hoverPart = 0;
-      if (slider.contains(mev->pos())) {
-         hoverPart = 1;
-      }
-      else if (subline.contains(mev->pos())) {
-         hoverPart = 2;
-      }
-      else if (addline.contains(mev->pos())) {
-         hoverPart = 3;
-      }
-
-      if ((hoverWidget != scrollbar || hoverPart != oldPart) && (!scrollbar->draggingSlider() || ev->type() == TQEvent::MouseButtonRelease)) {
-         scrollbar->update();
-      }
-
-      hoverWidget = scrollbar;
-
-      return false;
    }
 
    if (obj->inherits("TDEToolBarButton")) {
@@ -2384,7 +2344,7 @@ bool MetaThemeStyle::objectEventHandler(const TQStyleControlElementData &ceData,
    if (!qstrcmp(obj->name(), "tde toolbar widget")) {
       TQWidget* lb = static_cast<TQWidget*>(obj);
       if (lb->backgroundMode() == TQt::PaletteButton) lb->setBackgroundMode(TQt::PaletteBackground);
-      lb->removeEventFilter(this);
+      removeObjectEventHandler(ceData, elementFlags, obj, this);
    }
 
    if (obj->inherits("TQFrame") && !obj->inherits("TEWidget") && ev->type() == TQEvent::Paint) {

@@ -120,9 +120,9 @@ public:
    TQSize sizeFromContents(TQStyle::ContentsType t,
                            const TQStyleControlElementData &ceData,
                            ControlElementFlags elementFlags,
-                           const TQWidget *w,
                            const TQSize &s,
-                           const TQStyleOption &o) const;
+                           const TQStyleOption &o,
+                           const TQWidget *w) const;
 
    int styleHint(StyleHint stylehint,
                  const TQStyleControlElementData &ceData,
