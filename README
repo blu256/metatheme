@@ -49,11 +49,10 @@ Installation
 - Unpack the archive somewhere in your home directory.
 - Invoke CMake as following:
   $ cmake -B build -DCMAKE_INSTALL_PREFIX=/opt/trinity \
-                   -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON \
                    [your build flags]
     
   Define any build flags (see below) you want like this: -D[BUILD_FLAG]=[ON/OFF]
-  e.g. -DWITH_COLORSCHEMES=ON
+  e.g. -DWITH_ENGINE_REDMOND=ON -DWITH_COLORSCHEMES=ON
 
 - Run 'make -C build'.
 - Run 'make -C build install' as root.

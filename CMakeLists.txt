@@ -58,7 +58,8 @@ set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TQT_CXX_FLAGS}" )
 set( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined" )
 set( CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined" )
 
-set( METATHEMEDIR ${LIB_INSTALL_DIR}/metatheme CACHE INTERNAL "" FORCE)
+set( METATHEMEDIR ${LIB_INSTALL_DIR}/metatheme CACHE INTERNAL "" FORCE )
+set( CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}:${METATHEMEDIR}/toolkits" )
 
 ### Add subdirectories #########################################################
 add_subdirectory( metatheme )
